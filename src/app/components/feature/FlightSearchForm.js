@@ -1,8 +1,7 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
-import { ArrowRightLeft, Search, Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { ArrowRightLeft, Search, Loader, X, PlusCircle } from "lucide-react";
 
 // --- Reusable Suggestions Dropdown Component ---
 const SuggestionsList = ({
@@ -10,14 +9,12 @@ const SuggestionsList = ({
   isLoading,
   onSelect,
   dropdownRef,
-  type,
   query,
   onQueryChange,
   placeholder,
 }) => {
   const inputRef = useRef(null);
 
-  // Auto-focus the search input when the dropdown opens
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
@@ -27,7 +24,6 @@ const SuggestionsList = ({
       ref={dropdownRef}
       className="absolute top-full mt-2 left-0 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 flex flex-col"
     >
-      {/* Search Bar inside Dropdown */}
       <div className="p-2 border-b border-gray-200 sticky top-0 bg-white">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -41,19 +37,16 @@ const SuggestionsList = ({
           />
         </div>
       </div>
-
-      {/* Results List */}
       <div className="overflow-y-auto">
         {isLoading ? (
           <div className="flex justify-center items-center p-4">
             <Loader className="w-5 h-5 text-gray-400 animate-spin" />
-            <span className="ml-2 text-gray-500">Searching...</span>
           </div>
         ) : suggestions.length > 0 ? (
           suggestions.map((airport) => (
             <div
               key={airport.iata}
-              onClick={() => onSelect(airport, type)}
+              onClick={() => onSelect(airport)}
               className="px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0"
             >
               <div className="flex justify-between items-center">
@@ -71,13 +64,9 @@ const SuggestionsList = ({
               </div>
             </div>
           ))
-        ) : query.length >= 2 ? (
-          <p className="p-4 text-sm text-center text-gray-500">
-            No airports found.
-          </p>
         ) : (
           <p className="p-4 text-sm text-center text-gray-500">
-            Type to search for an airport.
+            {query.length >= 2 ? "No airports found." : "Type to search."}
           </p>
         )}
       </div>
@@ -86,159 +75,181 @@ const SuggestionsList = ({
 };
 
 // --- Main Flight Search Form Component ---
-export default function FlightSearchForm() {
+export default function FlightSearchForm({
+  variant = "main", // "main" or "compact"
+  initialState = null,
+  onNewSearch = null,
+}) {
   const router = useRouter();
   const [isSearching, setIsSearching] = useState(false);
+  const [tripType, setTripType] = useState(initialState?.tripType || "one-way");
 
-  // State for form data
-  const [formData, setFormData] = useState({
-    tripType: "one-way",
-    from: "Dhaka",
-    fromCode: "DAC",
-    fromAirport: "Hazrat Shahjalal International Airport",
-    to: "Cox's Bazar",
-    toCode: "CXB",
-    toAirport: "Cox's Bazar Airport",
-    journeyDate: "2025-08-09",
-    returnDate: "",
-    travelers: "1 Traveler",
-    class: "economy",
-  });
+  // A single state to manage which airport input is active
+  const [activeAirportSelector, setActiveAirportSelector] = useState(null);
+  const [airportQuery, setAirportQuery] = useState("");
+  const [airportSuggestions, setAirportSuggestions] = useState([]);
+  const [isSearchingAirports, setIsSearchingAirports] = useState(false);
 
-  // State for airport suggestions and search queries
-  const [fromSuggestions, setFromSuggestions] = useState([]);
-  const [toSuggestions, setToSuggestions] = useState([]);
-  const [fromQuery, setFromQuery] = useState("");
-  const [toQuery, setToQuery] = useState("");
-  const [isFromSearchingApi, setIsFromSearchingApi] = useState(false);
-  const [isToSearchingApi, setIsToSearchingApi] = useState(false);
-  const [showFromSuggestions, setShowFromSuggestions] = useState(false);
-  const [showToSuggestions, setShowToSuggestions] = useState(false);
+  // Initialize slices from props or default
+  const [slices, setSlices] = useState(
+    initialState?.slices || [
+      {
+        origin: {
+          name: "Jashore",
+          code: "JSR",
+          airportName: "Jashore Airport",
+        },
+        destination: {
+          name: "Dhaka",
+          code: "DAC",
+          airportName: "Hazrat Shahjalal International Airport",
+        },
+        departure_date: "2025-08-20",
+      },
+    ]
+  );
 
-  // Refs for inputs and dropdowns to handle outside clicks
-  const fromRef = useRef(null);
-  const toRef = useRef(null);
-  const fromDropdownRef = useRef(null);
-  const toDropdownRef = useRef(null);
+  const [passengers, setPassengers] = useState(
+    initialState?.passengers || [{ age: 30 }]
+  );
+  const activeDropdownRef = useRef(null);
   const debounceTimeout = useRef(null);
 
-  // --- API-based Airport Search ---
-  const searchAirports = (query, setSuggestions, setIsLoading) => {
-    // Clear previous timeout
-    if (debounceTimeout.current) {
-      clearTimeout(debounceTimeout.current);
-    }
+  // --- Airport Search Logic ---
+  const searchAirports = (query) => {
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     if (query.length < 2) {
-      setSuggestions([]);
-      setIsLoading(false);
+      setAirportSuggestions([]);
       return;
     }
-
-    setIsLoading(true);
-    // Set new timeout
+    setIsSearchingAirports(true);
     debounceTimeout.current = setTimeout(async () => {
       try {
-        const response = await fetch(`/api/flights/search?q=${query}&limit=5`);
+        const response = await fetch(`/api/airports?q=${query}&limit=5`);
         const result = await response.json();
-        setSuggestions(result.success ? result.data : []);
+        setAirportSuggestions(result.success ? result.data : []);
       } catch (error) {
         console.error("Failed to fetch airports:", error);
-        setSuggestions([]);
       } finally {
-        setIsLoading(false);
+        setIsSearchingAirports(false);
       }
-    }, 300); // 300ms debounce delay
+    }, 300);
   };
 
-  const handleFromInputChange = (e) => {
-    const value = e.target.value;
-    setFromQuery(value);
-    searchAirports(value, setFromSuggestions, setIsFromSearchingApi);
-  };
-  const handleToInputChange = (e) => {
-    const value = e.target.value;
-    setToQuery(value);
-    searchAirports(value, setToSuggestions, setIsToSearchingApi);
+  const handleAirportQueryChange = (e) => {
+    setAirportQuery(e.target.value);
+    searchAirports(e.target.value);
   };
 
-  // --- Airport Selection ---
-  const selectAirport = (airport, type) => {
-    const airportDetails = {
-      city: airport.city,
+  const handleSelectAirport = (airport) => {
+    if (!activeAirportSelector) return;
+    const { sliceIndex, field } = activeAirportSelector;
+    const newSlices = [...slices];
+    newSlices[sliceIndex][field] = {
+      name: airport.city,
       code: airport.iata,
       airportName: airport.name,
     };
-    if (type === "from") {
-      setFormData((prev) => ({
-        ...prev,
-        from: airportDetails.city,
-        fromCode: airportDetails.code,
-        fromAirport: airportDetails.airportName,
-      }));
-      setShowFromSuggestions(false);
-      setFromQuery(""); // Clear query
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        to: airportDetails.city,
-        toCode: airportDetails.code,
-        toAirport: airportDetails.airportName,
-      }));
-      setShowToSuggestions(false);
-      setToQuery(""); // Clear query
+
+    // For multi-city, auto-populate the next origin
+    if (
+      tripType === "multi-city" &&
+      field === "destination" &&
+      sliceIndex < newSlices.length - 1
+    ) {
+      newSlices[sliceIndex + 1].origin = {
+        name: airport.city,
+        code: airport.iata,
+        airportName: airport.name,
+      };
+    }
+
+    setSlices(newSlices);
+    setActiveAirportSelector(null);
+    setAirportQuery("");
+  };
+
+  const handleSwapLocations = () => {
+    const newSlices = [...slices];
+    const firstSlice = newSlices[0];
+    // Swap origin and destination of first slice
+    const temp = firstSlice.origin;
+    firstSlice.origin = firstSlice.destination;
+    firstSlice.destination = temp;
+    // If round trip, also update the return slice
+    if (tripType === "round-trip" && newSlices[1]) {
+      newSlices[1].origin = firstSlice.destination;
+      newSlices[1].destination = firstSlice.origin;
+    }
+    setSlices(newSlices);
+  };
+
+  const handleTripTypeChange = (newTripType) => {
+    setTripType(newTripType);
+    if (newTripType === "one-way") {
+      setSlices(slices.slice(0, 1));
+    } else if (newTripType === "round-trip") {
+      const firstSlice = slices[0];
+      const returnSlice = {
+        origin: firstSlice.destination,
+        destination: firstSlice.origin,
+        departure_date: "",
+      };
+      setSlices([firstSlice, returnSlice]);
+    } else if (newTripType === "multi-city") {
+      if (slices.length < 2) {
+        setSlices([
+          ...slices,
+          {
+            origin: slices[0]?.destination || { name: "", code: "" },
+            destination: { name: "", code: "" },
+            departure_date: "",
+          },
+        ]);
+      }
     }
   };
 
-  // --- UI Event Handlers ---
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        fromDropdownRef.current &&
-        !fromDropdownRef.current.contains(event.target) &&
-        fromRef.current &&
-        !fromRef.current.contains(event.target)
-      ) {
-        setShowFromSuggestions(false);
-      }
-      if (
-        toDropdownRef.current &&
-        !toDropdownRef.current.contains(event.target) &&
-        toRef.current &&
-        !toRef.current.contains(event.target)
-      ) {
-        setShowToSuggestions(false);
-      }
+  const handleAddSlice = () => {
+    const lastDestination = slices[slices.length - 1]?.destination || {
+      name: "",
+      code: "",
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleSwapLocations = () => {
-    setFormData((prev) => ({
-      ...prev,
-      from: prev.to,
-      fromCode: prev.toCode,
-      fromAirport: prev.toAirport,
-      to: prev.from,
-      toCode: prev.fromCode,
-      toAirport: prev.fromAirport,
-    }));
+    setSlices([
+      ...slices,
+      {
+        origin: lastDestination,
+        destination: { name: "", code: "" },
+        departure_date: "",
+      },
+    ]);
   };
 
-  // --- Form Submission ---
+  const handleRemoveSlice = (index) => {
+    if (slices.length > 2) {
+      setSlices(slices.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleSliceDateChange = (index, date) => {
+    const newSlices = [...slices];
+    newSlices[index].departure_date = date;
+    setSlices(newSlices);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSearching(true);
-    // ... rest of the submit logic from previous answer ...
     try {
+      const apiSlices = slices.map((slice) => ({
+        origin: slice.origin.code,
+        destination: slice.destination.code,
+        departure_date: slice.departure_date,
+      }));
       const searchPayload = {
-        origin: formData.fromCode,
-        destination: formData.toCode,
-        departure_date: formData.journeyDate,
-        return_date:
-          formData.tripType === "round-trip" ? formData.returnDate : null,
-        passengers: [{ type: "adult" }],
-        cabin_class: formData.class,
+        slices: apiSlices,
+        passengers: passengers,
+        cabin_class: "economy",
       };
 
       const response = await fetch("/api/flights/search", {
@@ -246,226 +257,571 @@ export default function FlightSearchForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(searchPayload),
       });
-
       const result = await response.json();
 
       if (result.success) {
-        sessionStorage.setItem(
-          "flightSearchResults",
-          JSON.stringify({
-            searchParams: formData,
-            results: result,
-            timestamp: new Date().toISOString(),
-          })
-        );
-        router.push("/flights/results");
+        const searchData = {
+          searchParams: { tripType, slices, passengers },
+          results: result,
+        };
+
+        if (onNewSearch) {
+          // If we're on results page, call the callback
+          onNewSearch(result, { tripType, slices, passengers });
+        } else {
+          // If we're on main page, navigate to results
+          sessionStorage.setItem(
+            "flightSearchResults",
+            JSON.stringify(searchData)
+          );
+          router.push("/flights/results");
+        }
       } else {
-        console.error("Search failed:", result.error, result.details);
-        alert(`Search failed: ${result.error || "Please try again."}`);
+        alert(
+          `Search failed: ${
+            result.details?.[0]?.message || result.error || "Please try again."
+          }`
+        );
       }
     } catch (error) {
-      console.error("Search error:", error);
       alert("An error occurred while searching for flights.");
     } finally {
       setIsSearching(false);
     }
   };
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        activeDropdownRef.current &&
+        !activeDropdownRef.current.contains(event.target)
+      ) {
+        const isTrigger = Array.from(
+          document.querySelectorAll(".airport-selector-trigger")
+        ).some((el) => el.contains(event.target));
+        if (!isTrigger) {
+          setActiveAirportSelector(null);
+        }
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleDateString("en-US", { month: "short" });
+    const year = date.getFullYear().toString().slice(-2);
+    const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+    return { day, month, year, dayName, full: `${day} ${month}'${year}` };
+  };
+
+  const commonSuggestionProps = {
+    suggestions: airportSuggestions,
+    isLoading: isSearchingAirports,
+    query: airportQuery,
+    onQueryChange: handleAirportQueryChange,
+  };
+
+  // Compact layout for results page
+  if (variant === "compact") {
+    return (
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <form onSubmit={handleSubmit}>
+          {/* Trip Type Radio Buttons */}
+          <div className="flex items-center gap-6 mb-4">
+            {["one-way", "round-trip", "multi-city"].map((type) => (
+              <label
+                key={type}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <input
+                  type="radio"
+                  name="tripType"
+                  value={type}
+                  checked={tripType === type}
+                  onChange={() => handleTripTypeChange(type)}
+                  className="sr-only"
+                />
+                <div
+                  className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                    tripType === type
+                      ? "border-blue-600 bg-blue-600"
+                      : "border-gray-300"
+                  }`}
+                >
+                  {tripType === type && (
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  )}
+                </div>
+                <span
+                  className={`text-sm font-medium capitalize ${
+                    tripType === type ? "text-blue-600" : "text-gray-500"
+                  }`}
+                >
+                  {type.replace("-", " ")}
+                </span>
+              </label>
+            ))}
+          </div>
+
+          {/* Compact Form Fields */}
+          <div className="grid grid-cols-1 lg:grid-cols-6 gap-3 items-end">
+            {/* FROM */}
+            <div
+              className="relative airport-selector-trigger"
+              ref={
+                activeAirportSelector?.sliceIndex === 0 &&
+                activeAirportSelector?.field === "origin"
+                  ? activeDropdownRef
+                  : null
+              }
+            >
+              <label className="block text-xs font-medium text-gray-500 mb-1 uppercase">
+                FROM
+              </label>
+              <div
+                onClick={() =>
+                  setActiveAirportSelector({ sliceIndex: 0, field: "origin" })
+                }
+                className="p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 bg-white"
+              >
+                <p className="font-bold text-blue-900 truncate">
+                  {slices[0]?.origin?.name || "Select"}
+                </p>
+                <p className="text-xs text-gray-400 truncate">
+                  {slices[0]?.origin?.code
+                    ? `${slices[0].origin.code}, ${slices[0].origin.airportName}`
+                    : ""}
+                </p>
+              </div>
+              {activeAirportSelector?.sliceIndex === 0 &&
+                activeAirportSelector?.field === "origin" && (
+                  <SuggestionsList
+                    {...commonSuggestionProps}
+                    onSelect={handleSelectAirport}
+                  />
+                )}
+            </div>
+
+            {/* TO */}
+            <div
+              className="relative airport-selector-trigger"
+              ref={
+                activeAirportSelector?.sliceIndex === 0 &&
+                activeAirportSelector?.field === "destination"
+                  ? activeDropdownRef
+                  : null
+              }
+            >
+              <label className="block text-xs font-medium text-gray-500 mb-1 uppercase">
+                TO
+              </label>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={handleSwapLocations}
+                  className="absolute -left-3 top-1/2 -translate-y-1/2 p-1.5 bg-white rounded-full border border-gray-200 hover:bg-gray-50 transition-colors z-10 shadow-sm"
+                >
+                  <ArrowRightLeft className="w-3 h-3 text-gray-600" />
+                </button>
+                <div
+                  onClick={() =>
+                    setActiveAirportSelector({
+                      sliceIndex: 0,
+                      field: "destination",
+                    })
+                  }
+                  className="p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 bg-white"
+                >
+                  <p className="font-bold text-blue-900 truncate">
+                    {slices[0]?.destination?.name || "Select"}
+                  </p>
+                  <p className="text-xs text-gray-400 truncate">
+                    {slices[0]?.destination?.code
+                      ? `${slices[0].destination.code}, ${slices[0].destination.airportName}`
+                      : ""}
+                  </p>
+                </div>
+              </div>
+              {activeAirportSelector?.sliceIndex === 0 &&
+                activeAirportSelector?.field === "destination" && (
+                  <SuggestionsList
+                    {...commonSuggestionProps}
+                    onSelect={handleSelectAirport}
+                  />
+                )}
+            </div>
+
+            {/* DEPARTURE DATE */}
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1 uppercase">
+                DEPARTURE DATE
+              </label>
+              <div className="p-3 border border-gray-200 rounded-lg bg-white">
+                {slices[0]?.departure_date ? (
+                  <>
+                    <p className="font-bold text-blue-900">
+                      {formatDate(slices[0].departure_date).full}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {formatDate(slices[0].departure_date).dayName}
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-gray-400">Select date</p>
+                )}
+                <input
+                  type="date"
+                  value={slices[0]?.departure_date || ""}
+                  onChange={(e) => handleSliceDateChange(0, e.target.value)}
+                  className="absolute inset-0 opacity-0 cursor-pointer"
+                  min={new Date().toISOString().split("T")[0]}
+                />
+              </div>
+            </div>
+
+            {/* RETURN DATE */}
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1 uppercase">
+                RETURN DATE
+              </label>
+              <div className="p-3 border border-gray-200 rounded-lg bg-white">
+                {tripType === "round-trip" ? (
+                  slices[1]?.departure_date ? (
+                    <>
+                      <p className="font-bold text-blue-900">
+                        {formatDate(slices[1].departure_date).full}
+                      </p>
+                      <p className="text-xs text-gray-400">
+                        {formatDate(slices[1].departure_date).dayName}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-gray-400">Select date</p>
+                  )
+                ) : (
+                  <p className="text-xs text-gray-500">
+                    Save more on return flight
+                  </p>
+                )}
+                {tripType === "round-trip" && (
+                  <input
+                    type="date"
+                    value={slices[1]?.departure_date || ""}
+                    onChange={(e) => handleSliceDateChange(1, e.target.value)}
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    min={
+                      slices[0]?.departure_date ||
+                      new Date().toISOString().split("T")[0]
+                    }
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* TRAVELER, CLASS */}
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1 uppercase">
+                TRAVELER, CLASS
+              </label>
+              <div className="p-3 border border-gray-200 rounded-lg bg-white">
+                <p className="font-bold text-blue-900">
+                  {passengers.length} Traveler
+                </p>
+                <p className="text-xs text-gray-400">Economy</p>
+              </div>
+            </div>
+
+            {/* SEARCH BUTTON */}
+            <div>
+              <button
+                type="submit"
+                disabled={isSearching}
+                className="w-full bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-300 text-blue-900 font-bold text-lg px-6 py-4 rounded-lg shadow-lg flex items-center justify-center transition-colors"
+              >
+                {isSearching ? (
+                  <Loader className="w-5 h-5 animate-spin" />
+                ) : (
+                  "Search"
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  }
+
+  // Original main page layout
+  const renderSlicesUI = () => {
+    if (tripType === "multi-city") {
+      return (
+        <div className="mb-4">
+          {slices.map((slice, index) => (
+            <div
+              key={index}
+              className="grid grid-cols-1 md:grid-cols-[1fr,1fr,1fr,auto] gap-2 items-center mb-2"
+            >
+              <div
+                className="relative airport-selector-trigger"
+                ref={
+                  activeAirportSelector?.sliceIndex === index &&
+                  activeAirportSelector?.field === "origin"
+                    ? activeDropdownRef
+                    : null
+                }
+              >
+                <div
+                  onClick={() =>
+                    setActiveAirportSelector({
+                      sliceIndex: index,
+                      field: "origin",
+                    })
+                  }
+                  className="p-3 border rounded-lg cursor-pointer hover:border-blue-400"
+                >
+                  <p className="text-xs text-gray-500">FROM</p>
+                  <p className="font-bold truncate">
+                    {slice.origin.name || "Select Origin"}
+                  </p>
+                </div>
+                {activeAirportSelector?.sliceIndex === index &&
+                  activeAirportSelector?.field === "origin" && (
+                    <SuggestionsList
+                      {...commonSuggestionProps}
+                      onSelect={handleSelectAirport}
+                    />
+                  )}
+              </div>
+              <div
+                className="relative airport-selector-trigger"
+                ref={
+                  activeAirportSelector?.sliceIndex === index &&
+                  activeAirportSelector?.field === "destination"
+                    ? activeDropdownRef
+                    : null
+                }
+              >
+                <div
+                  onClick={() =>
+                    setActiveAirportSelector({
+                      sliceIndex: index,
+                      field: "destination",
+                    })
+                  }
+                  className="p-3 border rounded-lg cursor-pointer hover:border-blue-400"
+                >
+                  <p className="text-xs text-gray-500">TO</p>
+                  <p className="font-bold truncate">
+                    {slice.destination.name || "Select Destination"}
+                  </p>
+                </div>
+                {activeAirportSelector?.sliceIndex === index &&
+                  activeAirportSelector?.field === "destination" && (
+                    <SuggestionsList
+                      {...commonSuggestionProps}
+                      onSelect={handleSelectAirport}
+                    />
+                  )}
+              </div>
+              <input
+                type="date"
+                value={slice.departure_date}
+                onChange={(e) => handleSliceDateChange(index, e.target.value)}
+                className="p-3.5 border rounded-lg text-gray-700"
+              />
+              {slices.length > 2 && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveSlice(index)}
+                  className="p-2 text-gray-400 hover:text-red-500"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    const oneWayReturnSlice = slices[0];
+    const returnSlice = slices[1];
+
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-5 border border-gray-200 rounded-2xl mb-12">
+        <div
+          className="relative p-5 border-b md:border-b-0 md:border-r airport-selector-trigger"
+          ref={
+            activeAirportSelector?.sliceIndex === 0 &&
+            activeAirportSelector?.field === "origin"
+              ? activeDropdownRef
+              : null
+          }
+        >
+          <div
+            onClick={() =>
+              setActiveAirportSelector({ sliceIndex: 0, field: "origin" })
+            }
+            className="cursor-pointer"
+          >
+            <p className="text-xs text-gray-500 uppercase">From</p>
+            <p className="text-xl font-bold text-blue-900 truncate">
+              {oneWayReturnSlice.origin.name}
+            </p>
+            <p className="text-xs text-gray-400 truncate">
+              {oneWayReturnSlice.origin.airportName}
+            </p>
+          </div>
+          {activeAirportSelector?.sliceIndex === 0 &&
+            activeAirportSelector?.field === "origin" && (
+              <SuggestionsList
+                {...commonSuggestionProps}
+                onSelect={handleSelectAirport}
+              />
+            )}
+        </div>
+        <div
+          className="relative p-5 border-b md:border-b-0 md:border-r airport-selector-trigger"
+          ref={
+            activeAirportSelector?.sliceIndex === 0 &&
+            activeAirportSelector?.field === "destination"
+              ? activeDropdownRef
+              : null
+          }
+        >
+          <button
+            type="button"
+            onClick={handleSwapLocations}
+            className="absolute left-0 top-1/2 -translate-x-1/2 p-2 bg-white rounded-full border shadow-md"
+          >
+            <ArrowRightLeft className="w-4 h-4" />
+          </button>
+          <div
+            onClick={() =>
+              setActiveAirportSelector({ sliceIndex: 0, field: "destination" })
+            }
+            className="cursor-pointer"
+          >
+            <p className="text-xs text-gray-500 uppercase">To</p>
+            <p className="text-xl font-bold text-blue-900 truncate">
+              {oneWayReturnSlice.destination.name}
+            </p>
+            <p className="text-xs text-gray-400 truncate">
+              {oneWayReturnSlice.destination.airportName}
+            </p>
+          </div>
+          {activeAirportSelector?.sliceIndex === 0 &&
+            activeAirportSelector?.field === "destination" && (
+              <SuggestionsList
+                {...commonSuggestionProps}
+                onSelect={handleSelectAirport}
+              />
+            )}
+        </div>
+        <div className="p-5 border-b md:border-b-0 md:border-r">
+          <p className="text-xs text-gray-500 uppercase">Departure</p>
+          <input
+            type="date"
+            value={oneWayReturnSlice.departure_date}
+            onChange={(e) => handleSliceDateChange(0, e.target.value)}
+            className="text-xl font-bold bg-transparent border-none outline-none w-full"
+            min={new Date().toISOString().split("T")[0]}
+          />
+        </div>
+        <div className="p-5 border-b md:border-b-0 md:border-r">
+          <p className="text-xs text-gray-500 uppercase">Return</p>
+          {tripType === "round-trip" ? (
+            <input
+              type="date"
+              value={returnSlice?.departure_date}
+              onChange={(e) => handleSliceDateChange(1, e.target.value)}
+              className="text-xl font-bold bg-transparent border-none outline-none w-full"
+              min={oneWayReturnSlice.departure_date}
+            />
+          ) : (
+            <p
+              className="pt-3 text-gray-400 text-sm cursor-pointer"
+              onClick={() => handleTripTypeChange("round-trip")}
+            >
+              Add return date
+            </p>
+          )}
+        </div>
+        <div className="p-5">
+          <p className="text-xs text-gray-500 font-medium mb-2 uppercase">
+            PASSENGERS
+          </p>
+          <p className="text-xl font-bold text-blue-900 mb-1">
+            {passengers.length} Traveler
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-white rounded-3xl shadow-xl w-full max-w-6xl relative z-10 pt-8">
       <form onSubmit={handleSubmit} className="px-8">
-        {/* ... Trip Type Radio Buttons ... */}
         <div className="flex items-center gap-6 mb-8 pt-4">
-          {["one-way", "round-trip", "multi-city"].map((trip) => (
+          {["one-way", "round-trip", "multi-city"].map((type) => (
             <label
-              key={trip}
+              key={type}
               className="flex items-center gap-2 cursor-pointer"
             >
               <input
                 type="radio"
                 name="tripType"
-                value={trip}
-                checked={formData.tripType === trip}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    tripType: e.target.value,
-                    returnDate:
-                      e.target.value !== "round-trip" ? "" : prev.returnDate,
-                  }))
-                }
+                value={type}
+                checked={tripType === type}
+                onChange={() => handleTripTypeChange(type)}
                 className="sr-only"
-                disabled={trip === "multi-city"}
               />
               <div
                 className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                  formData.tripType === trip
+                  tripType === type
                     ? "border-blue-600 bg-blue-600"
                     : "border-gray-300"
-                } ${trip === "multi-city" ? "opacity-50" : ""}`}
+                }`}
               >
-                {formData.tripType === trip && (
+                {tripType === type && (
                   <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
                 )}
               </div>
               <span
                 className={`font-medium text-base capitalize ${
-                  formData.tripType === trip ? "text-blue-600" : "text-gray-400"
-                } ${trip === "multi-city" ? "opacity-50" : ""}`}
+                  tripType === type ? "text-blue-600" : "text-gray-400"
+                }`}
               >
-                {trip.replace("-", " ")}
+                {type.replace("-", " ")}
               </span>
             </label>
           ))}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-5 border border-gray-200 rounded-2xl mb-12">
-          {/* FROM Section */}
-          <div
-            ref={fromRef}
-            onClick={() => setShowFromSuggestions(true)}
-            className={`p-5 bg-white rounded-l-2xl border-b md:border-b-0 md:border-r border-gray-200 relative cursor-pointer ${
-              showFromSuggestions ? "ring-2 ring-blue-400" : ""
-            }`}
+        {renderSlicesUI()}
+        {tripType === "multi-city" && (
+          <button
+            type="button"
+            onClick={handleAddSlice}
+            className="flex items-center gap-2 text-blue-600 font-medium mb-6 hover:text-blue-800"
           >
-            <p className="text-xs text-gray-500 font-medium mb-1 uppercase">
-              FROM
-            </p>
-            <p className="text-xl font-bold text-blue-900 truncate">
-              {formData.from}
-            </p>
-            <p className="text-xs text-gray-400 leading-tight truncate">
-              {formData.fromAirport}
-            </p>
-            {showFromSuggestions && (
-              <SuggestionsList
-                suggestions={fromSuggestions}
-                isLoading={isFromSearchingApi}
-                onSelect={selectAirport}
-                dropdownRef={fromDropdownRef}
-                type="from"
-                query={fromQuery}
-                onQueryChange={handleFromInputChange}
-              />
-            )}
-          </div>
-
-          {/* TO Section (with swap button) */}
-          <div
-            ref={toRef}
-            onClick={() => setShowToSuggestions(true)}
-            className={`p-5 bg-white border-b md:border-b-0 md:border-r border-gray-200 relative cursor-pointer ${
-              showToSuggestions ? "ring-2 ring-blue-400" : ""
-            }`}
-          >
-            <button
-              type="button"
-              onClick={handleSwapLocations}
-              className="absolute left-0 top-[50%] -translate-y-[50%] transform -translate-x-1/2 p-2 bg-white rounded-full border border-gray-300 hover:bg-gray-100 transition-colors z-20 shadow-md md:top-[50%]"
-            >
-              <ArrowRightLeft className="w-4 h-4 text-gray-600" />
-            </button>
-            <p className="text-xs text-gray-500 font-medium mb-1 uppercase">
-              TO
-            </p>
-            <p className="text-xl font-bold text-blue-900 truncate">
-              {formData.to}
-            </p>
-            <p className="text-xs text-gray-400 leading-tight truncate">
-              {formData.toAirport}
-            </p>
-            {showToSuggestions && (
-              <SuggestionsList
-                suggestions={toSuggestions}
-                isLoading={isToSearchingApi}
-                onSelect={selectAirport}
-                dropdownRef={toDropdownRef}
-                type="to"
-                query={toQuery}
-                onQueryChange={handleToInputChange}
-              />
-            )}
-          </div>
-          {/* ... Date, Traveler, and Class Sections ... */}
-          {/* DEPARTURE DATE Section */}
-          <div className="p-5 bg-white border-b md:border-b-0 md:border-r border-gray-200">
-            <p className="text-xs text-gray-500 font-medium mb-2 uppercase tracking-wide">
-              DEPARTURE
-            </p>
-            <input
-              type="date"
-              value={formData.journeyDate}
-              onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  journeyDate: e.target.value,
-                }))
-              }
-              className="text-xl font-bold text-blue-900 bg-transparent border-none outline-none w-full"
-              min={new Date().toISOString().split("T")[0]}
-            />
-          </div>
-
-          {/* RETURN DATE Section */}
-          <div className="p-5 bg-white border-b md:border-b-0 md:border-r border-gray-200">
-            <p className="text-xs text-gray-500 font-medium mb-2 uppercase tracking-wide">
-              RETURN
-            </p>
-            {formData.tripType === "round-trip" ? (
-              <input
-                type="date"
-                value={formData.returnDate}
-                onChange={(e) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    returnDate: e.target.value,
-                  }))
-                }
-                className="text-base font-medium text-blue-900 bg-transparent border-none outline-none w-full"
-                min={
-                  formData.journeyDate || new Date().toISOString().split("T")[0]
-                }
-              />
-            ) : (
-              <p className="text-sm text-gray-400 pt-3">Click Round Way</p>
-            )}
-          </div>
-
-          {/* TRAVELER, CLASS Section */}
-          <div className="p-5 bg-white rounded-r-2xl">
-            <p className="text-xs text-gray-500 font-medium mb-2 uppercase tracking-wide">
-              PASSENGERS & CLASS
-            </p>
-            <p className="text-xl font-bold text-blue-900 mb-1">
-              {formData.travelers}
-            </p>
-            <select
-              value={formData.class}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, class: e.target.value }))
-              }
-              className="text-xs text-gray-400 bg-transparent border-none outline-none -ml-1"
-            >
-              <option value="economy">Economy</option>
-              <option value="premium_economy">Premium Economy</option>
-              <option value="business">Business</option>
-              <option value="first">First</option>
-            </select>
-          </div>
-        </div>
+            <PlusCircle className="w-5 h-5" /> Add Another Flight
+          </button>
+        )}
       </form>
-      {/* Search Button */}
       <div className="flex justify-center relative -mb-7">
         <button
           type="submit"
           onClick={handleSubmit}
           disabled={isSearching}
-          className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-300 disabled:cursor-not-allowed text-blue-900 font-bold text-lg px-16 py-4 rounded-2xl shadow-lg transition-all transform hover:scale-105 focus:outline-none"
+          className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-300 text-blue-900 font-bold text-lg px-16 py-4 rounded-2xl shadow-lg flex items-center justify-center"
         >
           {isSearching ? (
-            <div className="flex items-center gap-2">
-              <Loader className="w-5 h-5 animate-spin" />
-              <span>Searching...</span>
-            </div>
+            <Loader className="w-6 h-6 animate-spin" />
           ) : (
             "Search Flights"
           )}
@@ -474,3 +830,627 @@ export default function FlightSearchForm() {
     </div>
   );
 }
+
+// "use client";
+// import { useState, useEffect, useRef } from "react";
+// import { useRouter } from "next/navigation";
+// import { Loader, Plus, X } from "lucide-react";
+// import DateSelector from "../flight-search/DateSelector";
+// import FromToSelector from "../flight-search/FromToSelector";
+// import TravelerClassSelector from "../flight-search/TravelerClassSelector";
+
+// export default function FlightSearchForm({
+//   variant = "main", // "main" or "compact"
+//   initialState = null,
+//   onNewSearch = null,
+// }) {
+//   const router = useRouter();
+//   const [isSearching, setIsSearching] = useState(false);
+//   const [tripType, setTripType] = useState(initialState?.tripType || "one-way");
+//   const [activeAirportSelector, setActiveAirportSelector] = useState(null);
+//   const [airportQuery, setAirportQuery] = useState("");
+//   const [airportSuggestions, setAirportSuggestions] = useState([]);
+//   const [isSearchingAirports, setIsSearchingAirports] = useState(false);
+
+//   const [slices, setSlices] = useState(
+//     initialState?.slices || [
+//       {
+//         origin: {
+//           name: "Jashore",
+//           code: "JSR",
+//           airportName: "Jashore Airport",
+//         },
+//         destination: {
+//           name: "Dhaka",
+//           code: "DAC",
+//           airportName: "Hazrat Shahjalal International Airport",
+//         },
+//         departure_date: "2025-08-20",
+//       },
+//     ]
+//   );
+
+//   const [passengers, setPassengers] = useState(
+//     initialState?.passengers || [{ type: "adult", age: 30 }]
+//   );
+//   const [cabinClass, setCabinClass] = useState("economy");
+
+//   const debounceTimeout = useRef(null);
+
+//   const searchAirports = (query) => {
+//     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+//     if (query.length < 2) {
+//       setAirportSuggestions([]);
+//       return;
+//     }
+//     setIsSearchingAirports(true);
+//     debounceTimeout.current = setTimeout(async () => {
+//       try {
+//         const response = await fetch(`/api/airports?q=${query}&limit=5`);
+//         const result = await response.json();
+//         setAirportSuggestions(result.success ? result.data : []);
+//       } catch (error) {
+//         console.error("Failed to fetch airports:", error);
+//       } finally {
+//         setIsSearchingAirports(false);
+//       }
+//     }, 300);
+//   };
+
+//   const handleAirportQueryChange = (e) => {
+//     setAirportQuery(e.target.value);
+//     searchAirports(e.target.value);
+//   };
+
+//   const handleSelectAirport = (airport, field, sliceIndex = 0) => {
+//     const newSlices = [...slices];
+//     newSlices[sliceIndex][field] = {
+//       name: airport.city,
+//       code: airport.iata,
+//       airportName: airport.name,
+//     };
+
+//     // For round-trip, update the return slice
+//     if (tripType === "round-trip" && newSlices[1] && sliceIndex === 0) {
+//       if (field === "origin") newSlices[1].destination = newSlices[0].origin;
+//       else newSlices[1].origin = newSlices[0].destination;
+//     }
+
+//     setSlices(newSlices);
+//     setActiveAirportSelector(null);
+//     setAirportQuery("");
+//     setAirportSuggestions([]);
+//   };
+
+//   const handleSwapLocations = (sliceIndex = 0) => {
+//     const newSlices = [...slices];
+//     const temp = newSlices[sliceIndex].origin;
+//     newSlices[sliceIndex].origin = newSlices[sliceIndex].destination;
+//     newSlices[sliceIndex].destination = temp;
+
+//     // For round-trip, also swap the return slice
+//     if (tripType === "round-trip" && newSlices[1] && sliceIndex === 0) {
+//       newSlices[1].origin = newSlices[0].destination;
+//       newSlices[1].destination = newSlices[0].origin;
+//     }
+
+//     setSlices(newSlices);
+//   };
+
+//   const handleTripTypeChange = (newTripType) => {
+//     setTripType(newTripType);
+
+//     if (newTripType === "one-way") {
+//       setSlices(slices.slice(0, 1));
+//     } else if (newTripType === "round-trip") {
+//       const firstSlice = slices[0];
+//       setSlices([
+//         firstSlice,
+//         {
+//           origin: firstSlice.destination,
+//           destination: firstSlice.origin,
+//           departure_date: "",
+//         },
+//       ]);
+//     } else if (newTripType === "multi-city") {
+//       // Start with at least 2 slices for multi-city
+//       if (slices.length < 2) {
+//         const firstSlice = slices[0];
+//         setSlices([
+//           firstSlice,
+//           {
+//             origin: firstSlice.destination || {
+//               name: "",
+//               code: "",
+//               airportName: "",
+//             },
+//             destination: { name: "", code: "", airportName: "" },
+//             departure_date: "",
+//           },
+//         ]);
+//       }
+//     }
+//   };
+
+//   const addMultiCitySlice = () => {
+//     const lastSlice = slices[slices.length - 1];
+//     const newSlice = {
+//       origin: lastSlice.destination || { name: "", code: "", airportName: "" },
+//       destination: { name: "", code: "", airportName: "" },
+//       departure_date: "",
+//     };
+//     setSlices([...slices, newSlice]);
+//   };
+
+//   const removeMultiCitySlice = (index) => {
+//     if (slices.length > 2) {
+//       const newSlices = slices.filter((_, i) => i !== index);
+//       setSlices(newSlices);
+//     }
+//   };
+
+//   const handleDepartureChange = (date, sliceIndex = 0) => {
+//     const newSlices = [...slices];
+//     newSlices[sliceIndex].departure_date = date;
+//     setSlices(newSlices);
+//   };
+
+//   const handleReturnChange = (date) => {
+//     const newSlices = [...slices];
+//     if (newSlices[1]) {
+//       newSlices[1].departure_date = date;
+//     }
+//     setSlices(newSlices);
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     // Validation for multi-city
+//     if (tripType === "multi-city") {
+//       for (let i = 0; i < slices.length; i++) {
+//         const slice = slices[i];
+//         if (
+//           !slice.origin.code ||
+//           !slice.destination.code ||
+//           !slice.departure_date
+//         ) {
+//           alert(`Please complete all fields for flight ${i + 1}`);
+//           return;
+//         }
+//       }
+//     }
+
+//     setIsSearching(true);
+//     try {
+//       const apiSlices = slices.map((s) => ({
+//         origin: s.origin.code,
+//         destination: s.destination.code,
+//         departure_date: s.departure_date,
+//       }));
+
+//       const searchPayload = {
+//         slices: apiSlices,
+//         passengers,
+//         cabin_class: cabinClass,
+//       };
+
+//       const response = await fetch("/api/flights/search", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify(searchPayload),
+//       });
+//       const result = await response.json();
+
+//       if (result.success) {
+//         const searchData = {
+//           searchParams: { tripType, slices, passengers },
+//           results: result,
+//         };
+
+//         if (onNewSearch) {
+//           onNewSearch(result, { tripType, slices, passengers });
+//         } else {
+//           sessionStorage.setItem(
+//             "flightSearchResults",
+//             JSON.stringify(searchData)
+//           );
+//           router.push("/flight-results");
+//         }
+//       } else {
+//         alert(`Search failed: ${result.details?.[0]?.message || result.error}`);
+//       }
+//     } catch (error) {
+//       alert("An error occurred.");
+//     } finally {
+//       setIsSearching(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     const handleClickOutside = (event) => {
+//       const isTrigger = Array.from(
+//         document.querySelectorAll(".airport-selector-trigger")
+//       ).some((el) => el.contains(event.target));
+//       if (!isTrigger) {
+//         setActiveAirportSelector(null);
+//       }
+//     };
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, []);
+
+//   // Compact layout for results page
+//   if (variant === "compact") {
+//     return (
+//       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+//         <form onSubmit={handleSubmit}>
+//           <div className="flex items-center gap-6 mb-4">
+//             {["one-way", "round-trip", "multi-city"].map((type) => (
+//               <label
+//                 key={type}
+//                 className="flex items-center gap-2 cursor-pointer"
+//               >
+//                 <input
+//                   type="radio"
+//                   name="tripType"
+//                   value={type}
+//                   checked={tripType === type}
+//                   onChange={() => handleTripTypeChange(type)}
+//                   className="sr-only"
+//                 />
+//                 <div
+//                   className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+//                     tripType === type ? "border-blue-600" : "border-gray-300"
+//                   }`}
+//                 >
+//                   {tripType === type && (
+//                     <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+//                   )}
+//                 </div>
+//                 <span
+//                   className={`text-sm font-medium capitalize ${
+//                     tripType === type ? "text-blue-600" : "text-gray-500"
+//                   }`}
+//                 >
+//                   {type.replace("-", " ")}
+//                 </span>
+//               </label>
+//             ))}
+//           </div>
+
+//           {tripType === "multi-city" ? (
+//             <div className="space-y-4">
+//               {slices.map((slice, index) => (
+//                 <div
+//                   key={index}
+//                   className="border border-gray-200 rounded-lg p-4"
+//                 >
+//                   <div className="flex items-center justify-between mb-3">
+//                     <h4 className="font-semibold text-gray-800">
+//                       Flight {index + 1}
+//                     </h4>
+//                     {slices.length > 2 && (
+//                       <button
+//                         type="button"
+//                         onClick={() => removeMultiCitySlice(index)}
+//                         className="text-red-500 hover:text-red-700 p-1"
+//                       >
+//                         <X className="w-4 h-4" />
+//                       </button>
+//                     )}
+//                   </div>
+//                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+//                     <FromToSelector
+//                       fromValue={slice.origin}
+//                       toValue={slice.destination}
+//                       onFromSelect={(airport) =>
+//                         handleSelectAirport(airport, "origin", index)
+//                       }
+//                       onToSelect={(airport) =>
+//                         handleSelectAirport(airport, "destination", index)
+//                       }
+//                       onSwap={() => handleSwapLocations(index)}
+//                       activeSelector={activeAirportSelector}
+//                       onActivateSelector={setActiveAirportSelector}
+//                       suggestions={airportSuggestions}
+//                       isLoading={isSearchingAirports}
+//                       query={airportQuery}
+//                       onQueryChange={handleAirportQueryChange}
+//                       variant="compact"
+//                     />
+//                     <div>
+//                       <label className="block text-xs font-medium text-gray-500 mb-1 uppercase">
+//                         DEPARTURE DATE
+//                       </label>
+//                       <input
+//                         type="date"
+//                         value={slice.departure_date}
+//                         onChange={(e) =>
+//                           handleDepartureChange(e.target.value, index)
+//                         }
+//                         min={new Date().toISOString().split("T")[0]}
+//                         className="w-full p-3 border border-gray-200 rounded-lg bg-white"
+//                       />
+//                     </div>
+//                   </div>
+//                 </div>
+//               ))}
+
+//               <div className="flex items-center gap-3">
+//                 <button
+//                   type="button"
+//                   onClick={addMultiCitySlice}
+//                   className="flex items-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+//                   disabled={slices.length >= 6}
+//                 >
+//                   <Plus className="w-4 h-4" />
+//                   Add Another Flight
+//                 </button>
+//                 <span className="text-xs text-gray-500">
+//                   {slices.length}/6 flights
+//                 </span>
+//               </div>
+
+//               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+//                 <TravelerClassSelector
+//                   passengers={passengers}
+//                   onPassengersChange={setPassengers}
+//                   cabinClass={cabinClass}
+//                   onCabinClassChange={setCabinClass}
+//                   variant="compact"
+//                 />
+//                 <button
+//                   type="submit"
+//                   disabled={isSearching}
+//                   className="w-full bg-yellow-400 hover:bg-yellow-500 font-bold h-11 text-blue-900 rounded-lg flex items-center justify-center"
+//                 >
+//                   {isSearching ? (
+//                     <Loader className="animate-spin w-5 h-5" />
+//                   ) : (
+//                     "Search Multi-City"
+//                   )}
+//                 </button>
+//               </div>
+//             </div>
+//           ) : (
+//             <div className="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-6 gap-3 items-end">
+//               <div className="md:col-span-2 lg:col-span-3">
+//                 <FromToSelector
+//                   fromValue={slices[0]?.origin}
+//                   toValue={slices[0]?.destination}
+//                   onFromSelect={(airport) =>
+//                     handleSelectAirport(airport, "origin")
+//                   }
+//                   onToSelect={(airport) =>
+//                     handleSelectAirport(airport, "destination")
+//                   }
+//                   onSwap={() => handleSwapLocations()}
+//                   activeSelector={activeAirportSelector}
+//                   onActivateSelector={setActiveAirportSelector}
+//                   suggestions={airportSuggestions}
+//                   isLoading={isSearchingAirports}
+//                   query={airportQuery}
+//                   onQueryChange={handleAirportQueryChange}
+//                   variant="compact"
+//                 />
+//               </div>
+//               <div className="md:col-span-2">
+//                 <DateSelector
+//                   departureDate={slices[0]?.departure_date}
+//                   returnDate={slices[1]?.departure_date}
+//                   onDepartureChange={handleDepartureChange}
+//                   onReturnChange={handleReturnChange}
+//                   tripType={tripType}
+//                   variant="compact"
+//                 />
+//               </div>
+//               <TravelerClassSelector
+//                 passengers={passengers}
+//                 onPassengersChange={setPassengers}
+//                 cabinClass={cabinClass}
+//                 onCabinClassChange={setCabinClass}
+//                 variant="compact"
+//               />
+//               <button
+//                 type="submit"
+//                 disabled={isSearching}
+//                 className="w-full bg-yellow-400 hover:bg-yellow-500 font-bold h-11 text-blue-900 rounded-lg flex items-center justify-center"
+//               >
+//                 {isSearching ? (
+//                   <Loader className="animate-spin w-5 h-5" />
+//                 ) : (
+//                   "Search"
+//                 )}
+//               </button>
+//             </div>
+//           )}
+//         </form>
+//       </div>
+//     );
+//   }
+
+//   // Main variant layout
+//   return (
+//     <div className="bg-white rounded-3xl shadow-xl w-full max-w-6xl relative z-10 pt-8">
+//       <form onSubmit={handleSubmit} className="px-8">
+//         <div className="flex items-center gap-6 mb-8 pt-4">
+//           {["one-way", "round-trip", "multi-city"].map((type) => (
+//             <label
+//               key={type}
+//               className="flex items-center gap-2 cursor-pointer"
+//             >
+//               <input
+//                 type="radio"
+//                 name="tripType"
+//                 value={type}
+//                 checked={tripType === type}
+//                 onChange={() => handleTripTypeChange(type)}
+//                 className="sr-only"
+//               />
+//               <div
+//                 className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+//                   tripType === type
+//                     ? "border-blue-600 bg-blue-600"
+//                     : "border-gray-300"
+//                 }`}
+//               >
+//                 {tripType === type && (
+//                   <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
+//                 )}
+//               </div>
+//               <span
+//                 className={`font-medium text-base capitalize ${
+//                   tripType === type ? "text-blue-600" : "text-gray-400"
+//                 }`}
+//               >
+//                 {type.replace("-", " ")}
+//               </span>
+//             </label>
+//           ))}
+//         </div>
+
+//         {tripType === "multi-city" ? (
+//           <div className="space-y-6 mb-12">
+//             {slices.map((slice, index) => (
+//               <div
+//                 key={index}
+//                 className="border border-gray-200 rounded-2xl overflow-hidden"
+//               >
+//                 <div className="bg-gray-50 px-6 py-3 flex items-center justify-between">
+//                   <h4 className="font-semibold text-gray-800">
+//                     Flight {index + 1}
+//                   </h4>
+//                   {slices.length > 2 && (
+//                     <button
+//                       type="button"
+//                       onClick={() => removeMultiCitySlice(index)}
+//                       className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-50"
+//                     >
+//                       <X className="w-5 h-5" />
+//                     </button>
+//                   )}
+//                 </div>
+//                 <div className="grid grid-cols-1 md:grid-cols-3">
+//                   <FromToSelector
+//                     fromValue={slice.origin}
+//                     toValue={slice.destination}
+//                     onFromSelect={(airport) =>
+//                       handleSelectAirport(airport, "origin", index)
+//                     }
+//                     onToSelect={(airport) =>
+//                       handleSelectAirport(airport, "destination", index)
+//                     }
+//                     onSwap={() => handleSwapLocations(index)}
+//                     activeSelector={activeAirportSelector}
+//                     onActivateSelector={setActiveAirportSelector}
+//                     suggestions={airportSuggestions}
+//                     isLoading={isSearchingAirports}
+//                     query={airportQuery}
+//                     onQueryChange={handleAirportQueryChange}
+//                   />
+//                   <div className="p-5 border-b md:border-b-0 md:border-r bg-white">
+//                     <p className="text-xs text-gray-500 uppercase font-medium mb-2">
+//                       DEPARTURE DATE
+//                     </p>
+//                     <input
+//                       type="date"
+//                       value={slice.departure_date}
+//                       onChange={(e) =>
+//                         handleDepartureChange(e.target.value, index)
+//                       }
+//                       min={new Date().toISOString().split("T")[0]}
+//                       className="w-full text-xl font-bold text-blue-900 bg-transparent border-none outline-none"
+//                     />
+//                   </div>
+//                 </div>
+//               </div>
+//             ))}
+
+//             <div className="flex items-center justify-center gap-4">
+//               <button
+//                 type="button"
+//                 onClick={addMultiCitySlice}
+//                 className="flex items-center gap-2 px-6 py-3 text-blue-600 border-2 border-blue-600 rounded-xl hover:bg-blue-50 transition-colors font-medium"
+//                 disabled={slices.length >= 6}
+//               >
+//                 <Plus className="w-5 h-5" />
+//                 Add Another Flight
+//               </button>
+//               <span className="text-sm text-gray-500">
+//                 {slices.length}/6 flights added
+//               </span>
+//             </div>
+
+//             <div className="grid grid-cols-1 md:grid-cols-2 border border-gray-200 rounded-2xl overflow-hidden">
+//               <TravelerClassSelector
+//                 passengers={passengers}
+//                 onPassengersChange={setPassengers}
+//                 cabinClass={cabinClass}
+//                 onCabinClassChange={setCabinClass}
+//               />
+//               <div className="p-5 bg-gray-50 flex items-center justify-center">
+//                 <div className="text-center">
+//                   <p className="text-sm text-gray-600 mb-2">Ready to search?</p>
+//                   <p className="text-xs text-gray-500">
+//                     {slices.length} flight{slices.length > 1 ? "s" : ""} •{" "}
+//                     {passengers.length} passenger
+//                     {passengers.length > 1 ? "s" : ""}
+//                   </p>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         ) : (
+//           <div className="grid grid-cols-1 md:grid-cols-5 border border-gray-200 rounded-2xl mb-12">
+//             <FromToSelector
+//               fromValue={slices[0]?.origin}
+//               toValue={slices[0]?.destination}
+//               onFromSelect={(airport) => handleSelectAirport(airport, "origin")}
+//               onToSelect={(airport) =>
+//                 handleSelectAirport(airport, "destination")
+//               }
+//               onSwap={() => handleSwapLocations()}
+//               activeSelector={activeAirportSelector}
+//               onActivateSelector={setActiveAirportSelector}
+//               suggestions={airportSuggestions}
+//               isLoading={isSearchingAirports}
+//               query={airportQuery}
+//               onQueryChange={handleAirportQueryChange}
+//             />
+//             <DateSelector
+//               departureDate={slices[0]?.departure_date}
+//               returnDate={slices[1]?.departure_date}
+//               onDepartureChange={handleDepartureChange}
+//               onReturnChange={handleReturnChange}
+//               tripType={tripType}
+//             />
+//             <TravelerClassSelector
+//               passengers={passengers}
+//               onPassengersChange={setPassengers}
+//               cabinClass={cabinClass}
+//               onCabinClassChange={setCabinClass}
+//             />
+//           </div>
+//         )}
+//       </form>
+
+//       <div className="flex justify-center relative -mb-7">
+//         <button
+//           type="submit"
+//           onClick={handleSubmit}
+//           disabled={isSearching}
+//           className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-300 text-blue-900 font-bold text-lg px-16 py-4 rounded-2xl shadow-lg flex items-center justify-center"
+//         >
+//           {isSearching ? (
+//             <Loader className="w-6 h-6 animate-spin" />
+//           ) : tripType === "multi-city" ? (
+//             "Search Multi-City Flights"
+//           ) : (
+//             "Search Flights"
+//           )}
+//         </button>
+//       </div>
+//     </div>
+//   );
+// }

@@ -1,54 +1,12 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-poppins: 'Poppins', sans-serif;
+/*
+  Removed conflicting styles:
 
-  /* Brand Colors */
-    --color-primary: #1e40af;
-    /* A deep blue for primary actions */
-    --color-secondary: #06b6d4;
-    /* A vibrant teal for highlights */
-  
-    /* Text Colors */
-    --color-text-base: #1f2937;
-    /* A dark gray for body text */
-    --color-text-light: #6b7280;
-    /* A lighter gray for secondary text */
-  
-    /* Background Colors */
-    --color-bg-light: #f9fafb;
-    /* A light background color */
-    --color-bg-dark: #111827;
-    /* A dark background color */
-}
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('/fonts/Poppins-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-
-
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-poppins);
-}
+  - The :root variables (--background, --foreground, --font-poppins) are no longer needed
+    as colors and fonts are managed by Tailwind utilities and next/font.
+  - The @font-face rule for Poppins is handled by next/font/google in RootLayout.js,
+    which optimizes font loading.
+  - The body styles (background, color, font-family) are applied via Tailwind classes
+    in RootLayout.js.
+*/

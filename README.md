@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+SkyFareUSA - Your Ultimate Flight Booking Solution ✈️
+Welcome to SkyFareUSA, a modern and secure flight booking platform designed to provide a seamless travel experience. Find and reserve the best flight deals with our easy-to-use interface and reliable service.
 
-## Getting Started
+Branding Guide
+This project's design system is built on a carefully selected palette of colors and fonts to create a professional and trustworthy user experience.
 
-First, run the development server:
+Color Palette
+The color scheme is designed to evoke a sense of security, clarity, and modern professionalism, perfect for an airline reservation system.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Name Hex Code Usage
+Navy Blue #004369 Primary Brand Color. Used for main headings, navigation bars, and as a background for primary elements.
+Teal #01949A Accent Color. Used for call-to-action buttons, interactive links, and highlights.
+Sand Dollar #E5DDC8 Background Color. A soft, clean background for the application's layout.
+Red #DB1F48 Danger/Error Color. Used for error messages and critical actions.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Export to Sheets
+Typography
+We use a two-font system to ensure high readability and a clean, modern aesthetic.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Headings: We use Poppins for all headings and titles. Its clean, geometric style adds a modern touch and is easily scannable.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Body Text: We use Inter for all body text and UI elements. Inter is a highly legible and versatile font, optimized for digital screens to ensure a comfortable reading experience.
 
-## Learn More
+Technologies Used
+Next.js: A React framework for production that provides server-side rendering and static site generation.
 
-To learn more about Next.js, take a look at the following resources:
+Tailwind CSS: A utility-first CSS framework for building custom designs rapidly.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next/font: For automatic font optimization.

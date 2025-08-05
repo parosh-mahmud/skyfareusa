@@ -1,0 +1,190 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { Users, Plus, Minus } from "lucide-react";
+
+// This is the popover UI for selecting travelers and class
+const TravelerPopover = ({
+  passengers,
+  onPassengersChange,
+  cabinClass,
+  onCabinClassChange,
+  onClose,
+}) => {
+  const popoverRef = useRef(null);
+
+  // This hook handles closing the popover when clicking outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [onClose]);
+
+  const updatePassengerCount = (type, change) => {
+    let newPassengers = [...passengers];
+    const currentCount = newPassengers.filter((p) => p.type === type).length;
+    const totalPassengers = newPassengers.length;
+
+    if (change > 0 && totalPassengers < 9) {
+      // Limit to 9 total passengers
+      const age = type === "adult" ? 30 : type === "child" ? 8 : 1;
+      newPassengers.push({ type, age });
+    } else if (change < 0) {
+      // Ensure at least one adult
+      if (type === "adult" && currentCount <= 1) return;
+      if (currentCount > 0) {
+        const index = newPassengers.findIndex((p) => p.type === type);
+        if (index !== -1) newPassengers.splice(index, 1);
+      }
+    }
+    onPassengersChange(newPassengers);
+  };
+
+  const getPassengerCount = (type) =>
+    passengers.filter((p) => p.type === type).length;
+
+  return (
+    <div
+      ref={popoverRef}
+      className="absolute top-full right-0 mt-2 bg-white rounded-lg shadow-xl z-50 w-80 p-6 border"
+    >
+      <div className="space-y-4">
+        {/* Passenger Counters */}
+        {[
+          { type: "adult", label: "Adults", desc: "12+ years" },
+          { type: "child", label: "Children", desc: "2-11 years" },
+          { type: "infant", label: "Infants", desc: "Below 2 years" },
+        ].map((pax) => (
+          <div key={pax.type} className="flex items-center justify-between">
+            <div>
+              <p className="font-semibold text-gray-800">{pax.label}</p>
+              <p className="text-sm text-gray-500">{pax.desc}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => updatePassengerCount(pax.type, -1)}
+                className="p-1.5 bg-gray-100 rounded-full hover:bg-gray-200"
+              >
+                <Minus className="w-4 h-4" />
+              </button>
+              <span className="w-8 text-center font-bold text-lg">
+                {getPassengerCount(pax.type)}
+              </span>
+              <button
+                type="button"
+                onClick={() => updatePassengerCount(pax.type, 1)}
+                className="p-1.5 bg-gray-100 rounded-full hover:bg-gray-200"
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        ))}
+
+        {/* Class Selection */}
+        <div className="pt-4 border-t">
+          <p className="font-semibold text-gray-800 mb-2">Cabin Class</p>
+          <select
+            value={cabinClass}
+            onChange={(e) => onCabinClassChange(e.target.value)}
+            className="w-full border-gray-200 border rounded-lg p-2 text-sm"
+          >
+            <option value="economy">Economy</option>
+            <option value="premium_economy">Premium Economy</option>
+            <option value="business">Business</option>
+            <option value="first">First</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// This is the main component you will use in your form
+export default function TravelerClassSelector({
+  passengers,
+  onPassengersChange,
+  cabinClass,
+  onCabinClassChange,
+  variant = "main",
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef(null);
+
+  // This closes the popover if you click outside the main component trigger
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [wrapperRef]);
+
+  const totalPassengers = passengers.length;
+  const passengerText = `${totalPassengers} Traveler${
+    totalPassengers > 1 ? "s" : ""
+  }`;
+  const cabinClassText = cabinClass
+    .replace("_", " ")
+    .replace(/\b\w/g, (l) => l.toUpperCase());
+
+  if (variant === "compact") {
+    return (
+      <div ref={wrapperRef} className="relative">
+        <label className="block text-xs font-medium text-gray-500 mb-1 uppercase">
+          TRAVELER, CLASS
+        </label>
+        <div
+          onClick={() => setIsOpen(!isOpen)}
+          className="p-3 border rounded-lg bg-white cursor-pointer h-[58px]"
+        >
+          <p className="font-bold text-blue-900 truncate">{passengerText}</p>
+          <p className="text-xs text-gray-400">{cabinClassText}</p>
+        </div>
+        {isOpen && (
+          <TravelerPopover
+            onClose={() => setIsOpen(false)}
+            passengers={passengers}
+            onPassengersChange={onPassengersChange}
+            cabinClass={cabinClass}
+            onCabinClassChange={onCabinClassChange}
+          />
+        )}
+      </div>
+    );
+  }
+
+  // Main variant
+  return (
+    <div ref={wrapperRef} className="relative p-5">
+      <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
+        <p className="text-xs text-gray-500 font-medium mb-2 uppercase">
+          TRAVELER, CLASS
+        </p>
+        <div className="flex items-center gap-2">
+          <Users className="w-5 h-5 text-blue-500" />
+          <div>
+            <p className="text-xl font-bold text-blue-900">{passengerText}</p>
+            <p className="text-xs text-gray-400">{cabinClassText}</p>
+          </div>
+        </div>
+      </div>
+      {isOpen && (
+        <TravelerPopover
+          onClose={() => setIsOpen(false)}
+          passengers={passengers}
+          onPassengersChange={onPassengersChange}
+          cabinClass={cabinClass}
+          onCabinClassChange={onCabinClassChange}
+        />
+      )}
+    </div>
+  );
+}
