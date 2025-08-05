@@ -1,25 +1,34 @@
-import FlightSearchTabs from "./components/feature/FlightSearchTabs";
+"use client";
+
 import FlightSearchForm from "./components/feature/FlightSearchForm";
+import FlightSearchTabs from "./components/feature/FlightSearchTabs";
 
 export default function Page() {
   return (
     <div>
       {/* Hero Section (first 500px) */}
       <section
-        className="relative h-[500px] bg-cover bg-center"
+        className="relative h-[650px] bg-cover bg-center pt-20" // Increased height and added top padding
         style={{ backgroundImage: "url('/images/hero.jpg')" }}
       >
         {/* Dark overlay for readability */}
         <div className="absolute inset-0 bg-neutral-900/30"></div>
         {/* Centered search UI */}
-        <div className="relative z-10 container mx-auto px-4 flex flex-col items-center justify-center h-full">
+        <div className="relative z-10 container mx-auto px-4 flex flex-col items-center justify-start h-full pt-16">
+          {" "}
+          {/* Changed justify-center to justify-start and added top padding */}
           <FlightSearchTabs />
-          <FlightSearchForm />
+          <div className="w-full max-w-6xl">
+            {" "}
+            {/* Added a wrapper with max-width */}
+            <FlightSearchForm />
+          </div>
         </div>
       </section>
-
       {/* Main Content */}
-      <section className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-cyan-50">
+      <section className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-cyan-50 pt-20">
+        {" "}
+        {/* Added top padding */}
         <div className="container mx-auto px-4 py-16">
           <h2 className="text-3xl font-heading text-primary text-center mb-8">
             Explore Our Top Destinations

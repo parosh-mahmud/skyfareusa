@@ -1,7 +1,6 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
-import { Users, Plus, Minus } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 
 // This is the popover UI for selecting travelers and class
 const TravelerPopover = ({
@@ -25,7 +24,7 @@ const TravelerPopover = ({
   }, [onClose]);
 
   const updatePassengerCount = (type, change) => {
-    let newPassengers = [...passengers];
+    const newPassengers = [...passengers];
     const currentCount = newPassengers.filter((p) => p.type === type).length;
     const totalPassengers = newPassengers.length;
 
@@ -50,7 +49,7 @@ const TravelerPopover = ({
   return (
     <div
       ref={popoverRef}
-      className="absolute top-full right-0 mt-2 bg-white rounded-lg shadow-xl z-50 w-80 p-6 border"
+      className="absolute top-full right-0 mt-2 bg-white rounded-lg shadow-xl z-[100] w-80 p-6 border"
     >
       <div className="space-y-4">
         {/* Passenger Counters */}
@@ -85,7 +84,6 @@ const TravelerPopover = ({
             </div>
           </div>
         ))}
-
         {/* Class Selection */}
         <div className="pt-4 border-t">
           <p className="font-semibold text-gray-800 mb-2">Cabin Class</p>
@@ -112,6 +110,7 @@ export default function TravelerClassSelector({
   cabinClass,
   onCabinClassChange,
   variant = "main",
+  onOpen,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef(null);
@@ -127,6 +126,11 @@ export default function TravelerClassSelector({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [wrapperRef]);
 
+  const handleOpen = () => {
+    onOpen?.(); // Close other selectors
+    setIsOpen(!isOpen);
+  };
+
   const totalPassengers = passengers.length;
   const passengerText = `${totalPassengers} Traveler${
     totalPassengers > 1 ? "s" : ""
@@ -138,15 +142,15 @@ export default function TravelerClassSelector({
   if (variant === "compact") {
     return (
       <div ref={wrapperRef} className="relative">
-        <label className="block text-xs font-medium text-gray-500 mb-1 uppercase">
+        <label className="block text-xs font-medium text-blue-600 mb-1 uppercase">
           TRAVELER, CLASS
         </label>
         <div
-          onClick={() => setIsOpen(!isOpen)}
-          className="p-3 border rounded-lg bg-white cursor-pointer h-[58px]"
+          onClick={handleOpen}
+          className="p-4 border border-gray-200 rounded-lg bg-white cursor-pointer hover:border-blue-400 transition-colors"
         >
-          <p className="font-bold text-blue-900 truncate">{passengerText}</p>
-          <p className="text-xs text-gray-400">{cabinClassText}</p>
+          <p className="font-bold text-blue-900 text-base">{passengerText}</p>
+          <p className="text-sm text-gray-500">{cabinClassText}</p>
         </div>
         {isOpen && (
           <TravelerPopover
@@ -163,15 +167,16 @@ export default function TravelerClassSelector({
 
   // Main variant
   return (
-    <div ref={wrapperRef} className="relative p-5">
-      <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
-        <p className="text-xs text-gray-500 font-medium mb-2 uppercase">
+    <div ref={wrapperRef} className="relative">
+      <div onClick={handleOpen} className="cursor-pointer">
+        <p className="text-xs text-blue-600 font-medium mb-2 uppercase">
           TRAVELER, CLASS
         </p>
         <div className="flex items-center gap-2">
-          <Users className="w-5 h-5 text-blue-500" />
           <div>
-            <p className="text-xl font-bold text-blue-900">{passengerText}</p>
+            <p className="text-base sm:text-lg font-bold text-blue-900">
+              {passengerText}
+            </p>
             <p className="text-xs text-gray-400">{cabinClassText}</p>
           </div>
         </div>

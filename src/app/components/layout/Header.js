@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -137,7 +136,6 @@ export default function Header({ transparent = false }) {
                 {label}
               </Link>
             ))}
-
             {/* Mobile Auth Buttons */}
             <div className="flex flex-col space-y-3 pt-4 border-t border-white/20">
               <Link href="/signin" onClick={() => setMobileOpen(false)}>
