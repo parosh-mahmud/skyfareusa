@@ -8,7 +8,7 @@ export default function Page() {
     <div>
       {/* Hero Section (first 500px) */}
       <section
-        className="relative h-[650px] bg-cover bg-center pt-20" // Increased height and added top padding
+        className="relative h-[650px] bg-cover bg-center pt-5" // Increased height and added top padding
         style={{ backgroundImage: "url('/images/hero.jpg')" }}
       >
         {/* Dark overlay for readability */}

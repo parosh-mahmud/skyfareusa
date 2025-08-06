@@ -1,4 +1,5 @@
 "use client";
+
 import { ChevronDown, Clock } from "lucide-react";
 import { useState } from "react";
 import FlightDetailsSidebar from "./FlightDetailsSidebar";
@@ -17,7 +18,6 @@ const formatDuration = (duration) => {
   if (!duration) return "";
   const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
   if (!match) return duration;
-
   const hours = match[1] ? `${match[1]}h` : "";
   const minutes = match[2] ? `${match[2]}m` : "";
   return `${hours} ${minutes}`.trim();
@@ -62,69 +62,60 @@ export default function FlightOfferCard({
 }) {
   const [showDetails, setShowDetails] = useState(false);
 
-  // Use the first offer (cheapest) for the summary display
-  const summaryOffer = offerGroup[0];
+  // Fixed: Changed ,[object Object], to [0]
+  const summaryOffer = offerGroup?.[0];
 
-  // Validate offer structure
-  if (
-    !summaryOffer ||
-    !summaryOffer.slices ||
-    summaryOffer.slices.length === 0
-  ) {
-    return null;
-  }
+  if (!summaryOffer?.slices?.length) return null;
 
+  // Fixed: Changed ,[object Object], to [0]
   const firstSlice = summaryOffer.slices[0];
+  const segs = firstSlice.segments;
 
-  if (!firstSlice || !firstSlice.segments || firstSlice.segments.length === 0) {
-    return null;
-  }
+  if (!segs?.length) return null;
 
-  const firstSegment = firstSlice.segments[0];
-  const lastSegment = firstSlice.segments[firstSlice.segments.length - 1];
+  // Fixed: Changed ,[object Object], to [0]
+  const firstSegment = segs[0];
+  const lastSegment = segs[segs.length - 1];
 
   const dayDiff = getDayDifference(
     firstSegment.departing_at,
     lastSegment.arriving_at
   );
-  const stopsText = getStopsText(firstSlice.segments);
-  const stopsCount = getStopsCount(firstSlice.segments);
+  const stopsText = getStopsText(segs);
+  const stopsCount = getStopsCount(segs);
 
-  // The unique ID for this itinerary group
-  const itineraryId =
-    summaryOffer.slices
-      ?.flatMap((s) => s.segments?.map((seg) => seg.id) || [])
-      .join("-") || summaryOffer.id;
-
-  const handleFlightDetailsClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setShowDetails(true);
-  };
-
-  const handleCloseSidebar = () => {
-    setShowDetails(false);
-  };
-
-  // Get airline info from the owner or first segment
+  // Airline info
   const airline =
     summaryOffer.owner ||
     firstSegment.marketing_carrier ||
-    firstSegment.operating_carrier;
-  const airlineLogo = airline?.logo_symbol_url;
-  const airlineName = airline?.name;
-  const airlineCode = airline?.iata_code;
+    firstSegment.operating_carrier ||
+    {};
+  const airlineLogo = airline.logo_symbol_url;
+  const airlineCode = airline.iata_code || "??";
+  const airlineName = airline.name || "";
 
-  // Convert price to USD
+  // Price
   const priceInUSD = convertToUSD(
     summaryOffer.total_amount,
     summaryOffer.total_currency
   );
 
-  // Check if offer is expiring soon (within 30 minutes)
   const isExpiringSoon =
     summaryOffer.expires_at &&
     new Date(summaryOffer.expires_at).getTime() - Date.now() < 30 * 60 * 1000;
+
+  // Handlers
+  const itineraryId =
+    summaryOffer.slices
+      .flatMap((s) => s.segments?.map((x) => x.id) || [])
+      .join("-") || summaryOffer.id;
+
+  const handleFlightDetailsClick = (e) => {
+    e.stopPropagation();
+    setShowDetails(true);
+  };
+
+  const handleCloseSidebar = () => setShowDetails(false);
 
   return (
     <>
@@ -146,150 +137,271 @@ export default function FlightOfferCard({
           </div>
         )}
 
-        <div className="p-6">
-          <div className="flex items-center justify-between">
-            {/* Flight Info */}
-            <div className="flex items-center gap-6 min-w-0 flex-1">
-              {/* Airline Logo */}
-              <div className="flex items-center gap-3 flex-shrink-0">
-                {airlineLogo ? (
-                  <img
-                    src={airlineLogo || "/placeholder.svg"}
-                    alt={airlineName}
-                    className="w-12 h-8 object-contain"
-                    onError={(e) => {
-                      e.target.style.display = "none";
-                      e.target.nextSibling.style.display = "flex";
-                    }}
-                  />
-                ) : null}
-                <div
-                  className="w-12 h-8 bg-blue-600 rounded flex items-center justify-center"
-                  style={{ display: airlineLogo ? "none" : "flex" }}
-                >
-                  <span className="text-white text-xs font-bold">
-                    {airlineCode || "??"}
-                  </span>
-                </div>
-                <span className="font-medium text-gray-700 truncate">
-                  {airlineName}
+        <div className="p-4 md:p-6">
+          {/* Mobile Layout */}
+          <div className="block md:hidden">
+            {/* Airline Info */}
+            <div className="flex items-center gap-3 mb-4">
+              {airlineLogo ? (
+                <img
+                  src={airlineLogo || "/placeholder.svg"}
+                  alt={airlineName}
+                  className="w-8 h-8 object-contain rounded-full"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                    e.target.nextSibling.style.display = "flex";
+                  }}
+                />
+              ) : null}
+              <div
+                className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center"
+                style={{ display: airlineLogo ? "none" : "flex" }}
+              >
+                <span className="text-white text-xs font-bold">
+                  {airlineCode || "??"}
                 </span>
               </div>
+              <span className="font-medium text-gray-800 text-sm">
+                {airlineName}
+              </span>
+            </div>
 
-              {/* Flight Details */}
-              <div className="flex items-center gap-8 ml-8 min-w-0 flex-1">
-                <div className="text-center flex-shrink-0">
-                  <div className="text-2xl font-bold text-gray-800">
-                    {formatTime(firstSegment.departing_at)}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    {firstSegment.origin?.iata_code}
-                  </div>
-                  {firstSegment.origin_terminal && (
-                    <div className="text-xs text-gray-400">
-                      T{firstSegment.origin_terminal}
-                    </div>
+            {/* Flight Times and Route */}
+            <div className="flex items-center justify-between mb-4">
+              {/* Departure */}
+              <div className="text-left">
+                <div className="text-xl font-bold text-gray-800">
+                  {formatTime(firstSegment.departing_at)}
+                </div>
+                <div className="text-sm text-gray-500">
+                  {firstSegment.origin?.iata_code}
+                </div>
+              </div>
+
+              {/* Timeline */}
+              <div className="flex flex-col items-center flex-1 mx-4">
+                <div className="text-xs text-gray-500 mb-1">
+                  {formatDuration(firstSlice.duration)}
+                </div>
+                <div className="flex items-center w-full">
+                  <div className="w-2 h-2 border-2 border-blue-400 rounded-full bg-white"></div>
+                  <div className="flex-1 h-px bg-gray-300 mx-2"></div>
+                  {stopsCount > 0 && (
+                    <>
+                      <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      <div className="flex-1 h-px bg-gray-300 mx-2"></div>
+                    </>
+                  )}
+                  <div className="w-2 h-2 border-2 border-blue-400 rounded-full bg-white"></div>
+                </div>
+                <div className="text-xs text-gray-500 mt-1">{stopsText}</div>
+              </div>
+
+              {/* Arrival */}
+              <div className="text-right">
+                <div className="text-xl font-bold text-gray-800 flex items-center gap-1">
+                  {formatTime(lastSegment.arriving_at)}
+                  {dayDiff > 0 && (
+                    <span className="text-xs font-bold text-red-500 bg-red-100 px-1 rounded">
+                      +{dayDiff}d
+                    </span>
                   )}
                 </div>
-
-                <div className="flex flex-col items-center flex-shrink-0">
-                  <div className="text-xs text-gray-500 mb-1">
-                    {formatDuration(firstSlice.duration)}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 border-2 border-blue-400 rounded-full bg-white"></div>
-                    <div className="w-16 h-px bg-gray-300"></div>
-                    {stopsCount > 0 && (
-                      <>
-                        <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
-                        <div className="w-16 h-px bg-gray-300"></div>
-                      </>
-                    )}
-                    <div className="w-3 h-3 border-2 border-blue-400 rounded-full bg-white"></div>
-                  </div>
-                  <div className="text-xs text-blue-600 font-medium mt-1">
-                    {stopsText}
-                  </div>
-                </div>
-
-                <div className="text-center flex-shrink-0">
-                  <div className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                    {formatTime(lastSegment.arriving_at)}
-                    {dayDiff > 0 && (
-                      <span className="text-xs font-bold text-red-500 bg-red-100 px-1.5 py-0.5 rounded">
-                        +{dayDiff} Day{dayDiff > 1 ? "s" : ""}
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    {lastSegment.destination?.iata_code}
-                  </div>
-                  {lastSegment.destination_terminal && (
-                    <div className="text-xs text-gray-400">
-                      T{lastSegment.destination_terminal}
-                    </div>
-                  )}
+                <div className="text-sm text-gray-500">
+                  {lastSegment.destination?.iata_code}
                 </div>
               </div>
             </div>
 
-            {/* Price and Action */}
-            <div className="text-right flex items-center gap-4 flex-shrink-0">
-              <div>
-                <div className="text-sm text-gray-500 mb-1">Starting from</div>
-                <div className="text-2xl font-bold text-gray-800">
-                  ${" "}
-                  <span className="text-blue-600">
-                    {priceInUSD.toLocaleString()}
-                  </span>
-                </div>
-                {summaryOffer.total_emissions_kg && (
-                  <div className="text-xs text-green-600 mt-1">
-                    {summaryOffer.total_emissions_kg}kg CO₂
-                  </div>
-                )}
+            {/* Price */}
+            <div className="text-right mb-4">
+              <div className="text-xs text-gray-500">Starting from</div>
+              <div className="text-lg font-bold text-gray-800">
+                BDT{" "}
+                <span className="text-blue-600">
+                  {priceInUSD.toLocaleString()}
+                </span>
               </div>
+            </div>
+
+            {/* View Fares Button */}
+            <button
+              onClick={() => {
+                if (isExpanded) {
+                  onToggleDetails(null);
+                } else {
+                  onToggleDetails(itineraryId);
+                }
+              }}
+              className="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 mb-4"
+            >
+              View Fares
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${
+                  isExpanded ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+
+            {/* Bottom Actions */}
+            <div className="flex justify-between items-center pt-3 border-t border-gray-100">
               <button
-                onClick={() => {
-                  if (isExpanded) {
-                    onToggleDetails(null);
-                  } else {
-                    onToggleDetails(itineraryId);
-                  }
-                }}
-                className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold px-6 py-3 rounded-lg transition-colors flex items-center gap-2 whitespace-nowrap"
+                onClick={handleFlightDetailsClick}
+                className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
               >
-                View Fares
-                <ChevronDown
-                  className={`w-4 h-4 transition-transform ${
-                    isExpanded ? "rotate-180" : ""
-                  }`}
-                />
+                Flight Details
               </button>
             </div>
           </div>
 
-          {/* Additional Info Row */}
-          <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
-            <div className="flex items-center gap-4 text-sm text-gray-600 flex-wrap">
-              {firstSlice.fare_brand_name && (
-                <span className="bg-gray-100 px-2 py-1 rounded text-xs">
-                  {firstSlice.fare_brand_name}
-                </span>
-              )}
-              {summaryOffer.conditions?.change_before_departure?.allowed && (
-                <span className="text-green-600">✓ Changes allowed</span>
-              )}
-              {summaryOffer.conditions?.refund_before_departure?.allowed && (
-                <span className="text-green-600">✓ Refunds allowed</span>
-              )}
+          {/* Desktop Layout */}
+          <div className="hidden md:block">
+            <div className="flex items-center justify-between">
+              {/* Flight Info */}
+              <div className="flex items-center gap-6 min-w-0 flex-1">
+                {/* Airline Logo */}
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  {airlineLogo ? (
+                    <img
+                      src={airlineLogo || "/placeholder.svg"}
+                      alt={airlineName}
+                      className="w-12 h-8 object-contain"
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                        e.target.nextSibling.style.display = "flex";
+                      }}
+                    />
+                  ) : null}
+                  <div
+                    className="w-12 h-8 bg-blue-600 rounded flex items-center justify-center"
+                    style={{ display: airlineLogo ? "none" : "flex" }}
+                  >
+                    <span className="text-white text-xs font-bold">
+                      {airlineCode || "??"}
+                    </span>
+                  </div>
+                  <span className="font-medium text-gray-700 truncate">
+                    {airlineName}
+                  </span>
+                </div>
+
+                {/* Flight Details */}
+                <div className="flex items-center gap-8 ml-8 min-w-0 flex-1">
+                  <div className="text-center flex-shrink-0">
+                    <div className="text-2xl font-bold text-gray-800">
+                      {formatTime(firstSegment.departing_at)}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {firstSegment.origin?.iata_code}
+                    </div>
+                    {firstSegment.origin_terminal && (
+                      <div className="text-xs text-gray-400">
+                        T{firstSegment.origin_terminal}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <div className="text-xs text-gray-500 mb-1">
+                      {formatDuration(firstSlice.duration)}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 border-2 border-blue-400 rounded-full bg-white"></div>
+                      <div className="w-16 h-px bg-gray-300"></div>
+                      {stopsCount > 0 && (
+                        <>
+                          <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
+                          <div className="w-16 h-px bg-gray-300"></div>
+                        </>
+                      )}
+                      <div className="w-3 h-3 border-2 border-blue-400 rounded-full bg-white"></div>
+                    </div>
+                    <div className="text-xs text-blue-600 font-medium mt-1">
+                      {stopsText}
+                    </div>
+                  </div>
+
+                  <div className="text-center flex-shrink-0">
+                    <div className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                      {formatTime(lastSegment.arriving_at)}
+                      {dayDiff > 0 && (
+                        <span className="text-xs font-bold text-red-500 bg-red-100 px-1.5 py-0.5 rounded">
+                          +{dayDiff} Day{dayDiff > 1 ? "s" : ""}
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      {lastSegment.destination?.iata_code}
+                    </div>
+                    {lastSegment.destination_terminal && (
+                      <div className="text-xs text-gray-400">
+                        T{lastSegment.destination_terminal}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Price and Action */}
+              <div className="text-right flex items-center gap-4 flex-shrink-0">
+                <div>
+                  <div className="text-sm text-gray-500 mb-1">
+                    Starting from
+                  </div>
+                  <div className="text-2xl font-bold text-gray-800">
+                    BDT{" "}
+                    <span className="text-blue-600">
+                      {priceInUSD.toLocaleString()}
+                    </span>
+                  </div>
+                  {summaryOffer.total_emissions_kg && (
+                    <div className="text-xs text-green-600 mt-1">
+                      {summaryOffer.total_emissions_kg}kg CO₂
+                    </div>
+                  )}
+                </div>
+                <button
+                  onClick={() => {
+                    if (isExpanded) {
+                      onToggleDetails(null);
+                    } else {
+                      onToggleDetails(itineraryId);
+                    }
+                  }}
+                  className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold px-6 py-3 rounded-lg transition-colors flex items-center gap-2 whitespace-nowrap"
+                >
+                  View Fares
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform ${
+                      isExpanded ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              </div>
             </div>
-            <button
-              onClick={handleFlightDetailsClick}
-              className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors whitespace-nowrap"
-            >
-              Flight Details
-            </button>
+
+            {/* Additional Info Row */}
+            <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+              <div className="flex items-center gap-4 text-sm text-gray-600 flex-wrap">
+                {firstSlice.fare_brand_name && (
+                  <span className="bg-gray-100 px-2 py-1 rounded text-xs">
+                    {firstSlice.fare_brand_name}
+                  </span>
+                )}
+                {summaryOffer.conditions?.change_before_departure?.allowed && (
+                  <span className="text-green-600">✓ Changes allowed</span>
+                )}
+                {summaryOffer.conditions?.refund_before_departure?.allowed && (
+                  <span className="text-green-600">✓ Refunds allowed</span>
+                )}
+              </div>
+              <button
+                onClick={handleFlightDetailsClick}
+                className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors whitespace-nowrap"
+              >
+                Flight Details
+              </button>
+            </div>
           </div>
         </div>
 

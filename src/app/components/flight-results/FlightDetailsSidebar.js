@@ -1,5 +1,6 @@
 "use client";
-import { X, Clock, Plane, Info, AlertCircle } from "lucide-react";
+
+import { X, Clock, Plane } from "lucide-react";
 import { useEffect } from "react";
 
 const formatTime = (dt) => {
@@ -23,7 +24,6 @@ const formatDuration = (duration) => {
   if (!duration) return "";
   const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
   if (!match) return duration;
-
   const hours = match[1] ? `${match[1]}h` : "";
   const minutes = match[2] ? `${match[2]}m` : "";
   return `${hours} ${minutes}`.trim();
@@ -39,15 +39,18 @@ const calculateLayoverTime = (arrivalTime, departureTime) => {
   return `${diffHours}h ${diffMinutes}m`;
 };
 
-export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
-  // Prevent body scroll when sidebar is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+const getDayDifference = (departDate, arriveDate) => {
+  if (!departDate || !arriveDate) return 0;
+  const d1 = new Date(departDate);
+  const d2 = new Date(arriveDate);
+  d1.setHours(0, 0, 0, 0);
+  d2.setHours(0, 0, 0, 0);
+  const diffTime = d2.getTime() - d1.getTime();
+  return Math.round(diffTime / (1000 * 60 * 60 * 24));
+};
 
+export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
+  useEffect(() => {
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -64,38 +67,38 @@ export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
     segments[0]?.marketing_carrier ||
     segments[0]?.operating_carrier;
 
-  // Check if offer is expiring soon
-  const isExpiringSoon =
-    flightData.expires_at &&
-    new Date(flightData.expires_at).getTime() - Date.now() < 30 * 60 * 1000;
+  const firstSegment = segments[0];
+  const lastSegment = segments[segments.length - 1];
+  const dayDiff = getDayDifference(
+    firstSegment.departing_at,
+    lastSegment.arriving_at
+  );
 
   return (
     <>
-      {/* Backdrop */}
-      {isOpen && (
+      {/* Remove the backdrop that's causing the darkening effect */}
+      {/* {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-[9998] transition-opacity duration-300"
+          className="fixed inset-0 bg-black bg-opacity-5 z-40 transition-opacity duration-300"
           onClick={onClose}
-          style={{ backdropFilter: "blur(2px)" }}
         />
-      )}
+      )} */}
 
       {/* Sidebar */}
       <div
-        className={`fixed right-0 top-0 h-full w-96 bg-white shadow-2xl z-[9999] transform transition-all duration-300 ease-in-out overflow-hidden ${
+        className={`fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-xl border-l border-gray-200 z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{
-          boxShadow: isOpen ? "-10px 0 25px -3px rgba(0, 0, 0, 0.1)" : "none",
-          maxWidth: "min(96rem, 90vw)",
+          boxShadow: isOpen ? "-8px 0 32px -8px rgba(0, 0, 0, 0.12)" : "none",
         }}
       >
-        {/* Header */}
-        <div className="bg-blue-800 text-white p-4 flex items-center justify-between sticky top-0 z-10">
-          <h2 className="text-xl font-bold">Flight Details</h2>
+        {/* Header - ensure proper styling */}
+        <div className="bg-blue-800 text-white px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+          <h2 className="text-lg font-semibold text-white">Flight Details</h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-blue-700 rounded-full transition-colors duration-200"
+            className="p-2 hover:bg-blue-700 rounded-full transition-colors duration-200 text-white"
             aria-label="Close flight details"
           >
             <X className="w-5 h-5" />
@@ -103,62 +106,54 @@ export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
         </div>
 
         {/* Content */}
-        <div className="overflow-y-auto h-full pb-20 bg-white">
-          {/* Expiry Warning */}
-          {isExpiringSoon && (
-            <div className="bg-red-50 border-l-4 border-red-400 p-4 m-4 rounded">
-              <div className="flex items-center">
-                <AlertCircle className="w-5 h-5 text-red-400 mr-2" />
-                <div>
-                  <p className="text-sm font-medium text-red-800">
-                    Offer expires soon!
-                  </p>
-                  <p className="text-xs text-red-600">
-                    Book within{" "}
-                    {Math.round(
-                      (new Date(flightData.expires_at).getTime() - Date.now()) /
-                        (1000 * 60)
-                    )}{" "}
-                    minutes
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div className="p-6 space-y-6">
+        <div className="overflow-y-auto h-full pb-20 bg-gray-50">
+          <div className="bg-white px-6 py-4">
             {/* Flight Header */}
-            <div>
-              <h3 className="text-xl font-bold text-blue-900 mb-2">
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold text-blue-800 mb-3">
                 Departure Flight
               </h3>
-              <div className="flex items-center gap-2 mb-2">
+
+              {/* Airline Info */}
+              <div className="flex items-center gap-3 mb-3">
                 {airline?.logo_symbol_url ? (
                   <img
                     src={airline.logo_symbol_url || "/placeholder.svg"}
                     alt={airline.name}
-                    className="w-8 h-6 object-contain"
+                    className="w-8 h-8 object-contain"
                   />
                 ) : (
-                  <div className="w-8 h-6 bg-blue-600 rounded flex items-center justify-center">
+                  <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
                     <span className="text-white text-xs font-bold">
-                      {airline?.iata_code}
+                      {airline?.iata_code || "AI"}
                     </span>
                   </div>
                 )}
-                <span className="font-medium">{airline?.name}</span>
+                <span className="font-medium text-gray-800">
+                  {airline?.name || "Air India"}
+                </span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-800">
-                {segments[0]?.origin?.city_name} (
-                {segments[0]?.origin?.iata_code}) -{" "}
-                {segments[segments.length - 1]?.destination?.city_name} (
-                {segments[segments.length - 1]?.destination?.iata_code})
+
+              {/* Route */}
+              <h4 className="text-lg font-semibold text-gray-800 mb-3">
+                {firstSegment?.origin?.city_name} (
+                {firstSegment?.origin?.iata_code}) -{" "}
+                {lastSegment?.destination?.city_name} (
+                {lastSegment?.destination?.iata_code})
               </h4>
-              <p className="text-gray-600">
-                {formatDate(segments[0]?.departing_at)} |{" "}
-                {formatTime(segments[0]?.departing_at)} -{" "}
-                {formatTime(segments[segments.length - 1]?.arriving_at)} (
-                {formatDuration(firstSlice.duration)},{" "}
+
+              {/* Date and Duration */}
+              <p className="text-gray-600 text-sm">
+                {formatDate(firstSegment?.departing_at)} |{" "}
+                {formatTime(firstSegment?.departing_at)} -{" "}
+                {formatTime(lastSegment?.arriving_at)}
+                {dayDiff > 0 && (
+                  <span className="text-red-500 font-medium">
+                    {" "}
+                    +{dayDiff}Day
+                  </span>
+                )}{" "}
+                ({formatDuration(firstSlice.duration)},{" "}
                 {segments.length - 1 === 0
                   ? "Direct"
                   : `${segments.length - 1} Stop${
@@ -169,29 +164,34 @@ export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
             </div>
 
             {/* Flight Timeline */}
-            <div className="space-y-6">
+            <div className="space-y-0 mt-6">
               {segments.map((segment, index) => (
-                <div key={segment.id} className="relative">
+                <div key={segment.id}>
                   {/* Departure */}
-                  <div className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-4 h-4 bg-blue-600 rounded-full border-2 border-white shadow-sm"></div>
-                      {index < segments.length - 1 && (
-                        <div className="w-px h-16 bg-gray-300 mt-2"></div>
-                      )}
-                    </div>
-                    <div className="flex-1 pb-4">
-                      <div className="text-2xl font-bold text-gray-800">
+                  <div className="flex items-start">
+                    {/* Left side - Time and Date */}
+                    <div className="w-20 text-right pr-6 flex-shrink-0">
+                      <div className="text-xl font-bold text-gray-800">
                         {formatTime(segment.departing_at)}
                       </div>
-                      <div className="text-sm text-gray-500 mb-1">
+                      <div className="text-xs text-gray-500 mt-1">
                         {formatDate(segment.departing_at)}
                       </div>
-                      <div className="font-semibold text-gray-800">
+                    </div>
+
+                    {/* Timeline */}
+                    <div className="flex flex-col items-center flex-shrink-0 relative">
+                      <div className="w-3 h-3 border-2 border-blue-400 bg-white rounded-full z-10"></div>
+                      <div className="w-0.5 h-20 bg-gray-300 absolute top-3"></div>
+                    </div>
+
+                    {/* Right side - Airport Info */}
+                    <div className="flex-1 pl-6 pt-0">
+                      <div className="font-semibold text-gray-800 text-lg mb-1">
                         {segment.origin?.city_name} ({segment.origin?.iata_code}
                         )
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-gray-600 mb-2">
                         {segment.origin?.name}
                       </div>
                       {segment.origin_terminal && (
@@ -199,15 +199,29 @@ export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
                           Terminal {segment.origin_terminal}
                         </div>
                       )}
+                    </div>
+                  </div>
 
-                      <div className="mt-3 flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-gray-500" />
-                        <span className="text-sm text-gray-600">
+                  {/* Flight Duration and Airline Info */}
+                  <div className="flex items-center my-4">
+                    {/* Left side - Duration */}
+                    <div className="w-20 text-right pr-6 flex-shrink-0">
+                      <div className="flex items-center justify-end gap-1 text-sm text-gray-600">
+                        <Clock className="w-4 h-4" />
+                        <span className="font-medium">
                           {formatDuration(segment.duration)}
                         </span>
                       </div>
+                    </div>
 
-                      <div className="mt-2 flex items-center gap-2">
+                    {/* Timeline */}
+                    <div className="flex flex-col items-center flex-shrink-0 relative">
+                      <div className="w-0.5 h-16 bg-gray-300"></div>
+                    </div>
+
+                    {/* Right side - Airline Info */}
+                    <div className="flex-1 pl-6">
+                      <div className="flex items-center gap-3 mb-2">
                         {segment.marketing_carrier?.logo_symbol_url ? (
                           <img
                             src={
@@ -215,48 +229,54 @@ export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
                               "/placeholder.svg"
                             }
                             alt={segment.marketing_carrier.name}
-                            className="w-6 h-4 object-contain"
+                            className="w-8 h-8 object-contain"
                           />
                         ) : (
-                          <div className="w-6 h-4 bg-blue-600 rounded"></div>
+                          <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">
+                              {segment.marketing_carrier?.iata_code || "AI"}
+                            </span>
+                          </div>
                         )}
-                        <span className="text-sm font-medium">
-                          {segment.marketing_carrier?.name}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                          {segment.marketing_carrier?.iata_code}{" "}
-                          {segment.marketing_carrier_flight_number}
+                        <span className="font-semibold text-gray-800 text-base">
+                          {segment.marketing_carrier?.name || "Air India"}
                         </span>
                       </div>
-
-                      {segment.aircraft && (
-                        <div className="text-xs text-gray-500 mt-1">
-                          {segment.aircraft.name}
-                        </div>
-                      )}
+                      <div className="text-sm text-gray-600 pl-11">
+                        {segment.marketing_carrier?.iata_code || "AI"}{" "}
+                        {segment.marketing_carrier_flight_number} |{" "}
+                        {segment.aircraft?.name || "Airbus 320"}
+                      </div>
                     </div>
                   </div>
 
                   {/* Arrival */}
-                  <div className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-4 h-4 bg-blue-600 rounded-full border-2 border-white shadow-sm"></div>
-                      {index < segments.length - 1 && (
-                        <div className="w-px h-20 bg-gray-300 mt-2"></div>
-                      )}
-                    </div>
-                    <div className="flex-1 pb-4">
-                      <div className="text-2xl font-bold text-gray-800">
+                  <div className="flex items-start">
+                    {/* Left side - Time and Date */}
+                    <div className="w-20 text-right pr-6 flex-shrink-0">
+                      <div className="text-xl font-bold text-gray-800">
                         {formatTime(segment.arriving_at)}
                       </div>
-                      <div className="text-sm text-gray-500 mb-1">
+                      <div className="text-xs text-gray-500 mt-1">
                         {formatDate(segment.arriving_at)}
                       </div>
-                      <div className="font-semibold text-gray-800">
+                    </div>
+
+                    {/* Timeline */}
+                    <div className="flex flex-col items-center flex-shrink-0">
+                      <div className="w-3 h-3 border-2 border-blue-400 bg-white rounded-full z-10"></div>
+                      {index < segments.length - 1 && (
+                        <div className="w-0.5 h-8 bg-gray-300 mt-2"></div>
+                      )}
+                    </div>
+
+                    {/* Right side - Airport Info */}
+                    <div className="flex-1 pl-6 pt-0">
+                      <div className="font-semibold text-gray-800 text-lg mb-1">
                         {segment.destination?.city_name} (
                         {segment.destination?.iata_code})
                       </div>
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm text-gray-600 mb-2">
                         {segment.destination?.name}
                       </div>
                       {segment.destination_terminal && (
@@ -264,78 +284,43 @@ export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
                           Terminal {segment.destination_terminal}
                         </div>
                       )}
+                    </div>
+                  </div>
 
-                      {/* Layover info for connecting flights */}
-                      {index < segments.length - 1 && (
-                        <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Clock className="w-4 h-4 text-yellow-600" />
-                            <span className="text-sm font-medium text-yellow-800">
+                  {/* Layover for connecting flights */}
+                  {index < segments.length - 1 && (
+                    <div className="my-6">
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mx-2">
+                        <div className="flex items-center">
+                          {/* Left side - Layover Duration */}
+                          <div className="w-16 text-right pr-4 flex-shrink-0">
+                            <div className="text-sm font-semibold text-gray-700">
                               {calculateLayoverTime(
                                 segment.arriving_at,
                                 segments[index + 1]?.departing_at
-                              ) || "Layover"}
-                            </span>
+                              )}
+                            </div>
                           </div>
-                          <div className="flex items-center gap-2">
+
+                          {/* Timeline */}
+                          <div className="flex flex-col items-center px-4 flex-shrink-0">
+                            <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                          </div>
+
+                          {/* Right side - Change Aircraft */}
+                          <div className="flex-1 flex items-center gap-2">
                             <Plane className="w-4 h-4 text-blue-600" />
-                            <span className="text-sm text-blue-600 font-medium">
+                            <span className="text-sm text-blue-600 font-semibold">
                               Change Aircraft
                             </span>
                           </div>
                         </div>
-                      )}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
-
-            {/* Additional Information */}
-            {(flightData.total_emissions_kg || flightData.conditions) && (
-              <div className="border-t pt-4">
-                <h4 className="font-semibold text-gray-800 mb-3">
-                  Additional Information
-                </h4>
-
-                {flightData.total_emissions_kg && (
-                  <div className="flex items-center gap-2 mb-2">
-                    <span>🌱</span>
-                    <span className="text-sm text-gray-600">
-                      Carbon emissions: {flightData.total_emissions_kg}kg CO₂
-                    </span>
-                  </div>
-                )}
-
-                {flightData.conditions?.change_before_departure?.allowed && (
-                  <div className="flex items-center gap-2 mb-2">
-                    <Info className="w-4 h-4 text-green-600" />
-                    <span className="text-sm text-gray-600">
-                      Changes allowed
-                      {flightData.conditions.change_before_departure
-                        .penalty_amount &&
-                        flightData.conditions.change_before_departure
-                          .penalty_amount !== "0.00" &&
-                        ` (${flightData.conditions.change_before_departure.penalty_amount} ${flightData.conditions.change_before_departure.penalty_currency} fee)`}
-                    </span>
-                  </div>
-                )}
-
-                {flightData.conditions?.refund_before_departure?.allowed && (
-                  <div className="flex items-center gap-2 mb-2">
-                    <Info className="w-4 h-4 text-green-600" />
-                    <span className="text-sm text-gray-600">
-                      Refunds allowed
-                      {flightData.conditions.refund_before_departure
-                        .penalty_amount &&
-                        flightData.conditions.refund_before_departure
-                          .penalty_amount !== "0.00" &&
-                        ` (${flightData.conditions.refund_before_departure.penalty_amount} ${flightData.conditions.refund_before_departure.penalty_currency} fee)`}
-                    </span>
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </div>
       </div>

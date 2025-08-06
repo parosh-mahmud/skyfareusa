@@ -27,6 +27,8 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="flex flex-col min-h-screen bg-sand text-neutral-800 font-sans">
         <Header />
+        {/* Reduced spacer height to match the actual header height more precisely */}
+        <div className="h-16 sm:h-18 md:h-20"></div>
         <main className="flex-grow">{children}</main>
         <Footer />
       </body>

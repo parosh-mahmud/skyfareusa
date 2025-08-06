@@ -111,6 +111,7 @@ export default function TravelerClassSelector({
   onCabinClassChange,
   variant = "main",
   onOpen,
+  displayVariant = "default", // Add this prop
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef(null);
@@ -142,14 +143,8 @@ export default function TravelerClassSelector({
   if (variant === "compact") {
     return (
       <div ref={wrapperRef} className="relative">
-        <label className="block text-xs font-medium text-blue-600 mb-1 uppercase">
-          TRAVELER, CLASS
-        </label>
-        <div
-          onClick={handleOpen}
-          className="p-4 border border-gray-200 rounded-lg bg-white cursor-pointer hover:border-blue-400 transition-colors"
-        >
-          <p className="font-bold text-blue-900 text-base">{passengerText}</p>
+        <div onClick={handleOpen} className="cursor-pointer">
+          <p className="font-bold text-blue-900 text-lg">{passengerText}</p>
           <p className="text-sm text-gray-500">{cabinClassText}</p>
         </div>
         {isOpen && (
@@ -174,10 +169,20 @@ export default function TravelerClassSelector({
         </p>
         <div className="flex items-center gap-2">
           <div>
-            <p className="text-base sm:text-lg font-bold text-blue-900">
+            <p
+              className={`text-base sm:text-lg font-bold text-blue-900 ${
+                displayVariant === "compact" ? "text-lg" : ""
+              }`}
+            >
               {passengerText}
             </p>
-            <p className="text-xs text-gray-400">{cabinClassText}</p>
+            <p
+              className={`text-xs text-gray-400 ${
+                displayVariant === "compact" ? "text-sm" : ""
+              }`}
+            >
+              {cabinClassText}
+            </p>
           </div>
         </div>
       </div>
