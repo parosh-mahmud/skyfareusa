@@ -589,6 +589,8 @@ export default function FlightResultsContent() {
   const filteredOffers = useMemo(() => {
     return groupedOffers.filter((offerGroup) => {
       const offer = offerGroup[0];
+      if (!offer || !offer.slices || offer.slices.length === 0) return false;
+
       const priceUSD = convertToUSD(offer.total_amount, offer.total_currency);
 
       // Price filter
@@ -601,8 +603,11 @@ export default function FlightResultsContent() {
 
       // Airlines filter
       if (filters.airlines.length > 0) {
-        const offerAirlines = offer.slices.flatMap((slice) =>
-          slice.segments.map((seg) => seg.marketing_carrier.iata_code)
+        const offerAirlines = offer.slices.flatMap(
+          (slice) =>
+            slice.segments
+              ?.map((seg) => seg.marketing_carrier?.iata_code)
+              .filter(Boolean) || []
         );
         if (
           !filters.airlines.some((airline) => offerAirlines.includes(airline))
@@ -626,9 +631,10 @@ export default function FlightResultsContent() {
 
       // Departure time filter
       if (filters.departureTime.length > 0) {
-        const departureHour = getDepartureHour(
-          offer.slices[0].segments[0].departing_at
-        );
+        const firstSegment = offer.slices[0]?.segments?.[0];
+        if (!firstSegment) return false;
+
+        const departureHour = getDepartureHour(firstSegment.departing_at);
         let timeCategory = "";
         if (departureHour >= 6 && departureHour < 12) timeCategory = "morning";
         else if (departureHour >= 12 && departureHour < 18)
@@ -691,8 +697,8 @@ export default function FlightResultsContent() {
     const fastestIndex = durations.indexOf(Math.min(...durations));
 
     return {
-      cheapest: prices[cheapestIndex],
-      fastest: prices[fastestIndex],
+      cheapest: Math.round(prices[cheapestIndex]),
+      fastest: Math.round(prices[fastestIndex]),
     };
   }, [groupedOffers]);
 
@@ -733,7 +739,7 @@ export default function FlightResultsContent() {
         <AlertCircle className="w-16 h-16 text-red-500 mb-4" />
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Search Error</h2>
         <p className="text-red-600 bg-red-100 p-3 rounded-md max-w-lg">
-          {error.message}
+          {error?.message || "An error occurred while searching for flights."}
         </p>
         <button
           onClick={() => router.push("/")}
@@ -761,8 +767,8 @@ export default function FlightResultsContent() {
         <div className="bg-blue-800 text-white p-4 rounded-t-lg mb-6">
           <h2 className="font-bold text-xl flex items-center gap-2">
             <Plane className="w-5 h-5" />
-            {displaySlices[0]?.origin.code} →{" "}
-            {displaySlices[0]?.destination.code} : Select Flight
+            {displaySlices[0]?.origin?.code || "DEP"} →{" "}
+            {displaySlices[0]?.destination?.code || "ARR"} : Select Flight
           </h2>
         </div>
 
