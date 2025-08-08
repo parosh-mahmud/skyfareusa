@@ -448,9 +448,12 @@
 import { useState, useEffect, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Plane, Loader, DollarSign, Zap } from "lucide-react";
-import ModifySearchForm from "../../components/feature/ModifySearchForm";
-import FilterSidebar from "../../components/flight-results/FilterSidebar";
-import FlightOfferCard from "../../components/flight-results/FlightOfferCard";
+// import ModifySearchForm from "../../components/feature/ModifySearchForm";
+// import FilterSidebar from "../../components/flight-results/FilterSidebar";
+// import FlightOfferCard from "../../components/flight-results/FlightOfferCard";
+import ModifySearchForm from "src/components/flight-results/ModifySearchForm";
+import FilterSidebar from "src/components/flight-results/FilterSidebar";
+import FlightOfferCard from "src/components/flight-results/FlightOfferCard";
 
 const convertToUSD = (amount, currency) => {
   const numAmount = Number.parseFloat(amount);
