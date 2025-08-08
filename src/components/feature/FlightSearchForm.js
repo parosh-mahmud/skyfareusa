@@ -114,22 +114,32 @@ export default function FlightSearchForm({
     if (!activeSelector) return;
     const { sliceIndex, field } = activeSelector;
     const newSlices = [...slices];
-    newSlices[sliceIndex][field] = {
+
+    const selectedAirport = {
       name: airport.city,
       code: airport.iata,
       airportName: airport.name,
     };
+
+    newSlices[sliceIndex][field] = selectedAirport;
+
+    // --- START: Round Trip Synchronization Logic ---
+    if (tripType === "round-trip" && sliceIndex === 0) {
+      if (field === "origin") {
+        newSlices[1].destination = selectedAirport;
+      }
+      if (field === "destination") {
+        newSlices[1].origin = selectedAirport;
+      }
+    }
+    // --- END: Round Trip Synchronization Logic ---
 
     if (
       tripType === "multi-city" &&
       field === "destination" &&
       sliceIndex < newSlices.length - 1
     ) {
-      newSlices[sliceIndex + 1].origin = {
-        name: airport.city,
-        code: airport.iata,
-        airportName: airport.name,
-      };
+      newSlices[sliceIndex + 1].origin = selectedAirport;
     }
 
     setSlices(newSlices);
@@ -223,7 +233,7 @@ export default function FlightSearchForm({
     params.set("cabinClass", cabinClass);
     params.set("slices", JSON.stringify(slices));
     params.set("passengers", JSON.stringify(passengers));
-
+    console.log(params.toString());
     router.push(`/flights/results?${params.toString()}`);
 
     // The `isSearching` state should be managed on the results page,

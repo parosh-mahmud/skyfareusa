@@ -1,9 +1,18 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { Plane, Loader, DollarSign, Zap, AlertCircle } from "lucide-react";
+import {
+  Plane,
+  Loader,
+  AlertCircle,
+  DollarSign,
+  Zap,
+  Star,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 
 import FilterSidebar from "src/components/flight-results/FilterSidebar";
 import FlightOfferCard from "src/components/flight-results/FlightOfferCard";
@@ -11,14 +20,12 @@ import ModifySearchForm from "src/components/flight-results/ModifySearchForm";
 
 // This function calls your backend API. It's best practice to keep it outside the component.
 const fetchFlights = async (searchParams) => {
-  // Guard against running without necessary params
   if (!searchParams.has("slices")) {
     throw new Error(
       "Invalid search query. Please try again from the homepage."
     );
   }
 
-  // Reconstruct the POST body from the URL parameters
   const payload = {
     slices: JSON.parse(searchParams.get("slices")).map((s) => ({
       origin: s.origin.code,
@@ -36,7 +43,7 @@ const fetchFlights = async (searchParams) => {
   });
 
   if (!res.ok) {
-    const errorData = await res.json().catch(() => ({})); // Try to parse JSON, but don't fail if it's not JSON
+    const errorData = await res.json().catch(() => ({}));
     throw new Error(
       errorData.error || `A server error occurred (status: ${res.status}).`
     );
@@ -48,49 +55,38 @@ const fetchFlights = async (searchParams) => {
       result.error || "The search was not successful. Please try again."
     );
   }
-
-  return result; // Returns the full object { success: true, offers: [...] }
+  return result;
 };
 
-// --- Your existing helper functions (no changes needed) ---
-const convertToUSD = (amount, currency) => {
-  const numAmount = Number.parseFloat(amount);
-  const rates = { GBP: 1.27, EUR: 1.08, USD: 1.0, BDT: 0.0084 };
-  return Math.round(numAmount * (rates[currency] || 1));
+// --- Helper Functions ---
+const getStopsCount = (segments) => (segments?.length || 1) - 1;
+const getDepartureHour = (dateTime) => new Date(dateTime).getHours();
+const calculateTotalDuration = (offer) => {
+  return offer.slices.reduce((total, slice) => {
+    const durationMatch = slice.duration?.match(/PT(\d+)H(\d+)M/);
+    if (!durationMatch) return total;
+    const hours = parseInt(durationMatch[1] || "0", 10);
+    const minutes = parseInt(durationMatch[2] || "0", 10);
+    return total + hours * 60 + minutes;
+  }, 0);
 };
-const getStopsCount = (segments) => {
-  if (!segments || segments.length === 0) return 0;
-  return segments.length - 1;
-};
-const getDepartureHour = (departureTime) => new Date(departureTime).getHours();
-const calculateTotalLayoverTime = (segments) => {
-  if (!segments || segments.length <= 1) return 0;
-  let totalLayover = 0;
-  for (let i = 0; i < segments.length - 1; i++) {
-    const layoverMs =
-      new Date(segments[i + 1].departing_at).getTime() -
-      new Date(segments[i].arriving_at).getTime();
-    totalLayover += layoverMs / (1000 * 60 * 60);
-  }
-  return totalLayover;
-};
-// --- End of helper functions ---
 
-export default function FlightResultsPage() {
+export default function ResultsClientComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
 
-  // 1. Data fetching is now handled entirely by TanStack Query's useQuery hook.
+  // --- Data Fetching ---
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["flights", searchParams.toString()],
     queryFn: () => fetchFlights(searchParams),
     enabled: searchParams.has("slices"),
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
-    retry: 1, // Retry failed requests once
+    retry: 1,
   });
 
-  // 2. Client-side state for UI controls remains the same.
+  // --- State Management ---
   const [activeSort, setActiveSort] = useState("cheapest");
   const [expandedItineraryId, setExpandedItineraryId] = useState(null);
   const [filters, setFilters] = useState({
@@ -98,23 +94,27 @@ export default function FlightResultsPage() {
     stops: [],
     priceRange: { min: 0, max: 10000 },
     departureTime: [],
-    layoverTime: [],
   });
 
-  // 3. All your `useMemo` hooks now derive their data directly from the `data` object
-  //    returned by `useQuery`. This makes the data flow clean and reactive.
+  // --- Memoized Data Processing ---
   const groupedOffers = useMemo(() => {
     const offers = data?.offers || [];
     const groups = new Map();
     offers.forEach((offer) => {
-      if (offer.slices && offer.slices.length > 0) {
-        const itineraryId =
-          offer.slices
-            ?.flatMap((s) => s.segments?.map((seg) => seg.id) || [])
-            .join("-") || offer.id;
-        if (!groups.has(itineraryId)) groups.set(itineraryId, []);
-        groups.get(itineraryId).push(offer);
-      }
+      const itineraryId =
+        offer.slices
+          ?.flatMap(
+            (s) =>
+              s.segments?.map(
+                (seg) =>
+                  `${seg.carrier?.iata_code || "XX"}-${
+                    seg.flight_number || "0000"
+                  }-${seg.departing_at}`
+              ) || []
+          )
+          .join("--") || offer.id;
+      if (!groups.has(itineraryId)) groups.set(itineraryId, []);
+      groups.get(itineraryId).push(offer);
     });
     const groupedArray = Array.from(groups.values());
     groupedArray.forEach((group) =>
@@ -125,55 +125,87 @@ export default function FlightResultsPage() {
     return groupedArray;
   }, [data]);
 
-  // All subsequent useMemo hooks will work as they did before, as they depend on `groupedOffers`.
   const filteredOffers = useMemo(() => {
-    // ... your existing filtering logic (no changes needed) ...
-    return groupedOffers.filter((offerGroup) => {
-      // ...
+    if (!groupedOffers) return [];
+    const timeRanges = {
+      "early-morning": [0, 6],
+      morning: [6, 12],
+      afternoon: [12, 18],
+      evening: [18, 24],
+    };
+    return groupedOffers.filter((group) => {
+      const offer = group[0];
+      if (!offer) return false;
+      const price = parseFloat(offer.total_amount);
+      if (price < filters.priceRange.min || price > filters.priceRange.max)
+        return false;
+      if (filters.airlines.length > 0) {
+        const airlineCode = offer.slices[0]?.segments[0]?.carrier?.iata_code;
+        if (!filters.airlines.includes(airlineCode)) return false;
+      }
+      if (filters.stops.length > 0) {
+        const stopsMatch = offer.slices.every((slice) => {
+          const stops = getStopsCount(slice.segments);
+          return (
+            filters.stops.includes(stops) ||
+            (filters.stops.includes(2) && stops >= 2)
+          );
+        });
+        if (!stopsMatch) return false;
+      }
+      if (filters.departureTime.length > 0) {
+        const departureHour = getDepartureHour(
+          offer.slices[0].segments[0].departing_at
+        );
+        const matchesTime = filters.departureTime.some((slot) => {
+          const [start, end] = timeRanges[slot];
+          return departureHour >= start && departureHour < end;
+        });
+        if (!matchesTime) return false;
+      }
       return true;
     });
   }, [groupedOffers, filters]);
 
   const sortedAndFilteredOffers = useMemo(() => {
-    // ... your existing sorting logic (no changes needed) ...
-    const offersCopy = [...filteredOffers];
-    offersCopy.sort((groupA, groupB) => {
-      // ...
-    });
-    return offersCopy;
+    const sorted = [...filteredOffers];
+    switch (activeSort) {
+      case "cheapest":
+        return sorted.sort(
+          (a, b) =>
+            parseFloat(a[0].total_amount) - parseFloat(b[0].total_amount)
+        );
+      case "fastest":
+        return sorted.sort(
+          (a, b) => calculateTotalDuration(a[0]) - calculateTotalDuration(b[0])
+        );
+      case "best":
+        const getScore = (offer) =>
+          parseFloat(offer.total_amount) + calculateTotalDuration(offer) * 2;
+        return sorted.sort((a, b) => getScore(a[0]) - getScore(b[0]));
+      default:
+        return sorted;
+    }
   }, [filteredOffers, activeSort]);
 
-  const priceInfo = useMemo(() => {
-    // ... your existing price calculation logic (no changes needed) ...
-    return { cheapest: 0, fastest: 0 };
-  }, [groupedOffers]);
-
-  // This useEffect to set the price range filter also works as before.
-  useState(() => {
+  useEffect(() => {
     if (groupedOffers.length > 0) {
-      const prices = groupedOffers.map((group) =>
-        parseFloat(group[0].total_amount)
-      );
-      const minPrice = Math.floor(Math.min(...prices));
-      const maxPrice = Math.ceil(Math.max(...prices));
-      setFilters((prev) => ({
-        ...prev,
-        priceRange: { min: minPrice, max: maxPrice },
-      }));
+      const prices = groupedOffers.map((g) => parseFloat(g[0].total_amount));
+      const min = Math.floor(Math.min(...prices));
+      const max = Math.ceil(Math.max(...prices));
+      if (filters.priceRange.min === 0 && filters.priceRange.max === 10000) {
+        setFilters((prev) => ({ ...prev, priceRange: { min, max } }));
+      }
     }
   }, [groupedOffers]);
 
-  // --- UI STATE RENDERING ---
-  // Handle primary states before attempting to render the page content.
+  // --- UI Rendering ---
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
         <Loader className="w-12 h-12 text-blue-600 animate-spin" />
         <p className="mt-4 text-lg font-semibold text-gray-700">
           Searching for flights...
-        </p>
-        <p className="text-gray-500">
-          This can take a moment, thank you for your patience.
         </p>
       </div>
     );
@@ -189,7 +221,7 @@ export default function FlightResultsPage() {
         </p>
         <button
           onClick={() => router.push("/")}
-          className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700"
         >
           Return to Homepage
         </button>
@@ -197,30 +229,32 @@ export default function FlightResultsPage() {
     );
   }
 
-  // Safely parse display parameters from the URL for the UI
   const displaySlices = JSON.parse(searchParams.get("slices") || "[]");
+  const sortOptions = [
+    { id: "cheapest", label: "Cheapest", icon: DollarSign },
+    { id: "fastest", label: "Fastest", icon: Zap },
+    { id: "best", label: "Best", icon: Star },
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-50 overflow-x-hidden">
-      <div className="bg-white shadow-sm border-b sticky top-0 z-40">
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-white shadow-sm border-b  top-0 z-40">
         <div className="container mx-auto px-4 py-4 max-w-7xl">
-          {/* The form is now self-sufficient and doesn't need props */}
           <ModifySearchForm variant="compact" />
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-6 max-w-7xl">
-        <div className="bg-blue-800 text-white p-4 rounded-t-lg mb-6">
+        <div className="bg-blue-800 text-white p-4 rounded-t-lg mb-4">
           <h2 className="font-bold text-xl flex items-center gap-2">
             <Plane className="w-5 h-5" />
             {displaySlices[0]?.origin.code} →{" "}
-            {displaySlices[0]?.destination.code} : Select Flight
+            {displaySlices[0]?.destination.code}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
-          <aside className="bg-white rounded-lg shadow-sm p-6 h-fit">
-            <h3 className="font-bold text-lg mb-4 text-gray-800">Filters</h3>
+          <aside className="hidden lg:block bg-white rounded-lg shadow-sm p-6 h-fit sticky top-24">
             <FilterSidebar
               offers={groupedOffers}
               filters={filters}
@@ -229,23 +263,56 @@ export default function FlightResultsPage() {
           </aside>
 
           <main className="space-y-4 min-w-0">
-            {/* Sort Options etc. */}
+            <div className="lg:hidden">
+              <button
+                onClick={() => setIsFilterSidebarOpen(true)}
+                className="w-full flex items-center justify-center gap-2 p-3 rounded-lg bg-white shadow-sm font-semibold text-gray-700 hover:bg-gray-50 border"
+              >
+                <SlidersHorizontal size={16} />
+                Filters
+              </button>
+            </div>
+
+            <div className="bg-white p-2 rounded-lg shadow-sm flex items-center justify-around">
+              {sortOptions.map((opt) => (
+                <button
+                  key={opt.id}
+                  onClick={() => setActiveSort(opt.id)}
+                  className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-md transition-colors text-sm font-semibold ${
+                    activeSort === opt.id
+                      ? "bg-blue-100 text-blue-700"
+                      : "text-gray-600 hover:bg-gray-100"
+                  }`}
+                >
+                  <opt.icon className="w-4 h-4" />
+                  {opt.label}
+                </button>
+              ))}
+            </div>
 
             {sortedAndFilteredOffers.length > 0 ? (
               <div className="space-y-4">
                 {sortedAndFilteredOffers.map((offerGroup) => {
                   const itineraryId =
                     offerGroup[0].slices
-                      ?.flatMap((s) => s.segments?.map((seg) => seg.id) || [])
-                      .join("-") || offerGroup[0].id;
+                      .flatMap(
+                        (s) =>
+                          s.segments?.map(
+                            (seg) =>
+                              `${seg.carrier?.iata_code || "XX"}-${
+                                seg.flight_number || "0000"
+                              }-${seg.departing_at}`
+                          ) || []
+                      )
+                      .join("--") || offerGroup[0].id;
                   return (
                     <FlightOfferCard
                       key={itineraryId}
                       offerGroup={offerGroup}
                       isExpanded={expandedItineraryId === itineraryId}
                       onToggleDetails={() =>
-                        setExpandedItineraryId((prevId) =>
-                          prevId === itineraryId ? null : itineraryId
+                        setExpandedItineraryId((prev) =>
+                          prev === itineraryId ? null : itineraryId
                         )
                       }
                     />
@@ -259,12 +326,42 @@ export default function FlightResultsPage() {
                   No Flights Found
                 </h3>
                 <p className="text-gray-500 max-w-md mx-auto">
-                  No flights match your search or filter criteria. Try adjusting
-                  your search or clearing some filters.
+                  No flights match your filter criteria. Try adjusting your
+                  filters.
                 </p>
               </div>
             )}
           </main>
+        </div>
+      </div>
+
+      {/* Mobile Filter Drawer */}
+      {isFilterSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsFilterSidebarOpen(false)}
+        />
+      )}
+      <div
+        className={`fixed left-0 top-0 h-full w-full max-w-xs bg-gray-50 shadow-xl z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
+          isFilterSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between p-4 border-b bg-white">
+          <h3 className="font-bold text-lg text-gray-800">Filters</h3>
+          <button
+            onClick={() => setIsFilterSidebarOpen(false)}
+            className="p-2 text-gray-500 hover:bg-gray-100 rounded-full"
+          >
+            <X size={20} />
+          </button>
+        </div>
+        <div className="p-4 overflow-y-auto">
+          <FilterSidebar
+            offers={groupedOffers}
+            filters={filters}
+            onFiltersChange={setFilters}
+          />
         </div>
       </div>
     </div>

@@ -25,11 +25,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+    // ✅ The fix is adding suppressHydrationWarning here
+    <html
+      lang="en"
+      className={`${inter.variable} ${poppins.variable}`}
+      suppressHydrationWarning
+    >
       <body className="flex flex-col min-h-screen bg-sand text-neutral-800 font-sans">
         <Header />
-        {/* Reduced spacer height to match the actual header height more precisely */}
-        <div className="h-16 sm:h-18 md:h-20"></div>
+        {/* Note: Corrected non-standard Tailwind class sm:h-18 to sm:h-20 */}
+        <div className="h-16 sm:h-20 md:h-20"></div>
         <main className="flex-grow">
           <Providers>{children}</Providers>
         </main>
