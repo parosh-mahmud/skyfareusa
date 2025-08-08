@@ -1,7 +1,7 @@
 "use client";
 
-import FlightSearchForm from "./components/feature/FlightSearchForm";
-import FlightSearchTabs from "./components/feature/FlightSearchTabs";
+import FlightSearchForm from "../components/feature/FlightSearchForm";
+import FlightSearchTabs from "../components/feature/FlightSearchTabs";
 
 export default function Page() {
   return (

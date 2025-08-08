@@ -1,8 +1,8 @@
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
-
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
+import Providers from "./providers";
 // Configure Inter for body text
 const inter = Inter({
   subsets: ["latin"],
@@ -29,7 +29,9 @@ export default function RootLayout({ children }) {
         <Header />
         {/* Reduced spacer height to match the actual header height more precisely */}
         <div className="h-16 sm:h-18 md:h-20"></div>
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow">
+          <Providers>{children}</Providers>
+        </main>
         <Footer />
       </body>
     </html>

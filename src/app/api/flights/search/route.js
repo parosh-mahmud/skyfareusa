@@ -1,87 +1,4 @@
-// import { Duffel } from "@duffel/api";
-// import { NextResponse } from "next/server";
-
-// // Initialize the Duffel client
-// const duffel = new Duffel({
-//   token: process.env.DUFFEL_ACCESS_TOKEN,
-// });
-
-// export async function POST(request) {
-//   try {
-//     const body = await request.json();
-//     const {
-//       origin,
-//       destination,
-//       departure_date,
-//       return_date,
-//       passengers,
-//       cabin_class,
-//     } = body;
-
-//     // Based on the docs, using passenger age is more reliable
-//     // to avoid mismatches with airline policies.
-//     const searchPassengers = passengers || [{ age: 25 }];
-
-//     // Create slices for the flight search
-//     const slices = [
-//       {
-//         origin,
-//         destination,
-//         departure_date,
-//       },
-//     ];
-
-//     // Add return slice if it's a round trip
-//     if (return_date) {
-//       slices.push({
-//         origin: destination,
-//         destination: origin,
-//         departure_date: return_date,
-//       });
-//     }
-
-//     // Create an offer request with the Duffel API
-//     const offerRequest = await duffel.offerRequests.create({
-//       slices,
-//       passengers: searchPassengers,
-//       cabin_class: cabin_class || "economy",
-//       return_offers: true, // Ensure we get offers back in the response
-//     });
-
-//     console.log("Offer Request Created:", offerRequest.data.id);
-
-//     // The offer request response now directly contains the offers
-//     // if return_offers is true, so no separate offers.list() call is needed.
-//     const offers = offerRequest.data.offers;
-//     const meta = {
-//       // Manually construct a meta object if needed, as it's not present here
-//       limit: offers.length,
-//       // 'after' cursor for pagination would come from a list() call if used
-//       after: null,
-//     };
-
-//     return NextResponse.json({
-//       success: true,
-//       offer_request_id: offerRequest.data.id,
-//       offers: offers,
-//       meta: meta,
-//     });
-//   } catch (error) {
-//     // Log the detailed error from the API for better debugging
-//     console.error("Duffel API Error:", JSON.stringify(error.errors, null, 2));
-
-//     return NextResponse.json(
-//       {
-//         success: false,
-//         error: error.message,
-//         details: error.errors || "Unknown server error",
-//       },
-//       // Use the status code from the API error if available
-//       { status: error.meta?.status || 500 }
-//     );
-//   }
-// }
-
+// src/app/api/flights/search/route.js
 import { Duffel } from "@duffel/api";
 import { NextResponse } from "next/server";
 
@@ -148,3 +65,236 @@ export async function POST(request) {
     );
   }
 }
+
+// src/app/api/flights/search/route.js
+
+// import { Duffel } from "@duffel/api";
+// import Amadeus from "amadeus";
+// import { NextResponse } from "next/server";
+
+// // --- 1. INITIALIZE API CLIENTS ---
+// const duffel = new Duffel({
+//   token: process.env.DUFFEL_ACCESS_TOKEN,
+// });
+
+// const amadeus = new Amadeus({
+//   clientId: process.env.AMADEUS_API_KEY,
+//   clientSecret: process.env.AMADEUS_API_SECRET,
+// });
+
+// // --- 2. ADAPTER, NORMALIZATION, AND DEDUPLICATION FUNCTIONS ---
+
+// function createDuffelPayload(unifiedRequest) {
+//   return {
+//     slices: unifiedRequest.slices.map((slice) => ({
+//       origin: slice.origin, // Pass IATA code as a string
+//       destination: slice.destination, // Pass IATA code as a string
+//       departure_date: slice.departure_date,
+//     })),
+//     passengers: unifiedRequest.passengers,
+//     cabin_class: unifiedRequest.cabin_class,
+//   };
+// }
+
+// /**
+//  * [COMPLETE IMPLEMENTATION] This function was missing in your last attempt.
+//  * It creates a detailed Amadeus request payload from our simple unified request.
+//  */
+// function createAmadeusPayload(unifiedRequest) {
+//   const { slices, passengers, cabin_class, excluded_carriers } = unifiedRequest;
+
+//   const payload = {
+//     currencyCode: "USD",
+//     originDestinations: slices.map((slice, index) => ({
+//       id: (index + 1).toString(),
+//       originLocationCode: slice.origin,
+//       destinationLocationCode: slice.destination,
+//       departureDateTimeRange: { date: slice.departure_date },
+//     })),
+//     travelers: passengers.map((p, index) => ({
+//       id: (index + 1).toString(),
+//       travelerType: p.type.toUpperCase(),
+//     })),
+//     sources: ["GDS"],
+//     searchCriteria: {
+//       maxFlightOffers: 50,
+//       flightFilters: {
+//         cabinRestrictions: [
+//           {
+//             cabin: cabin_class?.toUpperCase() || "ECONOMY",
+//             coverage: "MOST_SEGMENTS",
+//             originDestinationIds: slices.map((_, index) =>
+//               (index + 1).toString()
+//             ),
+//           },
+//         ],
+//       },
+//     },
+//   };
+
+//   if (excluded_carriers && excluded_carriers.length > 0) {
+//     payload.searchCriteria.flightFilters.carrierRestrictions = {
+//       excludedCarrierCodes: excluded_carriers,
+//     };
+//   }
+
+//   return payload; // This return statement is crucial
+// }
+
+// const normalizeDuffelOffer = (duffelOffer) => ({
+//   id: duffelOffer.id,
+//   sourceApi: "duffel",
+//   total_amount: duffelOffer.total_amount,
+//   total_currency: duffelOffer.total_currency,
+//   slices:
+//     duffelOffer.slices?.map((slice) => ({
+//       duration: slice.duration,
+//       origin: slice.origin,
+//       destination: slice.destination,
+//       segments:
+//         slice.segments?.map((seg) => ({
+//           departing_at: seg.departing_at,
+//           arriving_at: seg.arriving_at,
+//           carrier: seg.marketing_carrier,
+//           flight_number: seg.marketing_carrier_flight_number,
+//         })) ?? [],
+//     })) ?? [],
+// });
+
+// const normalizeAmadeusOffer = (amadeusOffer, dictionaries) => ({
+//   id: amadeusOffer.id,
+//   sourceApi: "amadeus",
+//   total_amount: amadeusOffer.price?.total,
+//   total_currency: amadeusOffer.price?.currency,
+//   slices:
+//     amadeusOffer.itineraries?.map((itinerary) => ({
+//       duration: itinerary.duration,
+//       segments:
+//         itinerary.segments?.map((seg) => ({
+//           departing_at: seg.departure.at,
+//           arriving_at: seg.arrival.at,
+//           origin: { iata_code: seg.departure.iataCode },
+//           destination: { iata_code: seg.arrival.iataCode },
+//           carrier: {
+//             iata_code: seg.carrierCode,
+//             name: dictionaries.carriers[seg.carrierCode],
+//           },
+//           flight_number: seg.number,
+//         })) ?? [],
+//     })) ?? [],
+// });
+
+// const getItineraryKey = (normalizedOffer) => {
+//   return (
+//     normalizedOffer.slices
+//       ?.map((slice) =>
+//         slice.segments
+//           ?.map(
+//             (seg) =>
+//               `${seg.carrier?.iata_code}${seg.flight_number}-${seg.origin?.iata_code}-${seg.destination?.iata_code}`
+//           )
+//           .join("_")
+//       )
+//       .join("__") ?? `fallback_${Math.random()}`
+//   );
+// };
+
+// // --- 3. THE MAIN API ROUTE HANDLER ---
+// export async function POST(request) {
+//   try {
+//     const unifiedRequest = await request.json();
+
+//     if (!unifiedRequest.slices || unifiedRequest.slices.length === 0) {
+//       return NextResponse.json(
+//         { success: false, error: "The 'slices' array is required." },
+//         { status: 400 }
+//       );
+//     }
+
+//     const duffelPayload = createDuffelPayload(unifiedRequest);
+//     const amadeusPayload = createAmadeusPayload(unifiedRequest); // This will now return a valid object
+
+//     // A helpful debugging check
+//     if (!duffelPayload || !amadeusPayload) {
+//       console.error("A payload is undefined!", {
+//         duffelPayload,
+//         amadeusPayload,
+//       });
+//       return NextResponse.json(
+//         { error: "Internal error: Failed to create API request payload." },
+//         { status: 500 }
+//       );
+//     }
+
+//     console.log(
+//       "✈️ Adapted Amadeus Payload:",
+//       JSON.stringify(amadeusPayload, null, 2)
+//     );
+//     console.log(
+//       "✈️ Adapted Duffel Payload:",
+//       JSON.stringify(duffelPayload, null, 2)
+//     );
+
+//     const duffelPromise = duffel.offerRequests.create(duffelPayload);
+//     const amadeusPromise =
+//       amadeus.shopping.flightOffersSearch.post(amadeusPayload);
+
+//     const results = await Promise.allSettled([duffelPromise, amadeusPromise]);
+
+//     let allOffers = [];
+//     const apiErrors = [];
+
+//     const [duffelResult, amadeusResult] = results;
+
+//     if (duffelResult.status === "fulfilled") {
+//       const normalized =
+//         duffelResult.value.data.offers.map(normalizeDuffelOffer);
+//       allOffers.push(...normalized);
+//     } else {
+//       apiErrors.push({ source: "duffel", error: duffelResult.reason.errors });
+//     }
+
+//     if (amadeusResult.status === "fulfilled") {
+//       const { data, dictionaries } = amadeusResult.value.result;
+//       const normalized = data.map((offer) =>
+//         normalizeAmadeusOffer(offer, dictionaries)
+//       );
+//       allOffers.push(...normalized);
+//     } else {
+//       apiErrors.push({
+//         source: "amadeus",
+//         error: amadeusResult.reason.description,
+//       });
+//     }
+
+//     const uniqueOffers = new Map();
+//     allOffers.forEach((offer) => {
+//       const key = getItineraryKey(offer);
+//       const existingOffer = uniqueOffers.get(key);
+
+//       if (
+//         !existingOffer ||
+//         parseFloat(offer.total_amount) < parseFloat(existingOffer.total_amount)
+//       ) {
+//         uniqueOffers.set(key, offer);
+//       }
+//     });
+
+//     const finalOffers = Array.from(uniqueOffers.values());
+//     finalOffers.sort(
+//       (a, b) => parseFloat(a.total_amount) - parseFloat(b.total_amount)
+//     );
+
+//     return NextResponse.json({
+//       success: true,
+//       offers: finalOffers,
+//       meta: { api_errors: apiErrors },
+//     });
+//   } catch (error) {
+//     console.error("❌ Unhandled Server Error in flight search:", error);
+//     return NextResponse.json(
+//       { success: false, error: "An unexpected server error occurred." },
+//       { status: 500 }
+//     );
+//   }
+// }

@@ -49,7 +49,7 @@ export default function SuggestionsList({
           ))
         ) : query.length >= 2 ? (
           <div className="p-4 text-center text-gray-500 text-sm">
-            No airports found for "{query}"
+            {`No airports found for "${query}"`} {/* Corrected this line */}
           </div>
         ) : (
           <div className="p-4 text-center text-gray-500 text-sm">
