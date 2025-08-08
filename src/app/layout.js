@@ -1,3 +1,4 @@
+// src/app/layout.js
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "../components/layout/Header";

@@ -1,11 +1,34 @@
+// src/components/feature/FlightSearchForm.js
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react"; // ✅ Import useCallback
 import { useSearchParams, useRouter } from "next/navigation";
 import { ArrowRightLeft, Loader, X, PlusCircle } from "lucide-react";
 import TripTypeSelector from "./TripTypeSelector";
 import SuggestionsList from "./SuggestionsList";
 import DatePicker from "../flight-search/DatePicker";
 import TravelerClassSelector from "../flight-search/TravelerClassSelector";
+
+// ✅ Define default state outside the component for clarity and performance
+const defaultInitialState = {
+  tripType: "one-way",
+  cabinClass: "economy",
+  slices: [
+    {
+      origin: {
+        name: "Dhaka",
+        code: "DAC",
+        airportName: "Hazrat Shahjalal International Airport",
+      },
+      destination: {
+        name: "Cox's Bazar",
+        code: "CXB",
+        airportName: "Cox's Bazar Airport",
+      },
+      departure_date: "2025-08-25",
+    },
+  ],
+  passengers: [{ type: "adult" }],
+};
 
 export default function FlightSearchForm({
   variant = "main", // "main" or "compact"
@@ -14,87 +37,53 @@ export default function FlightSearchForm({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // ─── State & Refs ──────────────────────────────────────────────────────────────
+  // ─── State & Refs ─────────────────────────────────────────────────────────
   const [isSearching, setIsSearching] = useState(false);
   const [activeSelector, setActiveSelector] = useState(null);
   const [airportQuery, setAirportQuery] = useState("");
   const [airportSuggestions, setAirportSuggestions] = useState([]);
   const [isSearchingAirports, setIsSearchingAirports] = useState(false);
 
-  // Helper function to build initial state from URL or defaults
-  const initializeState = () => {
+  // ✅ Initialize state with simple defaults. The useEffect will populate from the URL.
+  const [tripType, setTripType] = useState(defaultInitialState.tripType);
+  const [slices, setSlices] = useState(defaultInitialState.slices);
+  const [passengers, setPassengers] = useState(defaultInitialState.passengers);
+  const [cabinClass, setCabinClass] = useState(defaultInitialState.cabinClass);
+
+  // ✅ Wrap the initialization logic in useCallback to make it a stable function
+  const initializeStateFromURL = useCallback(() => {
     try {
-      const tripType = searchParams.get("tripType") || "one-way";
-      const cabinClass = searchParams.get("cabinClass") || "economy";
+      const tripTypeParam = searchParams.get("tripType");
+      const cabinClassParam = searchParams.get("cabinClass");
       const slicesParam = searchParams.get("slices");
       const passengersParam = searchParams.get("passengers");
 
-      const slices = slicesParam
-        ? JSON.parse(slicesParam)
-        : [
-            {
-              origin: {
-                name: "Dhaka",
-                code: "DAC",
-                airportName: "Hazrat Shahjalal International Airport",
-              },
-              destination: {
-                name: "Cox's Bazar",
-                code: "CXB",
-                airportName: "Cox's Bazar Airport",
-              },
-              departure_date: "2025-08-25",
-            },
-          ];
-
-      const passengers = passengersParam
-        ? JSON.parse(passengersParam)
-        : [{ type: "adult" }];
-
-      return { tripType, cabinClass, slices, passengers };
+      // Only update state if params actually exist in the URL
+      if (tripTypeParam || slicesParam || passengersParam || cabinClassParam) {
+        setTripType(tripTypeParam || defaultInitialState.tripType);
+        setCabinClass(cabinClassParam || defaultInitialState.cabinClass);
+        if (slicesParam) setSlices(JSON.parse(slicesParam));
+        if (passengersParam) setPassengers(JSON.parse(passengersParam));
+      }
     } catch (error) {
-      console.error("Failed to parse search params:", error);
-      // Return default state if URL params are corrupted
-      return {
-        tripType: "one-way",
-        cabinClass: "economy",
-        slices: [
-          {
-            origin: {
-              name: "Dhaka",
-              code: "DAC",
-              airportName: "Hazrat Shahjalal International Airport",
-            },
-            destination: {
-              name: "Cox's Bazar",
-              code: "CXB",
-              airportName: "Cox's Bazar Airport",
-            },
-            departure_date: "2025-08-25",
-          },
-        ],
-        passengers: [{ type: "adult" }],
-      };
+      console.error("Failed to parse search params, using defaults:", error);
+      // Reset to defaults if params are corrupted
+      setTripType(defaultInitialState.tripType);
+      setSlices(defaultInitialState.slices);
+      setPassengers(defaultInitialState.passengers);
+      setCabinClass(defaultInitialState.cabinClass);
     }
-  };
+  }, [searchParams]); // This function re-creates only when searchParams change
 
+  // ✅ This useEffect is now the single source of truth for setting state from the URL
   useEffect(() => {
-    const { tripType, slices, passengers, cabinClass } = initializeState();
-    setTripType(tripType);
-    setSlices(slices);
-    setPassengers(passengers);
-    setCabinClass(cabinClass);
-  }, [searchParams]);
-
-  const [tripType, setTripType] = useState(initializeState().tripType);
-  const [slices, setSlices] = useState(initializeState().slices);
-  const [passengers, setPassengers] = useState(initializeState().passengers);
-  const [cabinClass, setCabinClass] = useState(initializeState().cabinClass);
+    initializeStateFromURL();
+  }, [initializeStateFromURL]); // Dependency is the stable useCallback function
 
   const dropdownRef = useRef(null);
   const debounceTimeout = useRef(null);
 
-  // ─── Airport Search Logic ─────────────────────────────────────────────────────
+  // ─── Airport Search Logic ─────────────────────────────────────────────────
   const searchAirports = (q) => {
     if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     if (q.length < 2) {
@@ -148,7 +137,7 @@ export default function FlightSearchForm({
     setAirportQuery("");
   };
 
-  // ─── SWAP ORIGIN & DESTINATION ─────────────────────────────────────────────────
+  // ─── SWAP ORIGIN & DESTINATION ─────────────────────────────────────────────
   const handleSwapLocations = () => {
     const newSlices = [...slices];
     const firstSlice = newSlices[0];
@@ -164,7 +153,7 @@ export default function FlightSearchForm({
     setSlices(newSlices);
   };
 
-  // ─── TRIP TYPE CHANGE ───────────────────────────────────────────────────────────
+  // ─── TRIP TYPE CHANGE ───────────────────────────────────────────────────────
   const handleTripTypeChange = (type) => {
     setTripType(type);
     setActiveSelector(null);
@@ -193,7 +182,7 @@ export default function FlightSearchForm({
     }
   };
 
-  // ─── ADD / REMOVE SLICES ────────────────────────────────────────────────────────
+  // ─── ADD / REMOVE SLICES ────────────────────────────────────────────────────
   const handleAddSlice = () => {
     const lastDest = slices[slices.length - 1].destination;
 
@@ -211,20 +200,20 @@ export default function FlightSearchForm({
     if (slices.length > 2) setSlices(slices.filter((_, idx) => idx !== i));
   };
 
-  // ─── DATE CHANGE ────────────────────────────────────────────────────────────────
+  // ─── DATE CHANGE ────────────────────────────────────────────────────────────
   const handleDateChange = (i, date) => {
     const updated = [...slices];
     updated[i].departure_date = date;
     setSlices(updated);
   };
 
-  // ─── OPEN/CLOSE SELECTORS ───────────────────────────────────────────────────────
+  // ─── OPEN/CLOSE SELECTORS ───────────────────────────────────────────────────
   const handleSelectorChange = (newSelector) => {
     setActiveSelector(newSelector);
     setAirportQuery("");
   };
 
-  // ─── FORM SUBMIT ────────────────────────────────────────────────────────────────
+  // ─── FORM SUBMIT ────────────────────────────────────────────────────────────
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSearching(true); // You can still show a loader briefly
