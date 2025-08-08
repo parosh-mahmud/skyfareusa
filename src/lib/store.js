@@ -10,17 +10,17 @@ export const useAppStore = create((set) => ({
     set((state) => ({ shortlist: [...state.shortlist, flight] })),
 }));
 
-// In any component:
-import { useAppStore } from "@/lib/store";
+// // In any component:
+// import { useAppStore } from "@/lib/store";
 
-function CurrencySelector() {
-  const { currency, setCurrency } = useAppStore();
-  // ...
-}
+// function CurrencySelector() {
+//   const { currency, setCurrency } = useAppStore();
+//   // ...
+// }
 
-function AddToShortlistButton({ flight }) {
-  const addToShortlist = useAppStore((state) => state.addToShortlist);
-  return (
-    <button onClick={() => addToShortlist(flight)}>Add to Shortlist</button>
-  );
-}
+// function AddToShortlistButton({ flight }) {
+//   const addToShortlist = useAppStore((state) => state.addToShortlist);
+//   return (
+//     <button onClick={() => addToShortlist(flight)}>Add to Shortlist</button>
+//   );
+// }
