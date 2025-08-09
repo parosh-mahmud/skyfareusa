@@ -688,7 +688,7 @@ export default function ResultsClientComponent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-sm border-b sticky top-0 z-40">
+      <div className="bg-white shadow-sm border-b  top-0 z-40">
         <div className="container mx-auto px-4 py-4 max-w-7xl">
           <ModifySearchForm variant="compact" />
         </div>
