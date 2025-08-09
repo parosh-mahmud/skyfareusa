@@ -10,7 +10,7 @@ import { Plane, Loader } from "lucide-react";
 const LoadingFallback = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-      <Loader className="w-12 h-12 text-blue-600 animate-spin" />
+      {/* <Loader className="w-12 h-12 text-blue-600 animate-spin" /> */}
       <p className="mt-4 text-lg font-semibold text-gray-700">
         Finding the best flights for you...
       </p>

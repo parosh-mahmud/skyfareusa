@@ -299,7 +299,232 @@
 //   }
 // }
 
-// src/app/api/flights/search/route.js
+// // src/app/api/flights/search/route.js
+
+// import { Duffel } from "@duffel/api";
+// import Amadeus from "amadeus";
+// import { NextResponse } from "next/server";
+
+// // --- 1. INITIALIZE API CLIENTS ---
+// const duffel = new Duffel({
+//   token: process.env.DUFFEL_ACCESS_TOKEN,
+// });
+
+// const amadeus = new Amadeus({
+//   clientId: process.env.AMADEUS_API_KEY,
+//   clientSecret: process.env.AMADEUS_API_SECRET,
+// });
+
+// // --- 2. ADAPTERS & NORMALIZATION ---
+
+// function createDuffelPayload(unifiedRequest) {
+//   return {
+//     slices: unifiedRequest.slices.map((slice) => ({
+//       origin: slice.origin,
+//       destination: slice.destination,
+//       departure_date: slice.departure_date,
+//     })),
+//     passengers: unifiedRequest.passengers,
+//     cabin_class: unifiedRequest.cabin_class,
+//   };
+// }
+
+// function createAmadeusPayload(unifiedRequest) {
+//   const { slices, passengers, cabin_class } = unifiedRequest;
+//   return {
+//     currencyCode: "USD",
+//     originDestinations: slices.map((slice, index) => ({
+//       id: (index + 1).toString(),
+//       originLocationCode: slice.origin,
+//       destinationLocationCode: slice.destination,
+//       departureDateTimeRange: { date: slice.departure_date },
+//     })),
+//     travelers: passengers.map((p, index) => ({
+//       id: (index + 1).toString(),
+//       travelerType: p.type.toUpperCase(),
+//     })),
+//     sources: ["GDS"],
+//     searchCriteria: {
+//       maxFlightOffers: 50,
+//       flightFilters: {
+//         cabinRestrictions: [
+//           {
+//             cabin: cabin_class?.toUpperCase() || "ECONOMY",
+//             coverage: "MOST_SEGMENTS",
+//             originDestinationIds: slices.map((_, i) => (i + 1).toString()),
+//           },
+//         ],
+//       },
+//     },
+//   };
+// }
+
+// /**
+//  * ✅ PERFECTED NORMALIZATION
+//  * This ensures every piece of data needed for the UI is extracted consistently.
+//  */
+// const normalizeDuffelOffer = (offer) => ({
+//   id: offer.id,
+//   sourceApi: "duffel",
+//   total_amount: offer.total_amount,
+//   total_currency: offer.total_currency,
+//   slices: offer.slices.map((slice) => ({
+//     duration: slice.duration,
+//     origin: slice.origin,
+//     destination: slice.destination,
+//     segments: slice.segments.map((seg) => ({
+//       origin: seg.origin,
+//       destination: seg.destination,
+//       departing_at: seg.departing_at,
+//       arriving_at: seg.arriving_at,
+//       carrier: seg.marketing_carrier,
+//       flight_number: seg.marketing_carrier_flight_number,
+//       duration: seg.duration,
+//       aircraft: seg.aircraft,
+//     })),
+//   })),
+//   passengers: offer.passengers,
+//   conditions: offer.conditions,
+// });
+
+// const normalizeAmadeusOffer = (offer, dictionaries) => ({
+//   id: offer.id,
+//   sourceApi: "amadeus",
+//   total_amount: offer.price.total,
+//   total_currency: offer.price.currency,
+//   slices: offer.itineraries.map((itinerary) => ({
+//     duration: itinerary.duration,
+//     segments: itinerary.segments.map((seg) => ({
+//       origin: {
+//         iata_code: seg.departure.iataCode,
+//         name: dictionaries.locations[seg.departure.iataCode]?.cityCode,
+//         airportName: dictionaries.locations[seg.departure.iataCode]?.name,
+//       },
+//       destination: {
+//         iata_code: seg.arrival.iataCode,
+//         name: dictionaries.locations[seg.arrival.iataCode]?.cityCode,
+//         airportName: dictionaries.locations[seg.arrival.iataCode]?.name,
+//       },
+//       departing_at: seg.departure.at,
+//       arriving_at: seg.arrival.at,
+//       carrier: {
+//         iata_code: seg.carrierCode,
+//         name: dictionaries.carriers[seg.carrierCode],
+//       },
+//       flight_number: seg.number,
+//       duration: seg.duration,
+//       aircraft: { name: dictionaries.aircraft[seg.aircraft.code] },
+//     })),
+//   })),
+//   passengers: offer.travelerPricings.map((p) => ({
+//     id: p.travelerId,
+//     type: p.travelerType.toLowerCase(),
+//   })),
+//   conditions: {
+//     // Amadeus does not provide simple refund/change conditions in the search response
+//     refund_before_departure: null,
+//     change_before_departure: null,
+//   },
+// });
+
+// /**
+//  * ✅ ROBUST DEDUPLICATION KEY
+//  * This key is now safer and handles potential missing data gracefully.
+//  */
+// const getItineraryKey = (offer) => {
+//   return offer.slices
+//     .map((slice) =>
+//       slice.segments
+//         .map(
+//           (seg) =>
+//             `${seg.carrier?.iata_code || "XX"}${seg.flight_number}-${
+//               seg.origin?.iata_code
+//             }-${seg.destination?.iata_code}`
+//         )
+//         .join("_")
+//     )
+//     .join("__");
+// };
+
+// // --- 3. THE MAIN API ROUTE HANDLER ---
+// export async function POST(request) {
+//   try {
+//     const unifiedRequest = await request.json();
+//     if (!unifiedRequest.slices || unifiedRequest.slices.length === 0) {
+//       return NextResponse.json(
+//         { success: false, error: "Slices are required." },
+//         { status: 400 }
+//       );
+//     }
+
+//     const duffelPayload = createDuffelPayload(unifiedRequest);
+//     const amadeusPayload = createAmadeusPayload(unifiedRequest);
+
+//     const duffelPromise = duffel.offerRequests.create(duffelPayload);
+//     const amadeusPromise =
+//       amadeus.shopping.flightOffersSearch.post(amadeusPayload);
+
+//     const results = await Promise.allSettled([duffelPromise, amadeusPromise]);
+//     let allOffers = [];
+//     const apiErrors = [];
+
+//     const [duffelResult, amadeusResult] = results;
+
+//     if (duffelResult.status === "fulfilled") {
+//       allOffers.push(
+//         ...duffelResult.value.data.offers.map(normalizeDuffelOffer)
+//       );
+//     } else {
+//       apiErrors.push({ source: "duffel", error: duffelResult.reason.errors });
+//     }
+
+//     if (amadeusResult.status === "fulfilled") {
+//       const { data, dictionaries } = amadeusResult.value.result;
+//       allOffers.push(
+//         ...data.map((offer) => normalizeAmadeusOffer(offer, dictionaries))
+//       );
+//     } else {
+//       apiErrors.push({
+//         source: "amadeus",
+//         error: amadeusResult.reason.description,
+//       });
+//     }
+
+//     // ✅ DEDUPLICATION: Keep only the cheapest offer for each unique itinerary
+//     const uniqueOffers = new Map();
+//     allOffers.forEach((offer) => {
+//       const key = getItineraryKey(offer);
+//       const existing = uniqueOffers.get(key);
+//       if (
+//         !existing ||
+//         parseFloat(offer.total_amount) < parseFloat(existing.total_amount)
+//       ) {
+//         uniqueOffers.set(key, offer);
+//       }
+//     });
+
+//     const finalOffers = Array.from(uniqueOffers.values());
+
+//     // ✅ SORTING: Sort the final list by price, cheapest first.
+//     finalOffers.sort(
+//       (a, b) => parseFloat(a.total_amount) - parseFloat(b.total_amount)
+//     );
+
+//     return NextResponse.json({
+//       success: true,
+//       offers: finalOffers,
+//       meta: { api_errors: apiErrors },
+//     });
+//   } catch (error) {
+//     console.error("❌ Unhandled Server Error in flight search:", error);
+//     return NextResponse.json(
+//       { success: false, error: "An unexpected server error occurred." },
+//       { status: 500 }
+//     );
+//   }
+// }
+
+
 
 import { Duffel } from "@duffel/api";
 import Amadeus from "amadeus";
@@ -345,7 +570,7 @@ function createAmadeusPayload(unifiedRequest) {
     })),
     sources: ["GDS"],
     searchCriteria: {
-      maxFlightOffers: 50,
+      maxFlightOffers: 25, // Request a reasonable number of offers
       flightFilters: {
         cabinRestrictions: [
           {
@@ -359,10 +584,6 @@ function createAmadeusPayload(unifiedRequest) {
   };
 }
 
-/**
- * ✅ PERFECTED NORMALIZATION
- * This ensures every piece of data needed for the UI is extracted consistently.
- */
 const normalizeDuffelOffer = (offer) => ({
   id: offer.id,
   sourceApi: "duffel",
@@ -383,7 +604,12 @@ const normalizeDuffelOffer = (offer) => ({
       aircraft: seg.aircraft,
     })),
   })),
-  passengers: offer.passengers,
+  // Extract baggage and conditions for each passenger type
+  passengers: offer.passengers.map((p) => ({
+    id: p.id,
+    type: p.type,
+    baggages: p.baggages || [],
+  })),
   conditions: offer.conditions,
 });
 
@@ -416,21 +642,27 @@ const normalizeAmadeusOffer = (offer, dictionaries) => ({
       aircraft: { name: dictionaries.aircraft[seg.aircraft.code] },
     })),
   })),
-  passengers: offer.travelerPricings.map((p) => ({
-    id: p.travelerId,
-    type: p.travelerType.toLowerCase(),
-  })),
+  passengers: offer.travelerPricings.map((p) => {
+    const checked = p.fareDetailsBySegment.reduce(
+      (acc, detail) => acc + (detail.includedCheckedBags?.quantity || 0),
+      0
+    );
+    return {
+      id: p.travelerId,
+      type: p.travelerType.toLowerCase(),
+      baggages: [
+        // Amadeus search doesn't specify carry-on, so we assume 1 as a default
+        { type: "carry_on", quantity: 1 },
+        ...(checked > 0 ? [{ type: "checked", quantity: checked }] : []),
+      ],
+    };
+  }),
   conditions: {
-    // Amadeus does not provide simple refund/change conditions in the search response
     refund_before_departure: null,
     change_before_departure: null,
   },
 });
 
-/**
- * ✅ ROBUST DEDUPLICATION KEY
- * This key is now safer and handles potential missing data gracefully.
- */
 const getItineraryKey = (offer) => {
   return offer.slices
     .map((slice) =>
@@ -450,47 +682,45 @@ const getItineraryKey = (offer) => {
 export async function POST(request) {
   try {
     const unifiedRequest = await request.json();
-    if (!unifiedRequest.slices || unifiedRequest.slices.length === 0) {
+    if (!unifiedRequest.slices?.length) {
       return NextResponse.json(
         { success: false, error: "Slices are required." },
         { status: 400 }
       );
     }
 
+    const page = unifiedRequest.page || 1;
+    const limit = 20; // Results per page
+
     const duffelPayload = createDuffelPayload(unifiedRequest);
     const amadeusPayload = createAmadeusPayload(unifiedRequest);
 
-    const duffelPromise = duffel.offerRequests.create(duffelPayload);
-    const amadeusPromise =
-      amadeus.shopping.flightOffersSearch.post(amadeusPayload);
-
-    const results = await Promise.allSettled([duffelPromise, amadeusPromise]);
+    // Only fetch from APIs on the first page load to build the full list
     let allOffers = [];
-    const apiErrors = [];
-
-    const [duffelResult, amadeusResult] = results;
-
-    if (duffelResult.status === "fulfilled") {
-      allOffers.push(
-        ...duffelResult.value.data.offers.map(normalizeDuffelOffer)
-      );
-    } else {
-      apiErrors.push({ source: "duffel", error: duffelResult.reason.errors });
-    }
-
-    if (amadeusResult.status === "fulfilled") {
-      const { data, dictionaries } = amadeusResult.value.result;
-      allOffers.push(
-        ...data.map((offer) => normalizeAmadeusOffer(offer, dictionaries))
-      );
-    } else {
-      apiErrors.push({
-        source: "amadeus",
-        error: amadeusResult.reason.description,
+    if (page === 1) {
+      const duffelPromise = duffel.offerRequests.create({
+        ...duffelPayload,
+        limit: 100,
       });
+      const amadeusPromise =
+        amadeus.shopping.flightOffersSearch.post(amadeusPayload);
+      const results = await Promise.allSettled([duffelPromise, amadeusPromise]);
+
+      const [duffelResult, amadeusResult] = results;
+
+      if (duffelResult.status === "fulfilled") {
+        allOffers.push(
+          ...duffelResult.value.data.offers.map(normalizeDuffelOffer)
+        );
+      }
+      if (amadeusResult.status === "fulfilled") {
+        const { data, dictionaries } = amadeusResult.value.result;
+        allOffers.push(
+          ...data.map((offer) => normalizeAmadeusOffer(offer, dictionaries))
+        );
+      }
     }
 
-    // ✅ DEDUPLICATION: Keep only the cheapest offer for each unique itinerary
     const uniqueOffers = new Map();
     allOffers.forEach((offer) => {
       const key = getItineraryKey(offer);
@@ -504,16 +734,20 @@ export async function POST(request) {
     });
 
     const finalOffers = Array.from(uniqueOffers.values());
-
-    // ✅ SORTING: Sort the final list by price, cheapest first.
     finalOffers.sort(
       (a, b) => parseFloat(a.total_amount) - parseFloat(b.total_amount)
     );
 
+    // Paginate the final, sorted, and deduplicated list
+    const paginatedOffers = finalOffers.slice((page - 1) * limit, page * limit);
+
     return NextResponse.json({
       success: true,
-      offers: finalOffers,
-      meta: { api_errors: apiErrors },
+      offers: paginatedOffers,
+      meta: {
+        currentPage: page,
+        hasNextPage: finalOffers.length > page * limit,
+      },
     });
   } catch (error) {
     console.error("❌ Unhandled Server Error in flight search:", error);
