@@ -367,10 +367,9 @@
 //     </div>
 //   );
 // }
-//src/app/flights/results/ResultsClientComponent.js
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import {
@@ -382,13 +381,16 @@ import {
   Star,
   SlidersHorizontal,
   X,
+  ChevronDown,
+  Users,
+  Briefcase,
 } from "lucide-react";
 
 import FilterSidebar from "src/components/flight-results/FilterSidebar";
 import FlightOfferCard from "src/components/flight-results/FlightOfferCard";
 import ModifySearchForm from "src/components/flight-results/ModifySearchForm";
 
-// This function calls your backend API and now supports pagination.
+// API fetching function with pagination support
 const fetchFlights = async ({ searchParams, pageParam = 1 }) => {
   if (!searchParams.has("slices")) {
     throw new Error(
@@ -403,7 +405,7 @@ const fetchFlights = async ({ searchParams, pageParam = 1 }) => {
     })),
     passengers: JSON.parse(searchParams.get("passengers")),
     cabin_class: searchParams.get("cabinClass"),
-    page: pageParam, // Send the current page number to the API
+    page: pageParam,
   };
   const res = await fetch("/api/flights/search", {
     method: "POST",
@@ -478,13 +480,62 @@ const LoadingState = () => (
   </main>
 );
 
+const SearchSummaryBar = ({ searchParams, onModifyClick, isOpen }) => {
+  const displaySlices = JSON.parse(searchParams.get("slices") || "[]");
+  const passengers = JSON.parse(searchParams.get("passengers") || "[]");
+  const cabinClass = searchParams.get("cabinClass") || "economy";
+  const totalPassengers = passengers.length;
+  if (displaySlices.length === 0) return null;
+  const departure = displaySlices[0];
+  const returnSlice = displaySlices.length > 1;
+
+  return (
+    <div className="flex flex-col md:flex-row justify-between items-center w-full gap-2 md:gap-4">
+      <div className="flex items-center gap-4 text-sm text-gray-700 overflow-x-auto w-full pb-2 md:pb-0">
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <Plane size={16} className="text-gray-500" />
+          <span className="font-semibold">
+            {departure.origin.code} → {departure.destination.code}
+          </span>
+          {returnSlice && (
+            <span className="text-xs bg-gray-200 px-2 py-0.5 rounded-full">
+              Round Trip
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <Users size={16} className="text-gray-500" />
+          <span className="font-semibold">
+            {totalPassengers} Traveler{totalPassengers > 1 ? "s" : ""}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <Briefcase size={16} className="text-gray-500" />
+          <span className="font-semibold capitalize">{cabinClass}</span>
+        </div>
+      </div>
+      <button
+        onClick={onModifyClick}
+        className="w-full md:w-auto flex-shrink-0 bg-blue-50 text-blue-700 font-semibold px-4 py-2 rounded-lg hover:bg-blue-100 transition-colors text-sm flex items-center justify-center gap-2"
+      >
+        Modify Search{" "}
+        <ChevronDown
+          size={16}
+          className={`transition-transform ${isOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+    </div>
+  );
+};
+
 // --- Main Client Component ---
 export default function ResultsClientComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
+  const [isModifySearchOpen, setIsModifySearchOpen] = useState(false);
+  const modifySearchRef = useRef(null);
 
-  // Data Fetching
   const {
     data,
     fetchNextPage,
@@ -503,7 +554,6 @@ export default function ResultsClientComponent() {
     refetchOnWindowFocus: false,
   });
 
-  // State Management
   const [activeSort, setActiveSort] = useState("cheapest");
   const [expandedItineraryId, setExpandedItineraryId] = useState(null);
   const [filters, setFilters] = useState({
@@ -513,7 +563,6 @@ export default function ResultsClientComponent() {
     departureTime: [],
   });
 
-  // Memoized Data Processing
   const allOffers = useMemo(
     () => data?.pages.flatMap((page) => page.offers) || [],
     [data]
@@ -617,25 +666,40 @@ export default function ResultsClientComponent() {
   }, [filteredOffers, activeSort]);
 
   useEffect(() => {
-    if (groupedOffers.length > 0) {
-      const prices = groupedOffers.map((g) => parseFloat(g[0].total_amount));
-      const min = Math.floor(Math.min(...prices));
-      const max = Math.ceil(Math.max(...prices));
-      if (filters.priceRange.min === 0 && filters.priceRange.max === 10000) {
-        setFilters((prev) => ({ ...prev, priceRange: { min, max } }));
-      }
+    if (!groupedOffers || groupedOffers.length === 0) return;
+    const prices = groupedOffers.map((g) => parseFloat(g[0].total_amount));
+    const min = Math.floor(Math.min(...prices));
+    const max = Math.ceil(Math.max(...prices));
+    if (filters.priceRange.min === 0 && filters.priceRange.max === 10000) {
+      setFilters((prev) => ({ ...prev, priceRange: { min, max } }));
     }
   }, [groupedOffers, filters.priceRange.min, filters.priceRange.max]);
 
-  // --- UI Rendering ---
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        modifySearchRef.current &&
+        !modifySearchRef.current.contains(event.target)
+      ) {
+        setIsModifySearchOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const displaySlices = JSON.parse(searchParams.get("slices") || "[]");
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="bg-white shadow-sm border-b sticky top-0 z-40">
-          <div className="container mx-auto px-4 py-4 max-w-7xl">
-            <ModifySearchForm variant="compact" />
+          <div className="container mx-auto px-4 py-3 max-w-7xl">
+            <SearchSummaryBar
+              searchParams={searchParams}
+              onModifyClick={() => {}}
+              isOpen={false}
+            />
           </div>
         </div>
         <div className="container mx-auto px-4 py-6 max-w-7xl">
@@ -688,23 +752,34 @@ export default function ResultsClientComponent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-sm border-b  top-0 z-40">
-        <div className="container mx-auto px-4 py-4 max-w-7xl">
-          <ModifySearchForm variant="compact" />
+      <div className="bg-white shadow-sm border-b sticky top-0 z-40">
+        <div
+          ref={modifySearchRef}
+          className="container mx-auto px-4 py-3 max-w-7xl relative"
+        >
+          <SearchSummaryBar
+            searchParams={searchParams}
+            isOpen={isModifySearchOpen}
+            onModifyClick={() => setIsModifySearchOpen((prev) => !prev)}
+          />
+          {isModifySearchOpen && (
+            <div className="absolute top-full left-0 w-full mt-2 px-4 md:px-0">
+              <ModifySearchForm />
+            </div>
+          )}
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-6 max-w-7xl">
         <div className="bg-blue-800 text-white p-4 rounded-t-lg mb-4">
           <h2 className="font-bold text-xl flex items-center gap-2">
-            <Plane size={20} />
-            {displaySlices[0]?.origin.code} →{" "}
+            <Plane size={20} /> {displaySlices[0]?.origin.code} →{" "}
             {displaySlices[0]?.destination.code}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
-          <aside className="hidden lg:block bg-white rounded-lg shadow-sm p-6 h-fit sticky top-24">
+          <aside className="hidden lg:block bg-white rounded-lg shadow-sm p-6 h-fit sticky top-[85px]">
             <FilterSidebar
               offers={groupedOffers}
               filters={filters}
@@ -800,12 +875,12 @@ export default function ResultsClientComponent() {
         </div>
       </div>
 
-      <div
-        className={`fixed inset-0 z-40 lg:hidden ${
-          isFilterSidebarOpen ? "block" : "hidden"
-        }`}
-        onClick={() => setIsFilterSidebarOpen(false)}
-      />
+      {isFilterSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsFilterSidebarOpen(false)}
+        />
+      )}
       <div
         className={`fixed left-0 top-0 h-full w-full max-w-xs bg-gray-50 shadow-xl z-50 transform transition-transform duration-300 ease-in-out lg:hidden ${
           isFilterSidebarOpen ? "translate-x-0" : "-translate-x-full"

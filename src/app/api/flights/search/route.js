@@ -524,8 +524,6 @@
 //   }
 // }
 
-
-
 import { Duffel } from "@duffel/api";
 import Amadeus from "amadeus";
 import { NextResponse } from "next/server";
@@ -570,7 +568,7 @@ function createAmadeusPayload(unifiedRequest) {
     })),
     sources: ["GDS"],
     searchCriteria: {
-      maxFlightOffers: 25, // Request a reasonable number of offers
+      maxFlightOffers: 50, // Request a reasonable number of offers
       flightFilters: {
         cabinRestrictions: [
           {
@@ -690,7 +688,7 @@ export async function POST(request) {
     }
 
     const page = unifiedRequest.page || 1;
-    const limit = 20; // Results per page
+    const limit = 50; // Results per page
 
     const duffelPayload = createDuffelPayload(unifiedRequest);
     const amadeusPayload = createAmadeusPayload(unifiedRequest);
