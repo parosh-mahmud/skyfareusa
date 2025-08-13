@@ -1,0 +1,3677 @@
+{
+    "data": [
+        {
+            "chainCode": "TJ",
+            "iataCode": "DEL",
+            "dupeId": 501365348,
+            "name": "VIVANTA BY TAJ GURGAON",
+            "hotelId": "TJDELGUR",
+            "geoCode": {
+                "latitude": 28.45104,
+                "longitude": 77.07194
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122004",
+                "cityName": "GURGAON",
+                "lines": [
+                    "SECTOR 44"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:52",
+            "retailing": {
+                "sponsorship": {
+                    "isSponsored": true
+                }
+            }
+        },
+        {
+            "chainCode": "CP",
+            "iataCode": "DEL",
+            "dupeId": 700054986,
+            "name": "CROWNE PLAZA GURGAON",
+            "hotelId": "CPDELE6B",
+            "geoCode": {
+                "latitude": 28.46834,
+                "longitude": 77.05959
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "SITE 2 SECTOR 29 GURGAON",
+                    "OPPOSITE SIGNATURE TOWER"
+                ]
+            },
+            "masterChainCode": "6C",
+            "lastUpdate": "2025-06-03T10:19:39"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700156090,
+            "name": "TOPAZ",
+            "hotelId": "HSDELAIU",
+            "geoCode": {
+                "latitude": 28.65575,
+                "longitude": 77.2299
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110055",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "PAHARGANJ BAZAR ROAD 9140-3"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700079352,
+            "name": "TJS ROYALE",
+            "hotelId": "HSDELAFN",
+            "geoCode": {
+                "latitude": 28.65,
+                "longitude": 77.19999
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "ARYA SAMAJ ROAD 16-16, KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "DEL",
+            "dupeId": 700155860,
+            "name": "RADISSON BLU NEW DELHI DWARKA",
+            "hotelId": "RDDEL547",
+            "geoCode": {
+                "latitude": 28.5959,
+                "longitude": 77.03555
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "0000",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "PLOT 4 DWARKA CITY CENTRE SECT"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:17:13"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700172122,
+            "name": "HOTEL SWAGATH",
+            "hotelId": "ILDEL169",
+            "geoCode": {
+                "latitude": 28.54051,
+                "longitude": 77.22847
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110017",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "C 2 SECOND FLOOR MAIN MARKET",
+                    "MALVIYA NAGAR"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700050814,
+            "name": "THE CORUS HOTEL",
+            "hotelId": "YXDELCOR",
+            "geoCode": {
+                "latitude": 28.61753,
+                "longitude": 77.23247
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110001",
+                "cityName": "DELHI",
+                "lines": [
+                    "B 49 INNER CIRCLE",
+                    "CONNAUGHT PLACE"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "DEL",
+            "dupeId": 700156074,
+            "name": "RADISSON BLU DEL PASCHIM VIHAR",
+            "hotelId": "RDDEL171",
+            "geoCode": {
+                "latitude": 28.66748,
+                "longitude": 77.09124
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110063",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "PLOT NO. D",
+                    "DISTRICT CENTRE PASCHIM VIHAR"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:17:13"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700117821,
+            "name": "THE PARKLAND DEFENCE COLONY",
+            "hotelId": "ILDEL168",
+            "geoCode": {
+                "latitude": 28.5685,
+                "longitude": 77.26136
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110024",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "E 19 DEFENCE COLONY"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "EQ",
+            "iataCode": "DEL",
+            "dupeId": 700175677,
+            "name": "EATON SMART NEW DELHI AIRPORT",
+            "hotelId": "EQDELEDA",
+            "geoCode": {
+                "latitude": 28.64794,
+                "longitude": 77.28197
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "11037",
+                "cityName": "DELHI",
+                "lines": [
+                    "LEVEL 5 TERMINAL 3"
+                ]
+            },
+            "masterChainCode": "LO",
+            "lastUpdate": "2025-06-03T10:19:39"
+        },
+        {
+            "chainCode": "SX",
+            "iataCode": "DEL",
+            "dupeId": 700095155,
+            "name": "LEMON TREE HOTEL UDYOG VIHAR GURGAON",
+            "hotelId": "SXDEL715",
+            "geoCode": {
+                "latitude": 28.49975,
+                "longitude": 77.02566
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "866  UDYOG VIHAR",
+                    "PHASE V"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:42"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700141536,
+            "name": "THE BEAUFORT INN",
+            "hotelId": "HSDELAAE",
+            "geoCode": {
+                "latitude": 28.5826,
+                "longitude": 77.25096
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110001",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "MATHURA ROAD 14, JUNGPURA"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "CH",
+            "iataCode": "DEL",
+            "dupeId": 700074709,
+            "name": "HOTEL AJANTA",
+            "hotelId": "CHDELAND",
+            "geoCode": {
+                "latitude": 28.64561,
+                "longitude": 77.21686
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110055",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "36 ARAKASHAN RD RAM NAGAR",
+                    "DIAGONALLY OPPOSITE TO CHURCH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:22"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700095260,
+            "name": "FORT UNCHAGAON GARHMUKTESHWAR",
+            "hotelId": "HSDELAKM",
+            "geoCode": {
+                "latitude": 28.4,
+                "longitude": 77.84999
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "AURANGA BAD TAHERPUR,BULA",
+                "lines": [
+                    "UNCHAGAON 1"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "UZ",
+            "iataCode": "DEL",
+            "dupeId": 700182037,
+            "name": "THE PALMS TOWN AND COUNTRY CLUB",
+            "hotelId": "UZDEL713",
+            "geoCode": {
+                "latitude": 28.46858,
+                "longitude": 77.08494
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "B, BLOCK",
+                    "SUSHANT LOK, PHASE I HARYANA"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:10"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700144808,
+            "name": "EMBLEM A BOUTIQUE HOTEL",
+            "hotelId": "HSDELAEZ",
+            "geoCode": {
+                "latitude": 28.57488,
+                "longitude": 77.26452
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110065",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "E 5 KALINDI COLONY MAIN ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700154023,
+            "name": "HOTEL ANANDA",
+            "hotelId": "ILDEL170",
+            "geoCode": {
+                "latitude": 28.64885,
+                "longitude": 77.19459
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "841 WEA ABDUL AZIZ ROAD NEAR J",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "GZ",
+            "iataCode": "DEL",
+            "dupeId": 700147742,
+            "name": "HOTEL STAR ROCKS",
+            "hotelId": "GZDELHSR",
+            "geoCode": {
+                "latitude": 28.54589,
+                "longitude": 77.19743
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "C-5/30, SAFDARJUNG",
+                    "DEVELOPMENT AREA"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:48"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700161736,
+            "name": "ROUSHA INN",
+            "hotelId": "HSDELAIV",
+            "geoCode": {
+                "latitude": 28.66122,
+                "longitude": 77.42446
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201011",
+                "cityName": "GHAZIABAD",
+                "lines": [
+                    "D-81, KAUSHAMBI METRO STATION"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "CC",
+            "iataCode": "DEL",
+            "dupeId": 700075157,
+            "name": "CLARION COLLECTION",
+            "hotelId": "CCDEL075",
+            "geoCode": {
+                "latitude": 28.5904,
+                "longitude": 77.22475
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110016",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "SHAHEED JEET SINGH MARG"
+                ]
+            },
+            "masterChainCode": "EC",
+            "lastUpdate": "2025-06-03T10:19:22"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700095186,
+            "name": "HOTEL ROYAL CASTLE GRAND",
+            "hotelId": "FGDELRCG",
+            "geoCode": {
+                "latitude": 28.53747,
+                "longitude": 77.25621
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110019",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "D 616 CHITRANJAN PARK"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "OB",
+            "iataCode": "DEL",
+            "dupeId": 700142590,
+            "name": "THE OBEROI, GURGAON",
+            "hotelId": "OBDELOGG",
+            "geoCode": {
+                "latitude": 28.50217,
+                "longitude": 77.08822
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122016",
+                "cityName": "GURGAON",
+                "lines": [
+                    "443 B UDYOG VIHAR"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:20:31"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700173805,
+            "name": "THE AVENUE BY SEASONS",
+            "hotelId": "HSDELALU",
+            "geoCode": {
+                "latitude": 28.46494,
+                "longitude": 77.10241
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "J - 10-10 DLF PHASE - II,"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "BC",
+            "iataCode": "DEL",
+            "dupeId": 700151125,
+            "name": "WELCOMHOTEL DWARKA NEW DELHI",
+            "hotelId": "BCDELWHH",
+            "geoCode": {
+                "latitude": 28.58149,
+                "longitude": 77.05652
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110075",
+                "cityName": "DELHI",
+                "lines": [
+                    "PLOT NO 3 SECTOR 10",
+                    "DISTRICT CENTRE DWARKA"
+                ]
+            },
+            "masterChainCode": "PV",
+            "lastUpdate": "2025-06-03T10:19:27"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700156093,
+            "name": "TAVISHA VILLA",
+            "hotelId": "HSDELAAY",
+            "geoCode": {
+                "latitude": 28.56032,
+                "longitude": 77.3515
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201301",
+                "cityName": "NOIDA",
+                "lines": [
+                    "A212, SECTOR 43 A212"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700164997,
+            "name": "HOTEL SUNCOURT CORPORATE",
+            "hotelId": "ILDEL167",
+            "geoCode": {
+                "latitude": 28.65222,
+                "longitude": 77.20099
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "6A/67 WEA CHANNA MARKET",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700145492,
+            "name": "WALNUT CASTLE HOTEL",
+            "hotelId": "TADEL115",
+            "geoCode": {
+                "latitude": 28.64418,
+                "longitude": 77.19051
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "18 10 PUSA LANE"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "TJ",
+            "iataCode": "DEL",
+            "dupeId": 501432262,
+            "name": "THE GATEWAY RESORT DAMDAMA",
+            "hotelId": "TJDELDAM",
+            "geoCode": {
+                "latitude": 28.25007,
+                "longitude": 77.0667
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122102",
+                "cityName": "GURGAON",
+                "lines": [
+                    "PO DAMDAMA OFF SOHNA GURGAON"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:52"
+        },
+        {
+            "chainCode": "DH",
+            "iataCode": "DEL",
+            "dupeId": 700216726,
+            "name": "JW MARRIOTT HOTEL NEW DELHI AEROCITY",
+            "hotelId": "DHDELAYC",
+            "geoCode": {
+                "latitude": 28.54317,
+                "longitude": 77.24265
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "DELHI",
+                "lines": [
+                    "ASSET AREA 4 - HOSPITALITY DISTRICT,DELHI AEROCITY"
+                ]
+            },
+            "masterChainCode": "TC",
+            "lastUpdate": "2025-06-03T10:21:32"
+        },
+        {
+            "chainCode": "WI",
+            "iataCode": "DEL",
+            "dupeId": 700164818,
+            "name": "WESTIN GURGAON NEW DELHI",
+            "hotelId": "WIDEL710",
+            "geoCode": {
+                "latitude": 28.4772,
+                "longitude": 77.07071
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "NUMBER 1 MG ROAD",
+                    "SECTOR 29 NEW DELHI NCR"
+                ]
+            },
+            "masterChainCode": "EM",
+            "lastUpdate": "2025-08-04T06:07:45"
+        },
+        {
+            "chainCode": "TJ",
+            "iataCode": "DEL",
+            "dupeId": 700033746,
+            "name": "VIVANTA BY TAJ AMBASSADOR",
+            "hotelId": "TJDELAMB",
+            "geoCode": {
+                "latitude": 28.60181,
+                "longitude": 77.22878
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110003",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "SUJAN SINGH PARK",
+                    "SUBRAMANIA BHARTI MARG"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:52"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700210661,
+            "name": "THE UPPAL - AN ECOTEL HOTEL",
+            "hotelId": "YXDELUEH",
+            "geoCode": {
+                "latitude": 28.54531,
+                "longitude": 77.11022
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "STREET 1",
+                    "NEAR IGI AIRPORT"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700054897,
+            "name": "HOTEL RAHUL PALACE",
+            "hotelId": "TADEL925",
+            "geoCode": {
+                "latitude": 28.64718,
+                "longitude": 77.18868
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "5 3 MAIN AJMAL KHAN ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700095103,
+            "name": "HOTEL SOUTHERN",
+            "hotelId": "ONDELSOU",
+            "geoCode": {
+                "latitude": 28.6479,
+                "longitude": 77.19356
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "DELHI",
+                "lines": [
+                    "18 1 ARYA SAMAJ ROAD",
+                    "WEA KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "UI",
+            "iataCode": "DEL",
+            "dupeId": 700152421,
+            "name": "FORTUNE SELECT EXCALIBUR",
+            "hotelId": "UIDEL328",
+            "geoCode": {
+                "latitude": 28.41607,
+                "longitude": 77.04158
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122018",
+                "cityName": "GURGAON",
+                "lines": [
+                    "MAIN SOHNA ROAD",
+                    "SECTOR 49"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:05"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700095199,
+            "name": "HOTEL SWASNO PALACE",
+            "hotelId": "YXDEL016",
+            "geoCode": {
+                "latitude": 28.47281,
+                "longitude": 77.09319
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "J-10 7  OPP SAHARA MALL",
+                    "DLF PHASE II"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700193862,
+            "name": "THE SARISKA PALACE",
+            "hotelId": "ILDEL171",
+            "geoCode": {
+                "latitude": 28.54773,
+                "longitude": 77.25646
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110019",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "701 HIMKUND CHAMBER",
+                    "NEHRU PLACE"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "PD",
+            "iataCode": "DEL",
+            "dupeId": 700141271,
+            "name": "PARK INN GURGAON",
+            "hotelId": "PDDEL399",
+            "geoCode": {
+                "latitude": 28.45256,
+                "longitude": 77.03283
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "CIVIL LINES"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:16:39"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "DEL",
+            "dupeId": 700144556,
+            "name": "THE VISAYA",
+            "hotelId": "WVDELTVI",
+            "geoCode": {
+                "latitude": 28.54581,
+                "longitude": 77.21201
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110017",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "N 82 PANCHSHILA PARK"
+                ]
+            },
+            "masterChainCode": "TC",
+            "lastUpdate": "2025-06-03T10:18:17"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700141434,
+            "name": "CLARKS INN NEHRU PLACE",
+            "hotelId": "HSDELAEI",
+            "geoCode": {
+                "latitude": 28.5904,
+                "longitude": 77.22476
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "C-21 KALKAJI"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "DS",
+            "iataCode": "DEL",
+            "dupeId": 700013441,
+            "name": "THE PARK NEW DELHI",
+            "hotelId": "DSDELPAR",
+            "geoCode": {
+                "latitude": 28.62886,
+                "longitude": 77.21625
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110001",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "15 PARLIAMENT STREET"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:54"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "DEL",
+            "dupeId": 700070519,
+            "name": "THE LODHI",
+            "hotelId": "WVDELAND",
+            "geoCode": {
+                "latitude": 28.59001,
+                "longitude": 77.21529
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110003",
+                "cityName": "DELHI",
+                "lines": [
+                    "LODHI ROAD",
+                    "NEW DELHI"
+                ]
+            },
+            "masterChainCode": "TC",
+            "lastUpdate": "2025-06-03T10:18:17"
+        },
+        {
+            "chainCode": "GI",
+            "iataCode": "DEL",
+            "dupeId": 700182978,
+            "name": "HILTON GARDEN INN GURGAON NCR",
+            "hotelId": "GIDEL412",
+            "geoCode": {
+                "latitude": 28.42598,
+                "longitude": 77.05723
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122018",
+                "cityName": "GURGAON",
+                "lines": [
+                    "BAANI SQUARE OPPOSITE MAYFIELD GARDEN SECTOR 50"
+                ]
+            },
+            "masterChainCode": "EH",
+            "lastUpdate": "2025-06-03T10:21:49"
+        },
+        {
+            "chainCode": "PK",
+            "iataCode": "DEL",
+            "dupeId": 700173319,
+            "name": "PARK PLAZA NOIDA",
+            "hotelId": "PKDEL600",
+            "geoCode": {
+                "latitude": 28.60411,
+                "longitude": 77.34993
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201307",
+                "cityName": "NOIDA",
+                "lines": [
+                    "C BLOCK SECTOR 55"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:16:55"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700146480,
+            "name": "TJS GRAND",
+            "hotelId": "HSDELAFM",
+            "geoCode": {
+                "latitude": 28.64692,
+                "longitude": 77.19405
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "WEA ARYA SAMAJ ROAD 16-7"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "TJ",
+            "iataCode": "DEL",
+            "dupeId": 501512795,
+            "name": "VIVANTA BY TAJ DWARKA",
+            "hotelId": "TJDELVTD",
+            "geoCode": {
+                "latitude": 28.55238,
+                "longitude": 77.05807
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110075",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "METRO STATION COMPLEX"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:52"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700140802,
+            "name": "HOTEL PARAS INTERNATIONAL",
+            "hotelId": "TADELPAR",
+            "geoCode": {
+                "latitude": 28.65426,
+                "longitude": 77.19519
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "5 / 25, W.E.AAJMAL KHAN ROAD",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "PK",
+            "iataCode": "DEL",
+            "dupeId": 700190963,
+            "name": "PARK PLAZA DELHI CBD SHAH",
+            "hotelId": "PKDEL560",
+            "geoCode": {
+                "latitude": 28.65905,
+                "longitude": 77.29804
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "0000",
+                "cityName": "DELHI",
+                "lines": [
+                    "PLOT 32 CENTRAL BUSINESS DIST"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:16:55"
+        },
+        {
+            "chainCode": "SI",
+            "iataCode": "DEL",
+            "dupeId": 700015846,
+            "name": "SHERATON NEW DELHI",
+            "hotelId": "SIDEL996",
+            "geoCode": {
+                "latitude": 28.5263,
+                "longitude": 77.21626
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110017",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "DISTRICT CENTRE SAKET"
+                ]
+            },
+            "masterChainCode": "EM",
+            "lastUpdate": "2025-08-04T06:14:43"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 501426059,
+            "name": "CITY PREMIER",
+            "hotelId": "HSDELALV",
+            "geoCode": {
+                "latitude": 28.49631,
+                "longitude": 77.1066
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "DLF PHASE 4"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "SC",
+            "iataCode": "DEL",
+            "dupeId": 700164965,
+            "name": "HOTEL CLASSIC DIPLOMAT",
+            "hotelId": "SCDEL153",
+            "geoCode": {
+                "latitude": 28.54483,
+                "longitude": 77.12081
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "DELHI",
+                "lines": [
+                    "NH 8, MAHIPLAPUR, NEAR IGI"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:29"
+        },
+        {
+            "chainCode": "CH",
+            "iataCode": "DEL",
+            "dupeId": 700117811,
+            "name": "HOTEL DELHI CITY CENTRE",
+            "hotelId": "CHDELDCC",
+            "geoCode": {
+                "latitude": 28.64559,
+                "longitude": 77.21709
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110055",
+                "cityName": "DELHI",
+                "lines": [
+                    "8633 45 ARAKASHAN ROAD RAM NAGAR",
+                    "BEHIND AJANTA HOTEL"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:22"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 501518937,
+            "name": "OPTUS HOMETEL BHIWADI",
+            "hotelId": "YXDELOPT",
+            "geoCode": {
+                "latitude": 28.2081,
+                "longitude": 76.82505
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "301019",
+                "cityName": "BHIWADI ALWAR",
+                "lines": [
+                    "1 VASUNDHARA NAGAR"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "DEL",
+            "dupeId": 700141860,
+            "name": "HOTEL RAJBLAS",
+            "hotelId": "WVDEL116",
+            "geoCode": {
+                "latitude": 28.48035,
+                "longitude": 77.08878
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "DELHI",
+                "lines": [
+                    "MG ROAD, NEAR NEELKANTH",
+                    "DLF PHASE III"
+                ]
+            },
+            "masterChainCode": "TC",
+            "lastUpdate": "2023-06-15T10:16:14"
+        },
+        {
+            "chainCode": "UI",
+            "iataCode": "DEL",
+            "dupeId": 700117818,
+            "name": "FORTUNE INN GRAZIA",
+            "hotelId": "UIDEL076",
+            "geoCode": {
+                "latitude": 28.5771,
+                "longitude": 77.32813
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201301",
+                "cityName": "NOIDA",
+                "lines": [
+                    "BLOCK I PLOT 1A",
+                    "SECTOR-27"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:05"
+        },
+        {
+            "chainCode": "RT",
+            "iataCode": "DEL",
+            "dupeId": 700221082,
+            "name": "HOTEL FORMULE1 GURGAON",
+            "hotelId": "RTDELAON",
+            "geoCode": {
+                "latitude": 28.41604,
+                "longitude": 77.05933
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122018",
+                "cityName": "GURGAON",
+                "lines": [
+                    "GOOD EARTH CITY CENTRE",
+                    "SECTOR 50"
+                ]
+            },
+            "masterChainCode": "RT",
+            "lastUpdate": "2025-06-03T10:17:15"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700164945,
+            "name": "HOTEL MAAN K",
+            "hotelId": "TADEL079",
+            "geoCode": {
+                "latitude": 28.66477,
+                "longitude": 77.21699
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "8 A29 WEA CHANNA MARKET RD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700168493,
+            "name": "HOTEL EXPRESS 66",
+            "hotelId": "ONDELEXP",
+            "geoCode": {
+                "latitude": 28.64417,
+                "longitude": 77.21814
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110055",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "THAPAR CHAMBER 3RD 2 DB GUPTA ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700175697,
+            "name": "TIVOLI GRAND RESORT HOTEL",
+            "hotelId": "FGDELGRA",
+            "geoCode": {
+                "latitude": 12.89643,
+                "longitude": 77.4537
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110036",
+                "cityName": "DELHI",
+                "lines": [
+                    "MAIN G.T.KARNAL ROAD JINDPUR VILLAGE",
+                    "OPPOSITE SAI BABA MANDIR"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "CP",
+            "iataCode": "DEL",
+            "dupeId": 700152439,
+            "name": "CROWNE PLAZA NEW DELHI ROHINI",
+            "hotelId": "CPDELCF5",
+            "geoCode": {
+                "latitude": 28.72015,
+                "longitude": 77.10983
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110085",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "SECTOR 10 ROHINI TWIN DISTRICT"
+                ]
+            },
+            "masterChainCode": "6C",
+            "lastUpdate": "2025-06-03T10:19:37"
+        },
+        {
+            "chainCode": "QI",
+            "iataCode": "DEL",
+            "dupeId": 700146485,
+            "name": "QUALITY INN BLISS",
+            "hotelId": "QIDEL097",
+            "geoCode": {
+                "latitude": 28.46638,
+                "longitude": 77.02724
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "PLOT NO 11/12, SECTOR 29"
+                ]
+            },
+            "masterChainCode": "EC",
+            "lastUpdate": "2025-06-03T10:16:59"
+        },
+        {
+            "chainCode": "XT",
+            "iataCode": "DEL",
+            "dupeId": 700152445,
+            "name": "HOTEL ALPINA",
+            "hotelId": "XTDEL389",
+            "geoCode": {
+                "latitude": 28.53612,
+                "longitude": 77.23857
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "0000",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "E 506 GK-II MAIN ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:41"
+        },
+        {
+            "chainCode": "WV",
+            "iataCode": "DEL",
+            "dupeId": 700182192,
+            "name": "CITRUS HOTELS GURGAON CENTRE",
+            "hotelId": "WVDEL131",
+            "geoCode": {
+                "latitude": 28.46725,
+                "longitude": 77.06643
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "285-286 MILLENIUM CITY CENTER",
+                    "SECTOR 29"
+                ]
+            },
+            "masterChainCode": "TC",
+            "lastUpdate": "2025-06-03T10:18:17"
+        },
+        {
+            "chainCode": "TJ",
+            "iataCode": "DEL",
+            "dupeId": 700024638,
+            "name": "TAJ PALACE HOTEL NEW DELHI",
+            "hotelId": "TJDEL859",
+            "geoCode": {
+                "latitude": 28.59542,
+                "longitude": 77.17061
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110021",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "SARDAR PATEL MARG",
+                    "DIPLOMATIC ENCLAVE"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:52"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700054987,
+            "name": "HERITAGE VILLAGE RESORT AND SPA",
+            "hotelId": "FGDELHVR",
+            "geoCode": {
+                "latitude": 28.64339,
+                "longitude": 77.11548
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122050",
+                "cityName": "NEW GURGAON",
+                "lines": [
+                    "NATIONAL HIGHWAY 8",
+                    "MANESAR"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "DEL",
+            "dupeId": 700154948,
+            "name": "RADISSON BLU HTL GREATER NOIDA",
+            "hotelId": "RDDEL172",
+            "geoCode": {
+                "latitude": 28.45022,
+                "longitude": 77.52974
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201306",
+                "cityName": "GREATER NOIDA",
+                "lines": [
+                    "C-8 SITE-IV 2ND CROSS AVE RD K"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:17:13"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700081697,
+            "name": "LOHMOD BOUTIQUE AIRPORT HOTEL",
+            "hotelId": "YXDEL870",
+            "geoCode": {
+                "latitude": 28.54257,
+                "longitude": 77.11819
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "A-292 MAHIPALPUR EXT. N.H.-8",
+                    "NATIONAL HIGWAY NEAR AIRPORT"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "TJ",
+            "iataCode": "DEL",
+            "dupeId": 700024641,
+            "name": "THE TAJ MAHAL HOTEL",
+            "hotelId": "TJDEL853",
+            "geoCode": {
+                "latitude": 28.60468,
+                "longitude": 77.22372
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110011",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "NUMBER ONE MANSINGH ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:52"
+        },
+        {
+            "chainCode": "DH",
+            "iataCode": "DEL",
+            "dupeId": 700154018,
+            "name": "HOTEL THE RAJ",
+            "hotelId": "DHDELAXV",
+            "geoCode": {
+                "latitude": 28.54317,
+                "longitude": 77.24265
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "DELHI",
+                "lines": [
+                    "8495, ARAKASHAN ROAD , PAHAR GAN"
+                ]
+            },
+            "masterChainCode": "TC",
+            "lastUpdate": "2025-06-03T10:21:32"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "DEL",
+            "dupeId": 700037505,
+            "name": "RADISSON BLU HOTEL NOIDA",
+            "hotelId": "RDDEL966",
+            "geoCode": {
+                "latitude": 28.56855,
+                "longitude": 77.32267
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201301",
+                "cityName": "NOIDA",
+                "lines": [
+                    "L-2 SECTOR 18"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:17:13"
+        },
+        {
+            "chainCode": "SX",
+            "iataCode": "DEL",
+            "dupeId": 700190962,
+            "name": "LEMON TREE PREMIER, DELHI AEROCITY",
+            "hotelId": "SXDELAER",
+            "geoCode": {
+                "latitude": 28.55203,
+                "longitude": 77.1209
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "DELHI",
+                "lines": [
+                    "ASSET NO 6",
+                    "AEROCITY HOSPITALITY DISTRICT"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:42"
+        },
+        {
+            "chainCode": "DH",
+            "iataCode": "DEL",
+            "dupeId": 700190962,
+            "name": "LEMON TREE PREMIER - DELHI AEROCITY",
+            "hotelId": "DHDELAXC",
+            "geoCode": {
+                "latitude": 28.54317,
+                "longitude": 77.24265
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "DELHI",
+                "lines": [
+                    "HOSPITALITY DISTRICT, DELHI INTERNATIONAL AIRPOT,",
+                    "INTERNATIONAL AIRPORT , DELHI , NEW"
+                ]
+            },
+            "masterChainCode": "TC",
+            "lastUpdate": "2025-06-03T10:21:32"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700164963,
+            "name": "EUROSTAR INTERNATIONAL",
+            "hotelId": "HSDELAEV",
+            "geoCode": {
+                "latitude": 28.54663,
+                "longitude": 77.12761
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "A-27 STREET NO.1 MAHIPALPUR EXTENSION, NH 8"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700056186,
+            "name": "JUSTA THE RESIDENCE",
+            "hotelId": "YXDEL484",
+            "geoCode": {
+                "latitude": 28.54233,
+                "longitude": 77.21933
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110017",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "S 362",
+                    "PANCHSHEEL PARK"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700095275,
+            "name": "APRA INN",
+            "hotelId": "HSDELAIY",
+            "geoCode": {
+                "latitude": 28.64675,
+                "longitude": 77.18901
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "WEA,KAROL BAGH,AJMAL KHAN ROAD 15A-61"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "CX",
+            "iataCode": "DEL",
+            "dupeId": 700153960,
+            "name": "COUNTRY INN GURGAON SECTOR 29",
+            "hotelId": "CXDEL519",
+            "geoCode": {
+                "latitude": 28.46216,
+                "longitude": 77.06756
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "PLOT NO. 360-362 SECTOR 29"
+                ]
+            },
+            "masterChainCode": "EC",
+            "lastUpdate": "2025-06-03T10:16:27"
+        },
+        {
+            "chainCode": "GT",
+            "iataCode": "DEL",
+            "dupeId": 700156067,
+            "name": "GOLDEN TULIP CHATTARPUR NEW DELHI",
+            "hotelId": "GTDELCHA",
+            "geoCode": {
+                "latitude": 28.48747,
+                "longitude": 77.18653
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110075",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "242 246, FATHEHPUR BERI, ASOLA",
+                    "CHATTARPUR TEMPLE ROAD"
+                ]
+            },
+            "masterChainCode": "LI",
+            "lastUpdate": "2025-06-03T10:16:38"
+        },
+        {
+            "chainCode": "HI",
+            "iataCode": "DEL",
+            "dupeId": 700221452,
+            "name": "HOLIDAY INN NEW DELHI INTL ARPT",
+            "hotelId": "HIDEL429",
+            "geoCode": {
+                "latitude": 28.55583,
+                "longitude": 77.09681
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "DELHI INTERNATIONAL AIRPORT ROAD",
+                    "ASSET AREA 12"
+                ]
+            },
+            "masterChainCode": "6C",
+            "lastUpdate": "2025-06-03T10:17:06"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700053535,
+            "name": "HOTEL SWATI DELUXE",
+            "hotelId": "FGDELSDE",
+            "geoCode": {
+                "latitude": 28.65239,
+                "longitude": 77.19607
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "17A/32 GURUDWARA ROAD W.E.A.",
+                    "KAROLBAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700154019,
+            "name": "VEDAS HERITAGE",
+            "hotelId": "HSDELAND",
+            "geoCode": {
+                "latitude": 28.64349,
+                "longitude": 77.18429
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "KAROL BAGH,NEW DELHI",
+                "lines": [
+                    "8A-28 WEA PUSA ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700140807,
+            "name": "FLORENCE INN",
+            "hotelId": "HSDELACW",
+            "geoCode": {
+                "latitude": 28.6519,
+                "longitude": 77.19188
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "15-A-6, W.E.A. AJMAL KHAN ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "BW",
+            "iataCode": "DEL",
+            "dupeId": 700054985,
+            "name": "BEST WESTERN RESORT COUNTRY CLUB",
+            "hotelId": "BWDEL538",
+            "geoCode": {
+                "latitude": 28.28284,
+                "longitude": 76.93142
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122105",
+                "cityName": "GURGAON",
+                "lines": [
+                    "PACHGAON TAURU ROAD",
+                    "TEHSIL TAURU NEAR MANESAR DIST"
+                ]
+            },
+            "masterChainCode": "EW",
+            "lastUpdate": "2025-06-03T10:16:37"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700095243,
+            "name": "JUSTA THE RESIDENCE GK DELHI",
+            "hotelId": "YXDELJGK",
+            "geoCode": {
+                "latitude": 28.54859,
+                "longitude": 77.24191
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110048",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "R 53",
+                    "GREATER KAILASH PART 1"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700144466,
+            "name": "JUSTA THE RESIDENCE GURGAON",
+            "hotelId": "YXDELJTR",
+            "geoCode": {
+                "latitude": 28.48415,
+                "longitude": 77.10688
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "NR 40  NATHAPUR ROAD",
+                    "DLF PHASE 3"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "WI",
+            "iataCode": "DEL",
+            "dupeId": 700095264,
+            "name": "WESTIN SOHNA RESORT AND SPA",
+            "hotelId": "WIDEL000",
+            "geoCode": {
+                "latitude": 28.26274,
+                "longitude": 77.16822
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122103",
+                "cityName": "SOHNA",
+                "lines": [
+                    "VATIKA COMPLEX",
+                    "PO BOX DHAULA KARANKI RD"
+                ]
+            },
+            "masterChainCode": "EM",
+            "lastUpdate": "2025-06-03T10:18:02"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700095269,
+            "name": "HOTEL OMNI",
+            "hotelId": "ONDELOMN",
+            "geoCode": {
+                "latitude": 28.64512,
+                "longitude": 77.1823
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "12A/21 W.E.A SARASWATI MARG",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700117819,
+            "name": "PARKLAND EXOTICA",
+            "hotelId": "YXDELPER",
+            "geoCode": {
+                "latitude": 28.58111,
+                "longitude": 77.2502
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110074",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "CHATTARPUR TEMPLE ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700153963,
+            "name": "VIVA DESTINATIONS",
+            "hotelId": "HSDELAAV",
+            "geoCode": {
+                "latitude": 28.45232,
+                "longitude": 77.03201
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "JHARSA ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "OD",
+            "iataCode": "DEL",
+            "dupeId": 502290158,
+            "name": "MEDANTA - MULTI SUPER SPECIALITY HOSPITA",
+            "hotelId": "ODDEL123",
+            "geoCode": {
+                "latitude": 28.48145,
+                "longitude": 77.04864
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "stateCode": "DL",
+                "cityName": "Delhi",
+                "lines": [
+                    "DELHI NCR GURUGRAM",
+                    "CH BAKTAWAR SINGH ROAD, SECTOR 38, GURUGRAM, HARYANA"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:20:31"
+        },
+        {
+            "chainCode": "CI",
+            "iataCode": "DEL",
+            "dupeId": 700156434,
+            "name": "COMFORT INN ANNEHA",
+            "hotelId": "CIDEL121",
+            "geoCode": {
+                "latitude": 28.54989,
+                "longitude": 77.23687
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110048",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "BB-17 OPP POST OFFICE",
+                    "GREATER KAILASH"
+                ]
+            },
+            "masterChainCode": "EC",
+            "lastUpdate": "2025-06-03T10:19:43"
+        },
+        {
+            "chainCode": "XT",
+            "iataCode": "DEL",
+            "dupeId": 700164949,
+            "name": "INDRAPRASTHA HOTEL",
+            "hotelId": "XTDEL871",
+            "geoCode": {
+                "latitude": 28.65784,
+                "longitude": 77.20283
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "17A-54 WEA KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:41"
+        },
+        {
+            "chainCode": "SI",
+            "iataCode": "DEL",
+            "dupeId": 700193857,
+            "name": "FOUR POINTS NEW DELHI",
+            "hotelId": "SIDEL975",
+            "geoCode": {
+                "latitude": 28.52932,
+                "longitude": 77.10078
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "PLOT NO 9 NATIONAL HIGHWAY 8",
+                    "SAMALKA"
+                ]
+            },
+            "masterChainCode": "EM",
+            "lastUpdate": "2025-06-03T10:17:39"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700172128,
+            "name": "REGALIA RETREAT",
+            "hotelId": "HSDELAJG",
+            "geoCode": {
+                "latitude": 28.5505,
+                "longitude": 77.2436
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110048",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "E 72, GK PART 1, HANS RAJ GUPTA ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700140804,
+            "name": "VISTA PARK GURGAON",
+            "hotelId": "FGDELVIS",
+            "geoCode": {
+                "latitude": 28.47085,
+                "longitude": 77.06046
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "PLOT NO.6 AND 7",
+                    "SECTOR 29"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700177655,
+            "name": "HOTEL BLOSSOM",
+            "hotelId": "YXDELHBL",
+            "geoCode": {
+                "latitude": 28.48497,
+                "longitude": 77.08421
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURAGON",
+                "lines": [
+                    "36 AKASHNEEM MARG"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700154030,
+            "name": "HOTEL LA WISTERIA",
+            "hotelId": "TADEL090",
+            "geoCode": {
+                "latitude": 28.58454,
+                "longitude": 77.03821
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110075",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "PLOT NO 52, SECTOR 12B",
+                    "DWARKA"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700095133,
+            "name": "ROYAL RETREAT",
+            "hotelId": "FGDELRYR",
+            "geoCode": {
+                "latitude": 28.47511,
+                "longitude": 77.10269
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "42 KUSUM MARG",
+                    "DLF CITY PHASE I"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700175683,
+            "name": "HOTEL SHANTI PALACE WEST DELHI",
+            "hotelId": "YXDELSHP",
+            "geoCode": {
+                "latitude": 28.63411,
+                "longitude": 77.21691
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110008",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "COTTAGE 4A SHADIPUR"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700095152,
+            "name": "HOTEL B CONTINENTAL",
+            "hotelId": "ONDELBCO",
+            "geoCode": {
+                "latitude": 28.64731,
+                "longitude": 77.1932
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "8/14 ABDUL AZIZ ROAD KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700031716,
+            "name": "SUNSTAR RESIDENCY",
+            "hotelId": "ILDEL163",
+            "geoCode": {
+                "latitude": 28.64685,
+                "longitude": 77.18455
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "8A50 WEA CHANNA MARKET"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700177658,
+            "name": "HOTEL GULMOHAR VILLA-GURGAON",
+            "hotelId": "TADEL078",
+            "geoCode": {
+                "latitude": 28.4869,
+                "longitude": 77.08351
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "11 GULMOHAR MARG",
+                    "DLF CITY PHASE II"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700145491,
+            "name": "VANSON VILLA",
+            "hotelId": "HSDELAHZ",
+            "geoCode": {
+                "latitude": 28.64175,
+                "longitude": 77.21101
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110055",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "CHUNA MANDI ROAD 2531, PAHAR GANJ"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "DEL",
+            "dupeId": 700018177,
+            "name": "RADISSON BLU PLAZA DELHI",
+            "hotelId": "RDDEL617",
+            "geoCode": {
+                "latitude": 28.54364,
+                "longitude": 77.11977
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "MAHIPALPUR ENHANCEMENT NH 8"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:17:13"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700076928,
+            "name": "HOTEL SUNSTAR GRAND",
+            "hotelId": "ILDEL165",
+            "geoCode": {
+                "latitude": 28.64629,
+                "longitude": 77.18425
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "7A17 WEA CHANNA MARKET"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "GZ",
+            "iataCode": "DEL",
+            "dupeId": 700193859,
+            "name": "HOTEL PITRASHISH PRIDE",
+            "hotelId": "GZDELHPP",
+            "geoCode": {
+                "latitude": 28.53025,
+                "longitude": 77.08651
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "98 KAPASHERA NEAR KAPASHERA",
+                    "NEAR KAPASHERA CROSSING"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:48"
+        },
+        {
+            "chainCode": "BW",
+            "iataCode": "DEL",
+            "dupeId": 700147876,
+            "name": "BEST WESTERN SKYCITY HOTEL",
+            "hotelId": "BWDEL553",
+            "geoCode": {
+                "latitude": 28.45841,
+                "longitude": 77.03465
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "1 OLD JUDICIAL COMPLEX",
+                    "SECTOR 15"
+                ]
+            },
+            "masterChainCode": "EW",
+            "lastUpdate": "2025-06-03T10:22:02"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700095102,
+            "name": "HOTEL CLASSIC",
+            "hotelId": "ONDELCLA",
+            "geoCode": {
+                "latitude": 28.64618,
+                "longitude": 77.19018
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "17A/59, W.E.A., AJMAL KHAN ROAD",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "CP",
+            "iataCode": "DEL",
+            "dupeId": 700145931,
+            "name": "CROWNE PLAZA NEW DELHI OKHLA",
+            "hotelId": "CPDELD95",
+            "geoCode": {
+                "latitude": 28.5612,
+                "longitude": 77.26971
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110020",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "CROWNE PLAZA NEW DELHI OKHLA",
+                    "PLOT NO. 1 COMMUNITY CENTRE"
+                ]
+            },
+            "masterChainCode": "6C",
+            "lastUpdate": "2025-06-03T10:19:39"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700156071,
+            "name": "PAWAN PLAZA",
+            "hotelId": "HSDELAIS",
+            "geoCode": {
+                "latitude": 28.65284,
+                "longitude": 77.19328
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "CHANNA MARKET 7A-9 WEA"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "UZ",
+            "iataCode": "DEL",
+            "dupeId": 700164973,
+            "name": "HOTEL GRAND GODWIN",
+            "hotelId": "UZDEL115",
+            "geoCode": {
+                "latitude": 28.64616,
+                "longitude": 77.21411
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110055",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "8502/41 ARAKASHAN ROAD, RAM NAGAR",
+                    "PAHARGANJ"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:08"
+        },
+        {
+            "chainCode": "OB",
+            "iataCode": "DEL",
+            "dupeId": 700013417,
+            "name": "MAIDENS HOTEL",
+            "hotelId": "OBDEL015",
+            "geoCode": {
+                "latitude": 28.67448,
+                "longitude": 77.22605
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110054",
+                "cityName": "DELHI",
+                "lines": [
+                    "7 SHAM NATH MARG"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:20:29"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700141457,
+            "name": "HOTEL FOREST GREEN",
+            "hotelId": "ONDELFOR",
+            "geoCode": {
+                "latitude": 28.55506,
+                "longitude": 77.21844
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110049",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "24 SIRI FORT ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700095143,
+            "name": "HOTEL BAMYAN",
+            "hotelId": "YXDEL143",
+            "geoCode": {
+                "latitude": 28.70115,
+                "longitude": 77.19743
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110030",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "6A RING ROAD",
+                    "LAJPAT NAGAR"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "IM",
+            "iataCode": "DEL",
+            "dupeId": 700141196,
+            "name": "IRIS PARK",
+            "hotelId": "IMDELIRI",
+            "geoCode": {
+                "latitude": 28.54725,
+                "longitude": 77.19745
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110029",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "A 1 24  SAFDARJUNG",
+                    "ENCLAVE"
+                ]
+            },
+            "masterChainCode": "EM",
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "PD",
+            "iataCode": "DEL",
+            "dupeId": 501412133,
+            "name": "PARK INN BY RADISSON NEW DELHI",
+            "hotelId": "PDDEL432",
+            "geoCode": {
+                "latitude": 28.62987,
+                "longitude": 77.31464
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110092",
+                "cityName": "DELHI",
+                "lines": [
+                    "PLOT NO 6A",
+                    "IP EXT PATPARGANJ"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:16:39"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700095138,
+            "name": "ASHIANA",
+            "hotelId": "HSDELADO",
+            "geoCode": {
+                "latitude": 28.64596,
+                "longitude": 77.21495
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110055",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "50 ARA KASHAN ROAD RAM NAGAR, PAHARGANJ"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700156076,
+            "name": "HOTEL REGENT INTERCONTINENTAL",
+            "hotelId": "TADEL005",
+            "geoCode": {
+                "latitude": 28.65621,
+                "longitude": 77.18541
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "4 70 WEA SARASWATIMARG",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700151141,
+            "name": "HOTEL BIZZOTEL GRAND",
+            "hotelId": "FGDELBGR",
+            "geoCode": {
+                "latitude": 28.47754,
+                "longitude": 77.04577
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "1816/2 OLD DELHI GURGAON ROAD",
+                    "SEC 14 NEAR SHYAM SWEETS"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 501415366,
+            "name": "TIVOLI GARDEN RESORT HOTEL",
+            "hotelId": "FGDELTGR",
+            "geoCode": {
+                "latitude": 28.50041,
+                "longitude": 77.16936
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110074",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "CHHATTARPUR HILLS",
+                    "MEHRAULI"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "MC",
+            "iataCode": "DEL",
+            "dupeId": 700175690,
+            "name": "JW MARRIOTT NEW DELHI AEROCITY",
+            "hotelId": "MCDELAPM",
+            "geoCode": {
+                "latitude": 28.55289,
+                "longitude": 77.12153
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "ASSET AREA 4 HOSPITALITY DISTR"
+                ]
+            },
+            "masterChainCode": "EM",
+            "lastUpdate": "2025-07-21T09:00:14"
+        },
+        {
+            "chainCode": "CX",
+            "iataCode": "DEL",
+            "dupeId": 700162080,
+            "name": "COUNTRY INN GURGAON SECTOR 12",
+            "hotelId": "CXDEL532",
+            "geoCode": {
+                "latitude": 28.40753,
+                "longitude": 76.89659
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122001",
+                "cityName": "GURGAON",
+                "lines": [
+                    "PLOT NO. 301302 SECTOR 12"
+                ]
+            },
+            "masterChainCode": "EC",
+            "lastUpdate": "2025-06-03T10:16:27"
+        },
+        {
+            "chainCode": "XT",
+            "iataCode": "DEL",
+            "dupeId": 700156065,
+            "name": "CABANA HOTEL",
+            "hotelId": "XTDEL873",
+            "geoCode": {
+                "latitude": 28.63411,
+                "longitude": 77.21691
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "0000",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "74-000 HAILE SELASSIE AVE."
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:41"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700164951,
+            "name": "SOUTH INDIAN HOTEL",
+            "hotelId": "ONDELSIH",
+            "geoCode": {
+                "latitude": 28.6492,
+                "longitude": 77.18881
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "10211 PADAM SINGH ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "CX",
+            "iataCode": "DEL",
+            "dupeId": 501538723,
+            "name": "COUNTRY INN GURGAON SOHNA ROAD",
+            "hotelId": "CXDEL330",
+            "geoCode": {
+                "latitude": 28.3348,
+                "longitude": 77.06793
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122102",
+                "cityName": "GURGAON",
+                "lines": [
+                    "10TH KM STONE",
+                    "BHONDSI SOHNA ROAD"
+                ]
+            },
+            "masterChainCode": "EC",
+            "lastUpdate": "2025-06-03T10:16:27"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700193861,
+            "name": "JASOLA SUITES AND APARTMENTS",
+            "hotelId": "ONDELJAS",
+            "geoCode": {
+                "latitude": 28.69892,
+                "longitude": 77.12
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110025",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "89 POCKET 1"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700128185,
+            "name": "ROCKLAND CR PARK",
+            "hotelId": "HSDELAMU",
+            "geoCode": {
+                "latitude": 28.53877,
+                "longitude": 77.24769
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110019",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "C. R. PARK B-207"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "DH",
+            "iataCode": "DEL",
+            "dupeId": 700128185,
+            "name": "ROCKLAND C R PARK",
+            "hotelId": "DHDELATZ",
+            "geoCode": {
+                "latitude": 28.54317,
+                "longitude": 77.24265
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "DELHI",
+                "lines": [
+                    "B-207, C. R. PARK, NEW DELHI - 110019,"
+                ]
+            },
+            "masterChainCode": "TC",
+            "lastUpdate": "2025-06-03T10:21:32"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700076923,
+            "name": "KARAT 87 INN",
+            "hotelId": "HSDELAAZ",
+            "geoCode": {
+                "latitude": 28.64581,
+                "longitude": 77.1948
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "KAROL BAGH,PADAM SINGH ROAD 18-19 WEA"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "IM",
+            "iataCode": "DEL",
+            "dupeId": 700193858,
+            "name": "HOTEL PARK RESIDENCY",
+            "hotelId": "IMDELHPR",
+            "geoCode": {
+                "latitude": 28.55707,
+                "longitude": 77.20518
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110016",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "D-1 GREEN PARK",
+                    "BESIDES UPHAAR CINEMA"
+                ]
+            },
+            "masterChainCode": "EM",
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700145466,
+            "name": "ROCKWELL PLAZA HOTEL",
+            "hotelId": "TADEL976",
+            "geoCode": {
+                "latitude": 28.64888,
+                "longitude": 77.19121
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "5 14 WEA AJMAL KHAN ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "UI",
+            "iataCode": "DEL",
+            "dupeId": 700034203,
+            "name": "THE HANS NEW DELHI",
+            "hotelId": "UIDELHAN",
+            "geoCode": {
+                "latitude": 28.63196,
+                "longitude": 77.2273
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110001",
+                "cityName": "DELHI",
+                "lines": [
+                    "15 BARAKHAMBA ROAD",
+                    "CONNAUGHT PLACE"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:05"
+        },
+        {
+            "chainCode": "GI",
+            "iataCode": "DEL",
+            "dupeId": 700141645,
+            "name": "HILTON GARDEN INN NEW DELHI SAKET",
+            "hotelId": "GIDEL110",
+            "geoCode": {
+                "latitude": 28.52813,
+                "longitude": 77.2163
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "1100017",
+                "cityName": "DELHI",
+                "lines": [
+                    "DLF PLACE A4 SAKET DISTRICT CENTRE"
+                ]
+            },
+            "masterChainCode": "EH",
+            "lastUpdate": "2025-06-03T10:21:49"
+        },
+        {
+            "chainCode": "RT",
+            "iataCode": "DEL",
+            "dupeId": 700095174,
+            "name": "IBIS GURGAON",
+            "hotelId": "RTDELIBI",
+            "geoCode": {
+                "latitude": 28.44133,
+                "longitude": 77.10175
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "GURGAON",
+                "lines": [
+                    "BLOCK 1 SECTOR 53",
+                    "GOLF COURSE ROAD"
+                ]
+            },
+            "masterChainCode": "RT",
+            "lastUpdate": "2025-06-03T10:17:15"
+        },
+        {
+            "chainCode": "SX",
+            "iataCode": "DEL",
+            "dupeId": 501164383,
+            "name": "RED FOX HOTEL AEROCITY",
+            "hotelId": "SXDEL002",
+            "geoCode": {
+                "latitude": 28.63411,
+                "longitude": 77.21691
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "DELHI",
+                "lines": [
+                    "ASSET NO. 6",
+                    "AEROCITY HOSPITALITY DISTRICT"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:42"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700147879,
+            "name": "HOTEL SUNSTAR HEIGHTS",
+            "hotelId": "ILDEL166",
+            "geoCode": {
+                "latitude": 28.66477,
+                "longitude": 77.21699
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "8A41 WEA CHANNA MARKET"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700162987,
+            "name": "PARKLAND GRAND",
+            "hotelId": "ILDEL176",
+            "geoCode": {
+                "latitude": 28.5289,
+                "longitude": 77.10326
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "88 89  KAPASHERA OPPOSITE SARV"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "HY",
+            "iataCode": "DEL",
+            "dupeId": 501365746,
+            "name": "HYATT REGENCY GURGAON",
+            "hotelId": "HYDELHRG",
+            "geoCode": {
+                "latitude": 28.39236,
+                "longitude": 76.97656
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122004",
+                "cityName": "Gurgaon",
+                "lines": [
+                    "OFF NH 8, KHERKI DAULA",
+                    "SECTOR 83"
+                ]
+            },
+            "masterChainCode": "LH",
+            "lastUpdate": "2025-06-03T10:19:40"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700053683,
+            "name": "ROYAL RESIDENCY",
+            "hotelId": "HSDELABR",
+            "geoCode": {
+                "latitude": 28.65135,
+                "longitude": 77.19126
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "SARASWATI MARG 12"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700216490,
+            "name": "REGENT GRAND",
+            "hotelId": "ILDEL303",
+            "geoCode": {
+                "latitude": 28.65483,
+                "longitude": 77.16782
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110008",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "26 EAST PATEL NAGAR NEAR PUSA",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "UZ",
+            "iataCode": "DEL",
+            "dupeId": 700215645,
+            "name": "THE ROYAL PARK PLAZA",
+            "hotelId": "UZDEL145",
+            "geoCode": {
+                "latitude": 28.4669,
+                "longitude": 77.09572
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "F-9/5 DLF PHASE -1"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:08"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700174210,
+            "name": "MAHAGUN SAROVAR PORTICO",
+            "hotelId": "YXDELMAH",
+            "geoCode": {
+                "latitude": 28.64776,
+                "longitude": 77.33458
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201010",
+                "cityName": "GHAZIABAD",
+                "lines": [
+                    "VC 3 SECTOR 3 VAISHALI",
+                    "GHAZIABAD 120"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700141442,
+            "name": "HOTEL SUNRISE VILLA",
+            "hotelId": "ILDEL262",
+            "geoCode": {
+                "latitude": 28.53684,
+                "longitude": 77.25775
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110019",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "L 13 KALKAJI"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "CY",
+            "iataCode": "DEL",
+            "dupeId": 700144805,
+            "name": "COURTYARD GURGAON MARRIOTT",
+            "hotelId": "CYDELGUC",
+            "geoCode": {
+                "latitude": 28.46098,
+                "longitude": 77.08028
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "PLOT-27BSECTOR RDBLK B SUSHANT"
+                ]
+            },
+            "masterChainCode": "EM",
+            "lastUpdate": "2025-07-21T06:03:06"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700164959,
+            "name": "ROCKLAND PANCHSHEEL ENCLAVE",
+            "hotelId": "HSDELAMV",
+            "geoCode": {
+                "latitude": 28.54352,
+                "longitude": 77.22974
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110017",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "PANCHSHEEL ENCLAVE C-30"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700141494,
+            "name": "OPTUS SAROVAR PREMIERE",
+            "hotelId": "YXDEL526",
+            "geoCode": {
+                "latitude": 28.51073,
+                "longitude": 77.04801
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "122002",
+                "cityName": "GURGAON",
+                "lines": [
+                    "43 AND 47 SECTOR 29",
+                    "CITY CENTER"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700164981,
+            "name": "HOTEL SINGH EMPIRE DX",
+            "hotelId": "ONDELSED",
+            "geoCode": {
+                "latitude": 28.64474,
+                "longitude": 77.21492
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110055",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "8707 10 D B GUPTA ROAD",
+                    "PAHARGANJ"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700172109,
+            "name": "KINGSTON",
+            "hotelId": "HSDELANA",
+            "geoCode": {
+                "latitude": 28.64578,
+                "longitude": 77.17846
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110008",
+                "cityName": "PATEL NAGAR,DELHI",
+                "lines": [
+                    "PATEL ROAD 9-12"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "UI",
+            "iataCode": "DEL",
+            "dupeId": 501338281,
+            "name": "FORTUNE INN GRAZIA GHAZIABAD",
+            "hotelId": "UIDEL002",
+            "geoCode": {
+                "latitude": 28.5774,
+                "longitude": 77.328
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201002",
+                "cityName": "GHAZIABAD",
+                "lines": [
+                    "PLOT NO.1 SECTOR-23",
+                    "SANJAY NAGAR DISTRICT CENTRE"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:05"
+        },
+        {
+            "chainCode": "UI",
+            "iataCode": "DEL",
+            "dupeId": 700154862,
+            "name": "FORTUNE PARK BOULEVARD",
+            "hotelId": "UIDEL849",
+            "geoCode": {
+                "latitude": 28.48632,
+                "longitude": 77.18792
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110074",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "CHHATARPUR MANDIR ROAD",
+                    "NEAR DERA MORE"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:05"
+        },
+        {
+            "chainCode": "YX",
+            "iataCode": "DEL",
+            "dupeId": 700095160,
+            "name": "THE MUSE SAROVAR PORTICO",
+            "hotelId": "YXDEL004",
+            "geoCode": {
+                "latitude": 28.54646,
+                "longitude": 77.24996
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110048",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "A-1 CHIRAG ENCLAVE"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:37"
+        },
+        {
+            "chainCode": "YH",
+            "iataCode": "DEL",
+            "dupeId": 700172125,
+            "name": "GINGER EAST DELHI",
+            "hotelId": "YHDELEAS",
+            "geoCode": {
+                "latitude": 28.58452,
+                "longitude": 77.22335
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110095",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "PLOT NO C DDA COMMUNITY CENTRE",
+                    "KARKADOOMA COURT ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:43"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700095113,
+            "name": "HOTEL BB PALACE",
+            "hotelId": "ONDELBBP",
+            "geoCode": {
+                "latitude": 28.65058,
+                "longitude": 77.19474
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "DELHI",
+                "lines": [
+                    "2638/2642 BANK STREET GURU DWARA ROAD",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "CX",
+            "iataCode": "DEL",
+            "dupeId": 700141189,
+            "name": "COUNTRY INN SUITES SAHIBABAD",
+            "hotelId": "CXDEL507",
+            "geoCode": {
+                "latitude": 28.654419999999998,
+                "longitude": 77.34399
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201010",
+                "cityName": "GHAZIABAD",
+                "lines": [
+                    "646 SITE-IV SAHIBABAD UTTAR PR"
+                ]
+            },
+            "masterChainCode": "EC",
+            "lastUpdate": "2025-06-03T10:16:27"
+        },
+        {
+            "chainCode": "UI",
+            "iataCode": "DEL",
+            "dupeId": 700024639,
+            "name": "GRAND NEW DELHI",
+            "hotelId": "UIDELGND",
+            "geoCode": {
+                "latitude": 28.5388,
+                "longitude": 77.15269
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110070",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "VASANT KUNJ PHASE II",
+                    "NELSON MANDELA ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:05"
+        },
+        {
+            "chainCode": "IL",
+            "iataCode": "DEL",
+            "dupeId": 700095153,
+            "name": "HOTEL MANDAKINI PALACE",
+            "hotelId": "ILDEL161",
+            "geoCode": {
+                "latitude": 28.64341,
+                "longitude": 77.20714
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "829 W.E.A."
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "XL",
+            "iataCode": "DEL",
+            "dupeId": 700027380,
+            "name": "THE SURYAA SUMMIT HOTELS",
+            "hotelId": "XLDELTSH",
+            "geoCode": {
+                "latitude": 28.56098,
+                "longitude": 77.26958
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110025",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "NEW FRIENDS COLONY"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:41"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700175680,
+            "name": "HOTEL DEER PARKK",
+            "hotelId": "TADEL992",
+            "geoCode": {
+                "latitude": 28.56105,
+                "longitude": 77.19722
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110029",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "122A SAFDAJUNG ENCLAVE"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700117808,
+            "name": "HOTEL CHANCHAL CONTINENTAL",
+            "hotelId": "ONDELHCC",
+            "geoCode": {
+                "latitude": 28.64582,
+                "longitude": 77.21599
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110055",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "8524 ARAKASHAN ROAD",
+                    "BEHIND SHIELA CINEMA PAHAR GUNJ"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "DEL",
+            "dupeId": 700095104,
+            "name": "HOTEL THE ROYAL PLAZA",
+            "hotelId": "IQDELRPL",
+            "geoCode": {
+                "latitude": 28.62512,
+                "longitude": 77.20985
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110001",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "19 ASHOKA ROAD",
+                    "CENTRAL DELHI"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:40"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700181645,
+            "name": "CROWNE PLAZA GREATER NOIDA",
+            "hotelId": "HSDELAMY",
+            "geoCode": {
+                "latitude": 28.51392,
+                "longitude": 77.46921
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "0",
+                "cityName": "NATIONAL CAPITAL REGION",
+                "lines": [
+                    "GREATER NOIDA, UTTAR PRADESH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "CX",
+            "iataCode": "DEL",
+            "dupeId": 700156066,
+            "name": "COUNTRY INN SUITES SATBARI",
+            "hotelId": "CXDEL539",
+            "geoCode": {
+                "latitude": 28.47179,
+                "longitude": 77.18693
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110030",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "579- SATBARI CHATARPUR ROAD"
+                ]
+            },
+            "masterChainCode": "EC",
+            "lastUpdate": "2025-06-03T10:16:27"
+        },
+        {
+            "chainCode": "RT",
+            "iataCode": "DEL",
+            "dupeId": 700162700,
+            "name": "IBIS DELHI AIRPORT",
+            "hotelId": "RTDELIBS",
+            "geoCode": {
+                "latitude": 28.5511,
+                "longitude": 77.12315
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110037",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "ASSET NO 9 HOSPITALITY",
+                    "DISTRICT DELHI AEROCITY"
+                ]
+            },
+            "masterChainCode": "RT",
+            "lastUpdate": "2025-06-03T10:17:15"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700117272,
+            "name": "SHANTI HOME",
+            "hotelId": "HSDELADF",
+            "geoCode": {
+                "latitude": 28.61901,
+                "longitude": 77.0915
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110058",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "A-1-300 JANAKPURI"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:30"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700175698,
+            "name": "TIVOLICITITEL",
+            "hotelId": "FGDELTIV",
+            "geoCode": {
+                "latitude": 28.56543,
+                "longitude": 77.24585
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110024",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "41 RING ROAD",
+                    "LAJPAT NAGAR IV"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "RD",
+            "iataCode": "DEL",
+            "dupeId": 700178547,
+            "name": "RADISSON BLU HOTEL GHAZIABAD",
+            "hotelId": "RDDEL553",
+            "geoCode": {
+                "latitude": 28.6425,
+                "longitude": 77.31859
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "201010",
+                "cityName": "GHAZIABAD",
+                "lines": [
+                    "H - 3 SECTOR - 14 KAUSHAMBI"
+                ]
+            },
+            "masterChainCode": "CW",
+            "lastUpdate": "2025-06-03T10:17:13"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700175696,
+            "name": "TIVOLI DAFFODILS",
+            "hotelId": "FGDELDAF",
+            "geoCode": {
+                "latitude": 28.49956,
+                "longitude": 77.25854
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110074",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "CHHATTARPUR MANDIR ROAD",
+                    "MEHRAULI"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "ON",
+            "iataCode": "DEL",
+            "dupeId": 700154032,
+            "name": "SARTHAK PALACE",
+            "hotelId": "ONDELSAR",
+            "geoCode": {
+                "latitude": 28.64449,
+                "longitude": 77.18804
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "14A 34 WEA CHANNA MARKET",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:21:52"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700164953,
+            "name": "UNIVERSE INN",
+            "hotelId": "HSDELALE",
+            "geoCode": {
+                "latitude": 28.64464,
+                "longitude": 77.188
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "AJMAL KHAN ROAD 17A-51 W E A, KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "IQ",
+            "iataCode": "DEL",
+            "dupeId": 700042318,
+            "name": "JAYPEE VASANT CONTINENTAL",
+            "hotelId": "IQDELCON",
+            "geoCode": {
+                "latitude": 28.55647,
+                "longitude": 77.16439
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110057",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "BASANT LOK VASANT VIHAR"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:40"
+        },
+        {
+            "chainCode": "MD",
+            "iataCode": "DEL",
+            "dupeId": 700024642,
+            "name": "LE MERIDIEN NEW DELHI",
+            "hotelId": "MDDELMER",
+            "geoCode": {
+                "latitude": 28.5904,
+                "longitude": 77.22476
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110001",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "WINDSOR PALACE"
+                ]
+            },
+            "masterChainCode": "EM",
+            "lastUpdate": "2025-08-04T06:06:36"
+        },
+        {
+            "chainCode": "FG",
+            "iataCode": "DEL",
+            "dupeId": 700142237,
+            "name": "HOTEL SWATI",
+            "hotelId": "FGDELSWA",
+            "geoCode": {
+                "latitude": 28.63243,
+                "longitude": 77.21879
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "15A56 OPP. LANE TO ROOPAK STORE W.E.A. KAROL BAGH",
+                    "AJMAL KHAN ROAD - NEAR JAINSONS"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:16:34"
+        },
+        {
+            "chainCode": "CP",
+            "iataCode": "DEL",
+            "dupeId": 700152441,
+            "name": "CROWNE PLAZA MAYUR VIHAR NOIDA",
+            "hotelId": "CPDEL99F",
+            "geoCode": {
+                "latitude": 28.59115,
+                "longitude": 77.29859
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110091",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "13 B MAYUR VIHAR",
+                    "DISTRICT CENTER"
+                ]
+            },
+            "masterChainCode": "6C",
+            "lastUpdate": "2025-06-03T10:19:37"
+        },
+        {
+            "chainCode": "TA",
+            "iataCode": "DEL",
+            "dupeId": 700175692,
+            "name": "SISLEY BOUTIQUE HOTEL",
+            "hotelId": "TADEL085",
+            "geoCode": {
+                "latitude": 28.6539,
+                "longitude": 77.19094
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "53 3 DB GUPTA ROAD",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:44"
+        },
+        {
+            "chainCode": "HS",
+            "iataCode": "DEL",
+            "dupeId": 700143423,
+            "name": "CLARKS INN SUITES EARLIER VITS DELHI NCR",
+            "hotelId": "HSDELANG",
+            "geoCode": {
+                "latitude": 28.66916,
+                "longitude": 77.45376
+            },
+            "address": {
+                "countryCode": "IN",
+                "cityName": "GHAZIABAD",
+                "lines": [
+                    "37-1 PACIFIC BUSINESS PARK SITE-IV,"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:19:32"
+        },
+        {
+            "chainCode": "TJ",
+            "iataCode": "DEL",
+            "dupeId": 700149638,
+            "name": "VIVANTA BY TAJ SURAJKUND",
+            "hotelId": "TJDELSUR",
+            "geoCode": {
+                "latitude": 28.48917,
+                "longitude": 77.28501
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "121001",
+                "cityName": "FARIDABAD",
+                "lines": [
+                    "SHOOTING RANGE ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:17:52"
+        },
+        {
+            "chainCode": "UI",
+            "iataCode": "DEL",
+            "dupeId": 700056851,
+            "name": "BAJAJ INDIAN HOME STAY",
+            "hotelId": "UIDEL838",
+            "geoCode": {
+                "latitude": 28.64731,
+                "longitude": 77.19108
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110005",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "8A  34 W.E.A.",
+                    "KAROL BAGH"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:05"
+        },
+        {
+            "chainCode": "XT",
+            "iataCode": "DEL",
+            "dupeId": 700156068,
+            "name": "HOTEL GRD INN",
+            "hotelId": "XTDEL384",
+            "geoCode": {
+                "latitude": 28.54073,
+                "longitude": 77.25697
+            },
+            "address": {
+                "countryCode": "IN",
+                "postalCode": "110017",
+                "cityName": "NEW DELHI",
+                "lines": [
+                    "H20 B KALKAJI MAIN ROAD"
+                ]
+            },
+            "lastUpdate": "2025-06-03T10:18:41"
+        }
+    ],
+    "meta": {
+        "count": 177,
+        "links": {
+            "self": "https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=DEL&hotelSource=ALL"
+        }
+    }
+}

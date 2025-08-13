@@ -8,27 +8,38 @@ const amadeus = new Amadeus({
 
 export async function POST(request) {
   try {
-    const { cityCode, checkInDate, checkOutDate, adults } =
+    const { cityCode, hotelId, checkInDate, checkOutDate, adults } =
       await request.json();
 
-    if (!cityCode || !checkInDate || !checkOutDate) {
+    if (!checkInDate || !checkOutDate) {
       return NextResponse.json(
-        {
-          success: false,
-          error:
-            "Missing required fields: cityCode, checkInDate, and checkOutDate are required.",
-        },
+        { success: false, error: "Check-in and Check-out dates are required." },
         { status: 400 }
       );
     }
 
-    // Step 1: Get a list of hotel IDs for the given city, as per the documentation.
-    const hotelListResponse =
-      await amadeus.referenceData.locations.hotels.byCity.get({
-        cityCode: cityCode,
-      });
+    let hotelIds = [];
 
-    const hotelIds = hotelListResponse.data.map((hotel) => hotel.hotelId);
+    // ✅ FIX: Add conditional logic to handle two types of searches
+    if (hotelId) {
+      // Case 1: A specific hotel was selected from autocomplete
+      hotelIds = [hotelId];
+    } else if (cityCode) {
+      // Case 2: A city was selected
+      const hotelListResponse =
+        await amadeus.referenceData.locations.hotels.byCity.get({
+          cityCode: cityCode,
+        });
+      hotelIds = hotelListResponse.data.map((hotel) => hotel.hotelId);
+    } else {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Either a cityCode or a hotelId is required.",
+        },
+        { status: 400 }
+      );
+    }
 
     if (hotelIds.length === 0) {
       return NextResponse.json({
@@ -38,10 +49,9 @@ export async function POST(request) {
       });
     }
 
-    // Step 2: Use the hotel IDs to get real-time offers (prices and availability).
-    // ✅ FIX: This now uses the correct `hotelOffersSearch.get` method.
+    // This part remains the same, as it gets offers for the list of IDs we prepared.
     const offersResponse = await amadeus.shopping.hotelOffersSearch.get({
-      hotelIds: hotelIds.slice(0, 30).join(","), // Amadeus API is limited, search for the first 30 hotels
+      hotelIds: hotelIds.slice(0, 30).join(","),
       adults: adults || "1",
       checkInDate: checkInDate,
       checkOutDate: checkOutDate,
@@ -53,12 +63,10 @@ export async function POST(request) {
       success: true,
       offers: offersResponse.data,
       meta: {
-        // This API doesn't support pagination directly, so we indicate no more pages.
         hasNextPage: false,
       },
     });
   } catch (error) {
-    // This will catch errors from either of the Amadeus API calls
     console.error("❌ Amadeus Hotel Search Error:", error.description || error);
     const errorMessage =
       error.description?.detail || "An error occurred with the hotel provider.";

@@ -1,0 +1,764 @@
+{
+    "success": true,
+    "pricedOffer": {
+        "id": "8",
+        "sourceApi": "amadeus",
+        "total_amount": "1316.20",
+        "total_currency": "USD",
+        "slices": [
+            {
+                "segments": [
+                    {
+                        "departure": {
+                            "iataCode": "DAC",
+                            "terminal": "1",
+                            "at": "2025-12-05T10:45:00"
+                        },
+                        "arrival": {
+                            "iataCode": "DOH",
+                            "at": "2025-12-05T14:00:00"
+                        },
+                        "carrierCode": "QR",
+                        "number": "641",
+                        "aircraft": {
+                            "code": "788"
+                        },
+                        "operating": {
+                            "carrierCode": "QR"
+                        },
+                        "duration": "PT6H15M",
+                        "id": "5",
+                        "numberOfStops": 0,
+                        "co2Emissions": [
+                            {
+                                "weight": 230,
+                                "weightUnit": "KG",
+                                "cabin": "ECONOMY"
+                            }
+                        ]
+                    },
+                    {
+                        "departure": {
+                            "iataCode": "DOH",
+                            "at": "2025-12-05T18:35:00"
+                        },
+                        "arrival": {
+                            "iataCode": "DXB",
+                            "terminal": "1",
+                            "at": "2025-12-05T20:55:00"
+                        },
+                        "carrierCode": "QR",
+                        "number": "1014",
+                        "aircraft": {
+                            "code": "359"
+                        },
+                        "operating": {
+                            "carrierCode": "QR"
+                        },
+                        "duration": "PT1H20M",
+                        "id": "6",
+                        "numberOfStops": 0,
+                        "co2Emissions": [
+                            {
+                                "weight": 35,
+                                "weightUnit": "KG",
+                                "cabin": "ECONOMY"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "segments": [
+                    {
+                        "departure": {
+                            "iataCode": "DXB",
+                            "terminal": "1",
+                            "at": "2025-12-15T05:20:00"
+                        },
+                        "arrival": {
+                            "iataCode": "DOH",
+                            "at": "2025-12-15T05:35:00"
+                        },
+                        "carrierCode": "QR",
+                        "number": "1003",
+                        "aircraft": {
+                            "code": "359"
+                        },
+                        "operating": {
+                            "carrierCode": "QR"
+                        },
+                        "duration": "PT1H15M",
+                        "id": "42",
+                        "numberOfStops": 0,
+                        "co2Emissions": [
+                            {
+                                "weight": 35,
+                                "weightUnit": "KG",
+                                "cabin": "ECONOMY"
+                            }
+                        ]
+                    },
+                    {
+                        "departure": {
+                            "iataCode": "DOH",
+                            "at": "2025-12-15T09:25:00"
+                        },
+                        "arrival": {
+                            "iataCode": "DAC",
+                            "terminal": "1",
+                            "at": "2025-12-15T17:20:00"
+                        },
+                        "carrierCode": "QR",
+                        "number": "638",
+                        "aircraft": {
+                            "code": "788"
+                        },
+                        "operating": {
+                            "carrierCode": "QR"
+                        },
+                        "duration": "PT4H55M",
+                        "id": "43",
+                        "numberOfStops": 0,
+                        "co2Emissions": [
+                            {
+                                "weight": 230,
+                                "weightUnit": "KG",
+                                "cabin": "ECONOMY"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "passengers": [
+            {
+                "travelerId": "1",
+                "fareOption": "STANDARD",
+                "travelerType": "ADULT",
+                "price": {
+                    "currency": "USD",
+                    "total": "658.10",
+                    "base": "465.00",
+                    "taxes": [
+                        {
+                            "amount": "4.20",
+                            "code": "BD"
+                        },
+                        {
+                            "amount": "20.40",
+                            "code": "AE"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P7"
+                        },
+                        {
+                            "amount": "5.40",
+                            "code": "R9"
+                        },
+                        {
+                            "amount": "20.80",
+                            "code": "OW"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P8"
+                        },
+                        {
+                            "amount": "3.00",
+                            "code": "PZ"
+                        },
+                        {
+                            "amount": "33.00",
+                            "code": "G4"
+                        },
+                        {
+                            "amount": "3.60",
+                            "code": "E5"
+                        },
+                        {
+                            "amount": "33.00",
+                            "code": "QA"
+                        },
+                        {
+                            "amount": "12.30",
+                            "code": "F6"
+                        },
+                        {
+                            "amount": "2.80",
+                            "code": "ZR"
+                        },
+                        {
+                            "amount": "1.40",
+                            "code": "TP"
+                        },
+                        {
+                            "amount": "33.20",
+                            "code": "UT"
+                        }
+                    ],
+                    "refundableTaxes": "253.10"
+                },
+                "fareDetailsBySegment": [
+                    {
+                        "segmentId": "5",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "QJBDP0RE",
+                        "brandedFare": "ECLASSIC",
+                        "class": "Q",
+                        "includedCheckedBags": {
+                            "weight": 25,
+                            "weightUnit": "KG"
+                        }
+                    },
+                    {
+                        "segmentId": "6",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "QJBDP0RE",
+                        "brandedFare": "ECLASSIC",
+                        "class": "Q",
+                        "includedCheckedBags": {
+                            "weight": 25,
+                            "weightUnit": "KG"
+                        }
+                    },
+                    {
+                        "segmentId": "42",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "OJBDP0RE",
+                        "brandedFare": "ECLASSIC",
+                        "class": "O",
+                        "includedCheckedBags": {
+                            "weight": 25,
+                            "weightUnit": "KG"
+                        }
+                    },
+                    {
+                        "segmentId": "43",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "OJBDP0RE",
+                        "brandedFare": "ECLASSIC",
+                        "class": "O",
+                        "includedCheckedBags": {
+                            "weight": 25,
+                            "weightUnit": "KG"
+                        }
+                    }
+                ]
+            },
+            {
+                "travelerId": "2",
+                "fareOption": "STANDARD",
+                "travelerType": "ADULT",
+                "price": {
+                    "currency": "USD",
+                    "total": "658.10",
+                    "base": "465.00",
+                    "taxes": [
+                        {
+                            "amount": "4.20",
+                            "code": "BD"
+                        },
+                        {
+                            "amount": "20.40",
+                            "code": "AE"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P7"
+                        },
+                        {
+                            "amount": "5.40",
+                            "code": "R9"
+                        },
+                        {
+                            "amount": "20.80",
+                            "code": "OW"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P8"
+                        },
+                        {
+                            "amount": "3.00",
+                            "code": "PZ"
+                        },
+                        {
+                            "amount": "33.00",
+                            "code": "G4"
+                        },
+                        {
+                            "amount": "3.60",
+                            "code": "E5"
+                        },
+                        {
+                            "amount": "33.00",
+                            "code": "QA"
+                        },
+                        {
+                            "amount": "12.30",
+                            "code": "F6"
+                        },
+                        {
+                            "amount": "2.80",
+                            "code": "ZR"
+                        },
+                        {
+                            "amount": "1.40",
+                            "code": "TP"
+                        },
+                        {
+                            "amount": "33.20",
+                            "code": "UT"
+                        }
+                    ],
+                    "refundableTaxes": "253.10"
+                },
+                "fareDetailsBySegment": [
+                    {
+                        "segmentId": "5",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "QJBDP0RE",
+                        "brandedFare": "ECLASSIC",
+                        "class": "Q",
+                        "includedCheckedBags": {
+                            "weight": 25,
+                            "weightUnit": "KG"
+                        }
+                    },
+                    {
+                        "segmentId": "6",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "QJBDP0RE",
+                        "brandedFare": "ECLASSIC",
+                        "class": "Q",
+                        "includedCheckedBags": {
+                            "weight": 25,
+                            "weightUnit": "KG"
+                        }
+                    },
+                    {
+                        "segmentId": "42",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "OJBDP0RE",
+                        "brandedFare": "ECLASSIC",
+                        "class": "O",
+                        "includedCheckedBags": {
+                            "weight": 25,
+                            "weightUnit": "KG"
+                        }
+                    },
+                    {
+                        "segmentId": "43",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "OJBDP0RE",
+                        "brandedFare": "ECLASSIC",
+                        "class": "O",
+                        "includedCheckedBags": {
+                            "weight": 25,
+                            "weightUnit": "KG"
+                        }
+                    }
+                ]
+            }
+        ],
+        "rawOffer": {
+            "type": "flight-offer",
+            "id": "8",
+            "source": "GDS",
+            "instantTicketingRequired": false,
+            "nonHomogeneous": false,
+            "paymentCardRequired": false,
+            "lastTicketingDate": "2025-08-31",
+            "itineraries": [
+                {
+                    "segments": [
+                        {
+                            "departure": {
+                                "iataCode": "DAC",
+                                "terminal": "1",
+                                "at": "2025-12-05T10:45:00"
+                            },
+                            "arrival": {
+                                "iataCode": "DOH",
+                                "at": "2025-12-05T14:00:00"
+                            },
+                            "carrierCode": "QR",
+                            "number": "641",
+                            "aircraft": {
+                                "code": "788"
+                            },
+                            "operating": {
+                                "carrierCode": "QR"
+                            },
+                            "duration": "PT6H15M",
+                            "id": "5",
+                            "numberOfStops": 0,
+                            "co2Emissions": [
+                                {
+                                    "weight": 230,
+                                    "weightUnit": "KG",
+                                    "cabin": "ECONOMY"
+                                }
+                            ]
+                        },
+                        {
+                            "departure": {
+                                "iataCode": "DOH",
+                                "at": "2025-12-05T18:35:00"
+                            },
+                            "arrival": {
+                                "iataCode": "DXB",
+                                "terminal": "1",
+                                "at": "2025-12-05T20:55:00"
+                            },
+                            "carrierCode": "QR",
+                            "number": "1014",
+                            "aircraft": {
+                                "code": "359"
+                            },
+                            "operating": {
+                                "carrierCode": "QR"
+                            },
+                            "duration": "PT1H20M",
+                            "id": "6",
+                            "numberOfStops": 0,
+                            "co2Emissions": [
+                                {
+                                    "weight": 35,
+                                    "weightUnit": "KG",
+                                    "cabin": "ECONOMY"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "segments": [
+                        {
+                            "departure": {
+                                "iataCode": "DXB",
+                                "terminal": "1",
+                                "at": "2025-12-15T05:20:00"
+                            },
+                            "arrival": {
+                                "iataCode": "DOH",
+                                "at": "2025-12-15T05:35:00"
+                            },
+                            "carrierCode": "QR",
+                            "number": "1003",
+                            "aircraft": {
+                                "code": "359"
+                            },
+                            "operating": {
+                                "carrierCode": "QR"
+                            },
+                            "duration": "PT1H15M",
+                            "id": "42",
+                            "numberOfStops": 0,
+                            "co2Emissions": [
+                                {
+                                    "weight": 35,
+                                    "weightUnit": "KG",
+                                    "cabin": "ECONOMY"
+                                }
+                            ]
+                        },
+                        {
+                            "departure": {
+                                "iataCode": "DOH",
+                                "at": "2025-12-15T09:25:00"
+                            },
+                            "arrival": {
+                                "iataCode": "DAC",
+                                "terminal": "1",
+                                "at": "2025-12-15T17:20:00"
+                            },
+                            "carrierCode": "QR",
+                            "number": "638",
+                            "aircraft": {
+                                "code": "788"
+                            },
+                            "operating": {
+                                "carrierCode": "QR"
+                            },
+                            "duration": "PT4H55M",
+                            "id": "43",
+                            "numberOfStops": 0,
+                            "co2Emissions": [
+                                {
+                                    "weight": 230,
+                                    "weightUnit": "KG",
+                                    "cabin": "ECONOMY"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "price": {
+                "currency": "USD",
+                "total": "1316.20",
+                "base": "930.00",
+                "fees": [
+                    {
+                        "amount": "0.00",
+                        "type": "SUPPLIER"
+                    },
+                    {
+                        "amount": "0.00",
+                        "type": "TICKETING"
+                    },
+                    {
+                        "amount": "0.00",
+                        "type": "FORM_OF_PAYMENT"
+                    }
+                ],
+                "grandTotal": "1316.20",
+                "billingCurrency": "USD"
+            },
+            "pricingOptions": {
+                "fareType": [
+                    "PUBLISHED"
+                ],
+                "includedCheckedBagsOnly": true
+            },
+            "validatingAirlineCodes": [
+                "QR"
+            ],
+            "travelerPricings": [
+                {
+                    "travelerId": "1",
+                    "fareOption": "STANDARD",
+                    "travelerType": "ADULT",
+                    "price": {
+                        "currency": "USD",
+                        "total": "658.10",
+                        "base": "465.00",
+                        "taxes": [
+                            {
+                                "amount": "4.20",
+                                "code": "BD"
+                            },
+                            {
+                                "amount": "20.40",
+                                "code": "AE"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P7"
+                            },
+                            {
+                                "amount": "5.40",
+                                "code": "R9"
+                            },
+                            {
+                                "amount": "20.80",
+                                "code": "OW"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P8"
+                            },
+                            {
+                                "amount": "3.00",
+                                "code": "PZ"
+                            },
+                            {
+                                "amount": "33.00",
+                                "code": "G4"
+                            },
+                            {
+                                "amount": "3.60",
+                                "code": "E5"
+                            },
+                            {
+                                "amount": "33.00",
+                                "code": "QA"
+                            },
+                            {
+                                "amount": "12.30",
+                                "code": "F6"
+                            },
+                            {
+                                "amount": "2.80",
+                                "code": "ZR"
+                            },
+                            {
+                                "amount": "1.40",
+                                "code": "TP"
+                            },
+                            {
+                                "amount": "33.20",
+                                "code": "UT"
+                            }
+                        ],
+                        "refundableTaxes": "253.10"
+                    },
+                    "fareDetailsBySegment": [
+                        {
+                            "segmentId": "5",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "QJBDP0RE",
+                            "brandedFare": "ECLASSIC",
+                            "class": "Q",
+                            "includedCheckedBags": {
+                                "weight": 25,
+                                "weightUnit": "KG"
+                            }
+                        },
+                        {
+                            "segmentId": "6",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "QJBDP0RE",
+                            "brandedFare": "ECLASSIC",
+                            "class": "Q",
+                            "includedCheckedBags": {
+                                "weight": 25,
+                                "weightUnit": "KG"
+                            }
+                        },
+                        {
+                            "segmentId": "42",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "OJBDP0RE",
+                            "brandedFare": "ECLASSIC",
+                            "class": "O",
+                            "includedCheckedBags": {
+                                "weight": 25,
+                                "weightUnit": "KG"
+                            }
+                        },
+                        {
+                            "segmentId": "43",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "OJBDP0RE",
+                            "brandedFare": "ECLASSIC",
+                            "class": "O",
+                            "includedCheckedBags": {
+                                "weight": 25,
+                                "weightUnit": "KG"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "travelerId": "2",
+                    "fareOption": "STANDARD",
+                    "travelerType": "ADULT",
+                    "price": {
+                        "currency": "USD",
+                        "total": "658.10",
+                        "base": "465.00",
+                        "taxes": [
+                            {
+                                "amount": "4.20",
+                                "code": "BD"
+                            },
+                            {
+                                "amount": "20.40",
+                                "code": "AE"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P7"
+                            },
+                            {
+                                "amount": "5.40",
+                                "code": "R9"
+                            },
+                            {
+                                "amount": "20.80",
+                                "code": "OW"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P8"
+                            },
+                            {
+                                "amount": "3.00",
+                                "code": "PZ"
+                            },
+                            {
+                                "amount": "33.00",
+                                "code": "G4"
+                            },
+                            {
+                                "amount": "3.60",
+                                "code": "E5"
+                            },
+                            {
+                                "amount": "33.00",
+                                "code": "QA"
+                            },
+                            {
+                                "amount": "12.30",
+                                "code": "F6"
+                            },
+                            {
+                                "amount": "2.80",
+                                "code": "ZR"
+                            },
+                            {
+                                "amount": "1.40",
+                                "code": "TP"
+                            },
+                            {
+                                "amount": "33.20",
+                                "code": "UT"
+                            }
+                        ],
+                        "refundableTaxes": "253.10"
+                    },
+                    "fareDetailsBySegment": [
+                        {
+                            "segmentId": "5",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "QJBDP0RE",
+                            "brandedFare": "ECLASSIC",
+                            "class": "Q",
+                            "includedCheckedBags": {
+                                "weight": 25,
+                                "weightUnit": "KG"
+                            }
+                        },
+                        {
+                            "segmentId": "6",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "QJBDP0RE",
+                            "brandedFare": "ECLASSIC",
+                            "class": "Q",
+                            "includedCheckedBags": {
+                                "weight": 25,
+                                "weightUnit": "KG"
+                            }
+                        },
+                        {
+                            "segmentId": "42",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "OJBDP0RE",
+                            "brandedFare": "ECLASSIC",
+                            "class": "O",
+                            "includedCheckedBags": {
+                                "weight": 25,
+                                "weightUnit": "KG"
+                            }
+                        },
+                        {
+                            "segmentId": "43",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "OJBDP0RE",
+                            "brandedFare": "ECLASSIC",
+                            "class": "O",
+                            "includedCheckedBags": {
+                                "weight": 25,
+                                "weightUnit": "KG"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

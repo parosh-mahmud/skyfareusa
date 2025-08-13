@@ -568,25 +568,34 @@ export default function ResultsClientComponent() {
     [data]
   );
 
+  // In ResultsClientComponent
+
   const groupedOffers = useMemo(() => {
     const groups = new Map();
     allOffers.forEach((offer) => {
+      // Use the exact same key generation logic as the backend
       const itineraryId =
         offer.slices
-          ?.flatMap(
-            (s) =>
-              s.segments?.map(
+          ?.map((slice) =>
+            slice.segments
+              ?.map(
                 (seg) =>
-                  `${seg.carrier?.iata_code || "XX"}-${
-                    seg.flight_number || "0000"
-                  }-${seg.departing_at}`
-              ) || []
+                  `${seg.carrier?.iata_code || "XX"}${seg.flight_number}-${
+                    seg.origin?.iata_code
+                  }`
+              )
+              .join("_")
           )
-          .join("--") || offer.id;
-      if (!groups.has(itineraryId)) groups.set(itineraryId, []);
+          .join("__") || offer.id;
+
+      if (!groups.has(itineraryId)) {
+        groups.set(itineraryId, []);
+      }
       groups.get(itineraryId).push(offer);
     });
+
     const groupedArray = Array.from(groups.values());
+    // Sort each group internally by price so the first offer is always the cheapest
     groupedArray.forEach((group) =>
       group.sort(
         (a, b) => parseFloat(a.total_amount) - parseFloat(b.total_amount)
