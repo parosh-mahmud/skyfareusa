@@ -1,52 +1,46 @@
 // src/lib/store.js
 import { create } from "zustand";
-import { persist } from "zustand/middleware"; // Optional: for saving state
+import { persist } from "zustand/middleware";
 
 export const useBookingStore = create(
-  // The persist middleware can save the booking flow state to localStorage.
-  // This allows a user to refresh the page and not lose their selected flight.
   persist(
-    (set) => ({
-      // State for the entire booking flow
-      selectedOffer: null, // The initial offer selected from the search results
-      pricedOffer: null, // The offer after re-pricing (has the final price and new ID)
-      bookingState: "idle", // Tracks the current stage: idle, pricing, priced, payment, confirmed
+    (set, get) => ({
+      selectedOffer: null,
+      pricedOffer: null,
+      bookingState: "selection",
+      selectedServices: [],
+      selectedSeats: {},
+      passengerDetails: [],
 
-      // --- Actions ---
+      setSelectedOffer: (offer) =>
+        set({ selectedOffer: offer, bookingState: "pricing" }),
+      setPricedOffer: (offer) => set({ pricedOffer: offer }),
+      setBookingState: (state) => set({ bookingState: state }),
+      setSelectedServices: (services) => set({ selectedServices: services }),
+      setSelectedSeats: (seats) => set({ selectedSeats: seats }),
+      setPassengerDetails: (passengers) =>
+        set({ passengerDetails: passengers }),
 
-      /**
-       * Kicks off the booking flow by storing the user's chosen flight.
-       * This should be called when the user clicks "Select" on a fare.
-       */
-      selectOfferForBooking: (offer) =>
-        set({
-          selectedOffer: offer,
-          pricedOffer: null, // Clear any previous priced offer
-          bookingState: "pricing", // Move to the 'pricing' stage
-        }),
-
-      /**
-       * Updates the store with the confirmed, re-priced offer from your API.
-       */
-      setPricedOffer: (offer) =>
-        set({
-          pricedOffer: offer,
-          bookingState: "priced", // Move to the 'priced' stage (ready for passenger details)
-        }),
-
-      /**
-       * Resets the entire booking flow.
-       * Call this after a successful booking or if the user cancels.
-       */
       resetBookingFlow: () =>
         set({
           selectedOffer: null,
           pricedOffer: null,
-          bookingState: "idle",
+          bookingState: "selection",
+          selectedServices: [],
+          selectedSeats: {},
+          passengerDetails: [],
         }),
     }),
     {
-      name: "flight-booking-storage", // Name for the localStorage item
+      name: "flight-booking-store",
+      partialize: (state) => ({
+        selectedOffer: state.selectedOffer,
+        pricedOffer: state.pricedOffer,
+        bookingState: state.bookingState,
+        selectedServices: state.selectedServices,
+        selectedSeats: state.selectedSeats,
+        passengerDetails: state.passengerDetails,
+      }),
     }
   )
 );

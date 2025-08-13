@@ -8,39 +8,99 @@ const amadeus = new Amadeus({
   clientSecret: process.env.AMADEUS_API_SECRET,
 });
 
-export async function GET(request, { params }) {
-  const { orderId } = params;
+// --- NORMALIZATION FUNCTIONS ---
+// These translate the complex, different responses into one simple format.
 
-  // In a real app, you would first look up your internal order by `orderId`
-  // to get the provider's order ID and the `sourceApi`.
-  // For this example, we assume the orderId is the provider's ID.
+const normalizeDuffelSeatMap = (seatMap) => ({
+  segmentId: seatMap.segment_id,
+  cabins: seatMap.cabins.map((cabin) => ({
+    cabinClass: cabin.cabin_class,
+    rows: cabin.rows.map((row) => ({
+      rowNumber: row.row_number,
+      sections: row.sections.map((section) => ({
+        elements: section.elements.map((el) => {
+          const service = el.available_services?.[0];
+          return {
+            type: el.type,
+            designator: el.designator,
+            isAvailable: !!service,
+            price: service?.total_amount,
+            currency: service?.total_currency,
+            serviceId: service?.id, // Crucial for booking
+          };
+        }),
+      })),
+    })),
+  })),
+});
 
-  // TODO: Replace this with your database lookup logic.
-  // For now, we'll guess the source based on the ID format.
-  const sourceApi = orderId.startsWith("ord_") ? "duffel" : "amadeus";
+const normalizeAmadeusSeatMap = (seatMap) => ({
+  segmentId: null, // Amadeus response doesn't tie map to a segment ID here
+  cabins: seatMap.decks.map((deck) => ({
+    cabinClass: deck.deckConfiguration?.cabin,
+    rows: seatMap.seats
+      .filter((s) => s.deck === deck.deckNumber)
+      .reduce((acc, seat) => {
+        let row = acc.find((r) => r.rowNumber === seat.number.slice(0, -1));
+        if (!row) {
+          row = {
+            rowNumber: seat.number.slice(0, -1),
+            sections: [{ elements: [] }],
+          };
+          acc.push(row);
+        }
+        const travelerPricing = seatMap.travelerPricing?.find(
+          (tp) => tp.seatNumber === seat.number
+        );
+        row.sections[0].elements.push({
+          type: "seat",
+          designator: seat.number,
+          isAvailable:
+            seat.travelerPricing?.[0]?.seatAvailabilityStatus === "AVAILABLE",
+          price: travelerPricing?.price?.total,
+          currency: travelerPricing?.price?.currency,
+          serviceId: null, // Amadeus books by designator, not service ID
+        });
+        return acc;
+      }, []),
+  })),
+});
 
+export async function POST(request) {
   try {
-    let seatMaps;
-    switch (sourceApi) {
+    const { offer } = await request.json();
+    if (!offer || !offer.sourceApi) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "A complete flight offer object with sourceApi is required.",
+        },
+        { status: 400 }
+      );
+    }
+
+    let normalizedSeatMaps = [];
+    switch (offer.sourceApi) {
       case "duffel":
-        const duffelSeatMaps = await duffel.seatMaps.get({ order_id: orderId });
-        seatMaps = duffelSeatMaps.data;
+        const duffelResponse = await duffel.seatMaps.get({
+          offer_id: offer.id,
+        });
+        normalizedSeatMaps = duffelResponse.data.map(normalizeDuffelSeatMap);
         break;
 
       case "amadeus":
-        // Amadeus uses the flight-orderId to get the seatmap
-        const amadeusSeatMaps = await amadeus.shopping.seatmaps.get({
-          "flight-orderId": orderId,
-        });
-        seatMaps = amadeusSeatMaps.data;
+        const amadeusOffer = offer.rawOffer || offer;
+        const amadeusResponse = await amadeus.shopping.seatmaps.post(
+          JSON.stringify({ data: [amadeusOffer] })
+        );
+        normalizedSeatMaps = amadeusResponse.data.map(normalizeAmadeusSeatMap);
         break;
 
       default:
-        throw new Error("Unknown API source");
+        throw new Error("Unknown API source for seat maps.");
     }
 
-    // You can add a normalization step here if their structures are different
-    return NextResponse.json({ success: true, seatMaps });
+    return NextResponse.json({ success: true, seatMaps: normalizedSeatMaps });
   } catch (error) {
     console.error(
       "❌ API Error fetching seat maps:",

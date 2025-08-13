@@ -1,22 +1,22 @@
-//src/app/book/selected/SelectedClientComponent.js
 "use client";
 
 import { useBookingStore } from "src/lib/store";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import {
   Loader,
   AlertCircle,
   Plane,
-  Users,
   CheckCircle,
   ArrowRight,
+  RefreshCw,
+  Users,
   Luggage,
   Utensils,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import AddExtras from "src/components/booking/AddExtras";
-// Helper function to format time
+
 const formatTime = (dateString) => {
   if (!dateString) return "N/A";
   return new Date(dateString).toLocaleTimeString("en-US", {
@@ -26,7 +26,6 @@ const formatTime = (dateString) => {
   });
 };
 
-// Helper function to format date
 const formatDate = (dateString) => {
   if (!dateString) return "N/A";
   return new Date(dateString).toLocaleDateString("en-US", {
@@ -36,7 +35,6 @@ const formatDate = (dateString) => {
   });
 };
 
-// Helper function to calculate duration - COMPLETELY FIXED
 const formatDuration = (duration) => {
   if (!duration) return "N/A";
   const match = duration.match(/PT(\d+H)?(\d+M)?/);
@@ -47,257 +45,121 @@ const formatDuration = (duration) => {
   return `${hours}${minutes}`.trim();
 };
 
-// Helper function to safely get airport code
-const getAirportCode = (location) => {
-  if (!location) return "N/A";
-
-  // Handle different API structures
-  if (location.iata_code) return location.iata_code; // Duffel
-  if (location.iataCode) return location.iataCode; // Amadeus
-
-  return "N/A";
-};
-
-// Helper function to safely get carrier name from API data
-const getCarrierName = (segment) => {
-  if (!segment) return "Unknown Carrier";
-
-  // For Duffel API - use actual carrier name from API
-  if (segment.carrier && segment.carrier.name) {
-    return segment.carrier.name;
-  }
-
-  // For Duffel API - marketing carrier
-  if (segment.marketing_carrier && segment.marketing_carrier.name) {
-    return segment.marketing_carrier.name;
-  }
-
-  // For Amadeus API - just use carrier code as provided
-  if (segment.carrierCode) {
-    return segment.carrierCode;
-  }
-
-  return "Unknown Carrier";
-};
-
-// Helper function to safely get flight number from API data
-const getFlightNumber = (segment) => {
-  if (!segment) return "N/A";
-
-  // Duffel API structures
-  if (segment.flight_number) return segment.flight_number;
-  if (segment.marketing_carrier_flight_number)
-    return segment.marketing_carrier_flight_number;
-  if (segment.operating_carrier_flight_number)
-    return segment.operating_carrier_flight_number;
-
-  // Amadeus API structure
-  if (segment.number) return segment.number;
-
-  return "N/A";
-};
-
-// Helper function to safely get aircraft name from API data - NO STATIC MAPPING
-const getAircraftName = (segment) => {
-  if (!segment) return "Aircraft";
-
-  // For Duffel API - use actual aircraft name from API
-  if (segment.aircraft && segment.aircraft.name) {
-    return segment.aircraft.name;
-  }
-
-  // For Amadeus API - use aircraft code from API
-  if (segment.aircraft && segment.aircraft.code) {
-    return `Aircraft ${segment.aircraft.code}`;
-  }
-
-  // If no aircraft info available
-  return "Aircraft";
-};
-
-// Helper function to get departure info from different API structures
-const getDepartureInfo = (segment) => {
-  if (!segment) return { time: null, code: "N/A" };
-
-  // Duffel structure
-  if (segment.departing_at && segment.origin) {
-    return {
-      time: segment.departing_at,
-      code: getAirportCode(segment.origin),
-    };
-  }
-
-  // Amadeus structure
-  if (segment.departure) {
-    return {
-      time: segment.departure.at,
-      code: segment.departure.iataCode || "N/A",
-    };
-  }
-
-  return { time: null, code: "N/A" };
-};
-
-// Helper function to get arrival info from different API structures
-const getArrivalInfo = (segment) => {
-  if (!segment) return { time: null, code: "N/A" };
-
-  // Duffel structure
-  if (segment.arriving_at && segment.destination) {
-    return {
-      time: segment.arriving_at,
-      code: getAirportCode(segment.destination),
-    };
-  }
-
-  // Amadeus structure
-  if (segment.arrival) {
-    return {
-      time: segment.arrival.at,
-      code: segment.arrival.iataCode || "N/A",
-    };
-  }
-
-  return { time: null, code: "N/A" };
-};
-
-// Flight Segment Component - FULLY RESPONSIVE & API-DRIVEN
-const FlightSegment = ({ segment, isReturn = false }) => {
+const FlightSegment = ({ segment }) => {
   if (!segment) return null;
 
-  const departureInfo = getDepartureInfo(segment);
-  const arrivalInfo = getArrivalInfo(segment);
-  const carrierName = getCarrierName(segment);
-  const flightNumber = getFlightNumber(segment);
-  const aircraftName = getAircraftName(segment);
-  const duration = segment.duration;
+  const departureTime = segment.departing_at || segment.departure?.at;
+  const arrivalTime = segment.arriving_at || segment.arrival?.at;
+  const departureCode =
+    segment.origin?.iata_code || segment.departure?.iataCode || "N/A";
+  const arrivalCode =
+    segment.destination?.iata_code || segment.arrival?.iataCode || "N/A";
+  const carrierName = segment.carrier?.name || segment.carrierCode || "Unknown";
+  const flightNumber = segment.flight_number || segment.number || "N/A";
 
   return (
     <div className="bg-white rounded-lg border p-3 sm:p-4 mb-3">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Mobile Layout */}
-        <div className="flex sm:hidden w-full justify-between items-center">
-          <div className="text-center">
-            <div className="text-xl font-bold text-gray-900">
-              {formatTime(departureInfo.time)}
-            </div>
-            <div className="text-sm text-gray-500">{departureInfo.code}</div>
-            <div className="text-xs text-gray-400">
-              {formatDate(departureInfo.time)}
-            </div>
+      <div className="flex items-center justify-between gap-4">
+        <div className="text-center">
+          <div className="text-xl font-bold text-gray-900">
+            {formatTime(departureTime)}
           </div>
-
-          <div className="flex-1 text-center px-2">
-            <div className="flex items-center justify-center mb-1">
-              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-              <div className="flex-1 h-0.5 bg-blue-200 mx-1"></div>
-              <Plane className="w-3 h-3 text-blue-500" />
-              <div className="flex-1 h-0.5 bg-blue-200 mx-1"></div>
-              <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-            </div>
-            <div className="text-xs text-gray-600">
-              {formatDuration(duration)}
-            </div>
-          </div>
-
-          <div className="text-center">
-            <div className="text-xl font-bold text-gray-900">
-              {formatTime(arrivalInfo.time)}
-            </div>
-            <div className="text-sm text-gray-500">{arrivalInfo.code}</div>
-            <div className="text-xs text-gray-400">
-              {formatDate(arrivalInfo.time)}
-            </div>
+          <div className="text-sm text-gray-500">{departureCode}</div>
+          <div className="text-xs text-gray-400">
+            {formatDate(departureTime)}
           </div>
         </div>
 
-        {/* Desktop Layout */}
-        <div className="hidden sm:flex items-center gap-4 w-full">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-gray-900">
-              {formatTime(departureInfo.time)}
-            </div>
-            <div className="text-sm text-gray-500">{departureInfo.code}</div>
-            <div className="text-xs text-gray-400">
-              {formatDate(departureInfo.time)}
-            </div>
+        <div className="flex-1 text-center">
+          <div className="flex items-center justify-center mb-1">
+            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+            <div className="flex-1 h-0.5 bg-blue-200 mx-2"></div>
+            <Plane className="w-4 h-4 text-blue-500" />
+            <div className="flex-1 h-0.5 bg-blue-200 mx-2"></div>
+            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
           </div>
-
-          <div className="flex-1 text-center">
-            <div className="flex items-center justify-center mb-1">
-              <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-              <div className="flex-1 h-0.5 bg-blue-200 mx-2"></div>
-              <Plane className="w-4 h-4 text-blue-500" />
-              <div className="flex-1 h-0.5 bg-blue-200 mx-2"></div>
-              <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-            </div>
-            <div className="text-sm text-gray-600">
-              {formatDuration(duration)}
-            </div>
-            <div className="text-xs text-gray-500">
-              {carrierName} {flightNumber}
-            </div>
+          <div className="text-sm text-gray-600">
+            {formatDuration(segment.duration)}
           </div>
-
-          <div className="text-center">
-            <div className="text-2xl font-bold text-gray-900">
-              {formatTime(arrivalInfo.time)}
-            </div>
-            <div className="text-sm text-gray-500">{arrivalInfo.code}</div>
-            <div className="text-xs text-gray-400">
-              {formatDate(arrivalInfo.time)}
-            </div>
+          <div className="text-xs text-gray-500">
+            {carrierName} {flightNumber}
           </div>
         </div>
-      </div>
 
-      <div className="mt-3 pt-3 border-t border-gray-100">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 text-sm text-gray-600">
-          <span className="flex items-center gap-1">
-            <Plane className="w-4 h-4" />
-            <span className="truncate">{aircraftName}</span>
-          </span>
-          <span className="text-xs sm:text-sm">Flight {flightNumber}</span>
-          <span className="text-xs sm:text-sm">{carrierName}</span>
+        <div className="text-center">
+          <div className="text-xl font-bold text-gray-900">
+            {formatTime(arrivalTime)}
+          </div>
+          <div className="text-sm text-gray-500">{arrivalCode}</div>
+          <div className="text-xs text-gray-400">{formatDate(arrivalTime)}</div>
         </div>
       </div>
     </div>
   );
 };
 
-// Price Breakdown Component - RESPONSIVE
-// A more accurate PriceBreakdown component
+// Updated PriceBreakdown component to include selectedServices
+const PriceBreakdown = ({ offer, selectedServices = [] }) => {
+  const basePrice = Number.parseFloat(offer?.total_amount || 0);
+  const taxes = basePrice * 0.15;
+  const fees = 25;
 
-const PriceBreakdown = ({ offer }) => {
-  // Use data directly from the API response
-  const total = parseFloat(offer?.total_amount || 0);
-  const base = parseFloat(offer?.base_amount || total * 0.8); // Estimate base if not provided
-  const taxes = total - base;
+  // Calculate services total
+  const servicesTotal = selectedServices.reduce((total, service) => {
+    return total + service.price * (service.quantity || 1);
+  }, 0);
+
+  const finalTotal = basePrice + servicesTotal;
 
   return (
     <div className="bg-gray-50 rounded-lg p-4">
       <h3 className="font-semibold text-gray-900 mb-3">Price Breakdown</h3>
       <div className="space-y-2 text-sm">
         <div className="flex justify-between">
-          <span className="text-gray-600">
-            Base Fare ({offer.passengers?.length || 1} travelers)
+          <span className="text-xs sm:text-sm">
+            Base Fare ({offer?.passengers?.length || 2} passengers)
           </span>
-          <span>${base.toFixed(2)}</span>
+          <span>${(basePrice - taxes - fees).toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-gray-600">Taxes & Surcharges</span>
+          <span>Taxes & Fees</span>
           <span>${taxes.toFixed(2)}</span>
         </div>
-        <div className="border-t pt-2 mt-2 flex justify-between font-semibold text-lg">
+        <div className="flex justify-between">
+          <span>Booking Fee</span>
+          <span>${fees.toFixed(2)}</span>
+        </div>
+
+        {/* Added services breakdown */}
+        {selectedServices.length > 0 && (
+          <>
+            <div className="border-t pt-2">
+              <div className="text-xs font-medium text-gray-700 mb-1">
+                Additional Services
+              </div>
+              {selectedServices.map((service) => (
+                <div key={service.id} className="flex justify-between text-xs">
+                  <span className="text-gray-600">
+                    {service.name} x{service.quantity || 1}
+                  </span>
+                  <span>
+                    ${(service.price * (service.quantity || 1)).toFixed(2)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        <div className="border-t pt-2 flex justify-between font-semibold text-base sm:text-lg">
           <span>Total</span>
-          <span>${total.toFixed(2)}</span>
+          <span>${finalTotal.toFixed(2)}</span>
         </div>
       </div>
     </div>
   );
 };
 
-// Helper function to get baggage info from API data - NO STATIC DATA
 const getBaggageInfo = (offer) => {
   const baggages = [];
 
@@ -358,53 +220,26 @@ const getBaggageInfo = (offer) => {
 
 export default function SelectedClientComponent() {
   const router = useRouter();
-  const { selectedOffer, setPricedOffer, resetBookingFlow, bookingState } =
-    useBookingStore();
+  const {
+    selectedOffer,
+    setPricedOffer,
+    resetBookingFlow,
+    bookingState,
+    selectedServices,
+    selectedSeats,
+    setSelectedServices,
+    setSelectedSeats,
+    pricedOffer,
+  } = useBookingStore();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showSeatMap, setShowSeatMap] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
-  // Redirect if no offer is selected
-  useEffect(() => {
-    if (!selectedOffer) {
-      router.push("/search");
-      return;
-    }
-  }, [selectedOffer, router]);
+  const pricingQuery = useQuery({
+    queryKey: ["flight-pricing", selectedOffer?.id, selectedOffer?.sourceApi],
+    queryFn: async () => {
+      if (!selectedOffer) throw new Error("No offer selected");
 
-  // Pricing mutation
-  const pricingMutation = useMutation({
-    mutationFn: async (offerData) => {
-      const response = await fetch("/api/flights/offers/price", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(offerData),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "Failed to price offer");
-      }
-
-      return response.json();
-    },
-    onSuccess: (data) => {
-      if (data.success) {
-        setPricedOffer(data.pricedOffer);
-      }
-    },
-    onError: (error) => {
-      console.error("Pricing failed:", error);
-    },
-  });
-
-  // Auto-price the offer when component loads
-  useEffect(() => {
-    if (
-      selectedOffer &&
-      bookingState === "pricing" &&
-      !pricingMutation.isPending
-    ) {
       const pricingData =
         selectedOffer.sourceApi === "amadeus"
           ? {
@@ -416,9 +251,91 @@ export default function SelectedClientComponent() {
               offerId: selectedOffer.id,
             };
 
-      pricingMutation.mutate(pricingData);
+      const response = await fetch("/api/flights/offers/price", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pricingData),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(
+          error.error || `HTTP ${response.status}: Failed to price offer`
+        );
+      }
+
+      return response.json();
+    },
+    enabled: !!selectedOffer && bookingState === "pricing",
+    staleTime: 5 * 60 * 1000, // 5 minutes - prevent unnecessary re-fetching
+    cacheTime: 10 * 60 * 1000, // 10 minutes cache
+    retry: (failureCount, error) => {
+      // Don't retry on 4xx errors except 429 (rate limit)
+      if (error.message.includes("HTTP 4") && !error.message.includes("429")) {
+        return false;
+      }
+      return failureCount < 3;
+    },
+    retryDelay: (attemptIndex) => {
+      // Exponential backoff: 1s, 2s, 4s
+      return Math.min(1000 * 2 ** attemptIndex, 30000);
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        setPricedOffer(data.pricedOffer);
+        setRetryCount(0);
+      }
+    },
+    onError: (error) => {
+      console.error("Pricing failed:", error);
+      setRetryCount((prev) => prev + 1);
+    },
+  });
+
+  const handleRetry = useCallback(() => {
+    setRetryCount(0);
+    pricingQuery.refetch();
+  }, [pricingQuery]);
+
+  // Redirect if no offer is selected
+  useEffect(() => {
+    if (!selectedOffer) {
+      router.push("/search");
+      return;
     }
-  }, [selectedOffer, bookingState]); // Removed pricingMutation from dependencies
+  }, [selectedOffer, router]);
+
+  const handleServiceSelection = (service, action) => {
+    const updatedServices = [...selectedServices];
+    const existingIndex = updatedServices.findIndex((s) => s.id === service.id);
+
+    if (action === "add") {
+      if (existingIndex >= 0) {
+        updatedServices[existingIndex] = {
+          ...updatedServices[existingIndex],
+          quantity: (updatedServices[existingIndex].quantity || 1) + 1,
+        };
+      } else {
+        updatedServices.push({ ...service, quantity: 1 });
+      }
+    } else if (action === "remove") {
+      if (existingIndex >= 0) {
+        const current = updatedServices[existingIndex];
+        if (current.quantity > 1) {
+          updatedServices[existingIndex] = {
+            ...updatedServices[existingIndex],
+            quantity: current.quantity - 1,
+          };
+        } else {
+          updatedServices.splice(existingIndex, 1);
+        }
+      }
+    }
+
+    setSelectedServices(updatedServices);
+  };
 
   const handleProceedToPassengerDetails = () => {
     setIsProcessing(true);
@@ -430,6 +347,24 @@ export default function SelectedClientComponent() {
   const handleBackToResults = () => {
     resetBookingFlow();
     router.push("/search/results");
+  };
+
+  const getErrorMessage = (error) => {
+    if (
+      error?.message?.includes("429") ||
+      error?.message?.includes("rate limit")
+    ) {
+      return `Rate limit exceeded. Please wait ${Math.min(
+        30,
+        5 * retryCount
+      )} seconds before trying again.`;
+    }
+    if (error?.message?.includes("HTTP 4")) {
+      return "Invalid request. Please go back and select a different flight.";
+    }
+    return (
+      error?.message || "Unable to confirm current prices. Please try again."
+    );
   };
 
   if (!selectedOffer) {
@@ -454,32 +389,15 @@ export default function SelectedClientComponent() {
     );
   }
 
-  // ✅ Use useQuery to automatically fetch the price when the component loads
-  const {
-    data: pricedOfferData,
-    isLoading: isPricing,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["price", selectedOffer?.id], // A unique key for this query
-    queryFn: () => repriceOffer(selectedOffer), // The function that fetches data
-    enabled: !!selectedOffer && bookingState === "pricing", // Only run if an offer is selected
-    onSuccess: (data) => {
-      // When successful, update the global store
-      setPricedOffer(data.pricedOffer);
-    },
-    retry: false, // Don't retry automatically on failure
-  });
-
-  const isLoading = pricingMutation.isPending || isProcessing;
-  const pricedOffer = pricedOfferData?.pricedOffer || selectedOffer;
-  const hasError = pricingMutation.isError;
-  const baggages = getBaggageInfo(pricedOffer);
+  const currentOffer = pricedOffer || selectedOffer;
+  const isLoading = pricingQuery.isLoading || isProcessing;
+  const hasError = pricingQuery.isError;
+  const baggages = getBaggageInfo(currentOffer);
 
   return (
     <div className="min-h-screen bg-gray-50 py-4 sm:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header - RESPONSIVE */}
+        {/* Header */}
         <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
@@ -494,11 +412,11 @@ export default function SelectedClientComponent() {
               <div className="text-2xl sm:text-3xl font-bold text-blue-600">
                 $
                 {Math.round(
-                  Number.parseFloat(pricedOffer.total_amount || 0)
+                  Number.parseFloat(currentOffer.total_amount || 0)
                 ).toLocaleString()}
               </div>
               <div className="text-sm text-gray-500">
-                {pricedOffer.passengers?.length || 2} passengers
+                {currentOffer.passengers?.length || 2} passengers
               </div>
             </div>
           </div>
@@ -519,19 +437,30 @@ export default function SelectedClientComponent() {
         {/* Error State */}
         {hasError && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 sm:mb-6">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mb-2">
               <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
               <span className="text-red-700 font-medium">Pricing Error</span>
             </div>
-            <p className="text-red-600 mt-1 text-sm">
-              {pricingMutation.error?.message ||
-                "Unable to confirm current prices. Please try again."}
+            <p className="text-red-600 mb-3 text-sm">
+              {getErrorMessage(pricingQuery.error)}
             </p>
+            <button
+              onClick={handleRetry}
+              disabled={pricingQuery.isFetching}
+              className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 text-sm"
+            >
+              {pricingQuery.isFetching ? (
+                <Loader className="w-4 h-4 animate-spin" />
+              ) : (
+                <RefreshCw className="w-4 h-4" />
+              )}
+              Try Again
+            </button>
           </div>
         )}
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
-          {/* Flight Details - RESPONSIVE */}
+          {/* Flight Details */}
           <div className="xl:col-span-2 space-y-4 sm:space-y-6">
             {/* Outbound Flight */}
             <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
@@ -539,39 +468,34 @@ export default function SelectedClientComponent() {
                 <Plane className="w-5 h-5 text-blue-600" />
                 Outbound Flight
               </h2>
-              {pricedOffer.slices &&
-                pricedOffer.slices[0] &&
-                pricedOffer.slices[0].segments &&
-                pricedOffer.slices[0].segments.map((segment, index) => (
+              {currentOffer.slices &&
+                currentOffer.slices[0] &&
+                currentOffer.slices[0].segments &&
+                currentOffer.slices[0].segments.map((segment, index) => (
                   <FlightSegment key={index} segment={segment} />
                 ))}
             </div>
 
             {/* Return Flight */}
-            {pricedOffer.slices && pricedOffer.slices[1] && (
+            {currentOffer.slices && currentOffer.slices[1] && (
               <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                   <Plane className="w-5 h-5 text-blue-600 transform rotate-180" />
                   Return Flight
                 </h2>
-                {pricedOffer.slices[1].segments &&
-                  pricedOffer.slices[1].segments.map((segment, index) => (
-                    <FlightSegment
-                      key={index}
-                      segment={segment}
-                      isReturn={true}
-                    />
+                {currentOffer.slices[1].segments &&
+                  currentOffer.slices[1].segments.map((segment, index) => (
+                    <FlightSegment key={index} segment={segment} />
                   ))}
               </div>
             )}
 
-            {pricedOffer && (
+            {currentOffer && (
               <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-                <AddExtras offer={pricedOffer} />
+                <AddExtras offer={currentOffer} />
               </div>
             )}
 
-            {/* Fare Features - RESPONSIVE */}
             <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 Included in Your Fare
@@ -604,10 +528,12 @@ export default function SelectedClientComponent() {
             </div>
           </div>
 
-          {/* Booking Summary Sidebar - RESPONSIVE */}
+          {/* Booking Summary Sidebar */}
           <div className="space-y-4 sm:space-y-6">
-            {/* Price Summary */}
-            <PriceBreakdown offer={pricedOffer} />
+            <PriceBreakdown
+              offer={currentOffer}
+              selectedServices={selectedServices}
+            />
 
             {/* Booking Progress */}
             <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
@@ -640,7 +566,7 @@ export default function SelectedClientComponent() {
               </div>
             </div>
 
-            {/* Action Buttons - RESPONSIVE */}
+            {/* Action Buttons */}
             <div className="space-y-3">
               <button
                 onClick={handleProceedToPassengerDetails}
@@ -668,7 +594,6 @@ export default function SelectedClientComponent() {
               </button>
             </div>
 
-            {/* Support Info - RESPONSIVE */}
             <div className="bg-blue-50 rounded-lg p-4">
               <h4 className="font-medium text-blue-900 mb-2">Need Help?</h4>
               <p className="text-sm text-blue-700 mb-3">

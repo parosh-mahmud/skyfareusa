@@ -1,0 +1,3431 @@
+{
+    "success": true,
+    "seatMaps": [
+        {
+            "segmentId": "seg_0000Ax8SraC5Q8RqG9KZbG",
+            "cabins": [
+                {
+                    "cabinClass": "economy",
+                    "rows": [
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "empty",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "bassinet",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "empty",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "bassinet",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "empty",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "bassinet",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "empty",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "28A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "28C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiAOLxkjRYHa4"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "28D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "28E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiAOLxkjRYHa6"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "28F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiAOLxkjRYHa8"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "28J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "28K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "29A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiAOLxkjRYHaA"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "29D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "29H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "30A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "30D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "30H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiAOLxkjRYHaC"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiAOLxkjRYHaE"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiAOLxkjRYHaG"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "31A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiAOLxkjRYHaI"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "31D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiAOLxkjRYHaK"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "31H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8K"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "32A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8M"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8O"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "32D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8Q"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "32H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8S"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8U"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "33A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "33D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8W"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8Y"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "33H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8a"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8c"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "34A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8e"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "34D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8g"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "34H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "35A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8i"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "35D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8k"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "35H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8m"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8o"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "exit_row",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": []
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "exit_row",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "37A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8q"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8s"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8u"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "37D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8w"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ8y"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "37H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ90"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ92"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ94"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "38A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ96"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "38D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ98"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "38H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9A"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "39A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "39D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "39H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "40A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "40D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9C"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "40H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9E"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "41A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "41D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9G"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9I"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "41H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9K"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9M"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9O"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "42A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9Q"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "42D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9S"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9U"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "42H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9W"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "43A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9Y"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "43D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9a"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "43H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "44A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9c"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "44D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "44H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9e"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9g"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "45A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9i"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "45D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9k"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iiWN2FKkXiZ9m"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "45H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "46A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgb"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgd"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "46D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgf"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "46H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgh"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgj"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "47A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgl"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgn"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgp"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "47D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgr"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgt"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "47H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgv"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgx"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "48A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqgz"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqh1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "48D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "48H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqh3"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "49A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "49C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqh5"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "49D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "49E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "49F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqh7"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "49J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqh9"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "49K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "50A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhB"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "50C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "50D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "50E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "50F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhD"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "50J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhF"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "50K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": []
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "galley",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "galley",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "galley",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "segmentId": "seg_0000Ax8SraC5Q8RqG9KZbe",
+            "cabins": [
+                {
+                    "cabinClass": "economy",
+                    "rows": [
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "empty",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "bassinet",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "empty",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "bassinet",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "empty",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "bassinet",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "empty",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "28A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "28C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhH"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "28D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "28E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhJ"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "28F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhL"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "28J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "28K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "29A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhN"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "29D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "29H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "29K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "30A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "30D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "30H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhP"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhR"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "30K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhT"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "31A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhV"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "31D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhX"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "31H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhZ"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "31K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "32A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhb"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhd"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "32D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhf"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "32H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhh"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhj"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "32K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "33A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "33D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhl"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhn"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "33H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhp"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhr"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "33K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "34A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqht"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "34D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhv"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "34H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "34K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "35A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5iisLiWuldsqhx"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "35D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Eq"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "35H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Es"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Eu"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "35K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "exit_row",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": []
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "exit_row",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "37A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Ew"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Ey"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38F0"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "37D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38F2"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38F4"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "37H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38F6"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38F8"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "37K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FA"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "38A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FC"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "38D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FE"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "38H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "38K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FG"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "39A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "39D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "39H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "39K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "40A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "40D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FI"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "40H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FK"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "40K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "41A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "41D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FM"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FO"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "41H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FQ"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FS"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "41K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FU"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "42A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FW"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "42D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38FY"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fa"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "42H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "42K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fc"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "43A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fe"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "43D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fg"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "43H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "43K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "44A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fi"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "44D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "44H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fk"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fm"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "44K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "45A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45B",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fo"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "45D",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fq"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fs"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "45H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "45K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "46A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fu"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fw"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "46D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38Fy"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "46H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38G0"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "46K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38G2"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "47A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38G4"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38G6"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38G8"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "47D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47E",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GA"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GC"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "47H",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GE"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "47K",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GG"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "48A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48B",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GI"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GK"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "48D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48F",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "48H",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GM"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48J",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "48K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "49A",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "49C",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GO"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "49D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "49E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "49F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GQ"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "49J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GS"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "49K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "50A",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijEKOoUmk38GU"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "50C",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "50D",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "50E",
+                                            "isAvailable": false
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "50F",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijaJ564nqDPn6"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "seat",
+                                            "designator": "50J",
+                                            "isAvailable": true,
+                                            "price": "27.15",
+                                            "currency": "USD",
+                                            "serviceId": "ase_0000Ax8X5ijaJ564nqDPn8"
+                                        },
+                                        {
+                                            "type": "seat",
+                                            "designator": "50K",
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": []
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "lavatory",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "sections": [
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "galley",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "galley",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "type": "galley",
+                                            "designator": null,
+                                            "isAvailable": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
