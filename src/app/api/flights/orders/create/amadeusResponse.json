@@ -1,0 +1,479 @@
+{
+    "success": true,
+    "rawResponse": {
+        "data": {
+            "type": "flight-order",
+            "id": "eJzTd9e3DA539PEGAAsoAmE%3D",
+            "queuingOfficeId": "NCE4D31SB",
+            "associatedRecords": [
+                {
+                    "reference": "9SWALK",
+                    "creationDate": "2025-08-15T22:05:00.000",
+                    "originSystemCode": "GDS",
+                    "flightOfferId": "1"
+                },
+                {
+                    "reference": "9SWALK",
+                    "creationDate": "2025-08-15T22:05:00.000",
+                    "originSystemCode": "UL",
+                    "flightOfferId": "1"
+                }
+            ],
+            "flightOffers": [
+                {
+                    "type": "flight-offer",
+                    "id": "1",
+                    "source": "GDS",
+                    "nonHomogeneous": false,
+                    "lastTicketingDate": "2025-08-27",
+                    "itineraries": [
+                        {
+                            "segments": [
+                                {
+                                    "departure": {
+                                        "iataCode": "DAC",
+                                        "terminal": "1",
+                                        "at": "2025-08-27T14:30:00"
+                                    },
+                                    "arrival": {
+                                        "iataCode": "CMB",
+                                        "at": "2025-08-27T17:15:00"
+                                    },
+                                    "carrierCode": "UL",
+                                    "number": "190",
+                                    "aircraft": {
+                                        "code": "333"
+                                    },
+                                    "duration": "PT3H15M",
+                                    "id": "3",
+                                    "numberOfStops": 0,
+                                    "co2Emissions": [
+                                        {
+                                            "weight": 173,
+                                            "weightUnit": "KG",
+                                            "cabin": "ECONOMY"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "segments": [
+                                {
+                                    "departure": {
+                                        "iataCode": "CMB",
+                                        "at": "2025-09-24T09:25:00"
+                                    },
+                                    "arrival": {
+                                        "iataCode": "DAC",
+                                        "terminal": "1",
+                                        "at": "2025-09-24T13:10:00"
+                                    },
+                                    "carrierCode": "UL",
+                                    "number": "189",
+                                    "aircraft": {
+                                        "code": "333"
+                                    },
+                                    "duration": "PT3H15M",
+                                    "id": "35",
+                                    "numberOfStops": 0,
+                                    "co2Emissions": [
+                                        {
+                                            "weight": 173,
+                                            "weightUnit": "KG",
+                                            "cabin": "ECONOMY"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "price": {
+                        "currency": "USD",
+                        "total": "1659.60",
+                        "base": "1348.00",
+                        "fees": [
+                            {
+                                "amount": "0.00",
+                                "type": "TICKETING"
+                            },
+                            {
+                                "amount": "0.00",
+                                "type": "SUPPLIER"
+                            },
+                            {
+                                "amount": "0.00",
+                                "type": "FORM_OF_PAYMENT"
+                            }
+                        ],
+                        "grandTotal": "1659.60",
+                        "billingCurrency": "USD"
+                    },
+                    "pricingOptions": {
+                        "fareType": [
+                            "PUBLISHED"
+                        ],
+                        "includedCheckedBagsOnly": false
+                    },
+                    "validatingAirlineCodes": [
+                        "UL"
+                    ],
+                    "travelerPricings": [
+                        {
+                            "travelerId": "1",
+                            "fareOption": "STANDARD",
+                            "travelerType": "ADULT",
+                            "price": {
+                                "currency": "USD",
+                                "total": "575.40",
+                                "base": "473.00",
+                                "taxes": [
+                                    {
+                                        "amount": "4.20",
+                                        "code": "BD"
+                                    },
+                                    {
+                                        "amount": "2.30",
+                                        "code": "E5"
+                                    },
+                                    {
+                                        "amount": "60.00",
+                                        "code": "LK"
+                                    },
+                                    {
+                                        "amount": "8.30",
+                                        "code": "OW"
+                                    },
+                                    {
+                                        "amount": "5.00",
+                                        "code": "P7"
+                                    },
+                                    {
+                                        "amount": "6.00",
+                                        "code": "P8"
+                                    },
+                                    {
+                                        "amount": "16.60",
+                                        "code": "UT"
+                                    }
+                                ],
+                                "refundableTaxes": "106.40"
+                            },
+                            "fareDetailsBySegment": [
+                                {
+                                    "segmentId": "3",
+                                    "cabin": "ECONOMY",
+                                    "fareBasis": "SE2MBD",
+                                    "class": "S",
+                                    "includedCheckedBags": {
+                                        "weight": 30,
+                                        "weightUnit": "KG"
+                                    }
+                                },
+                                {
+                                    "segmentId": "35",
+                                    "cabin": "ECONOMY",
+                                    "fareBasis": "QE2MP9BD",
+                                    "class": "Q",
+                                    "includedCheckedBags": {
+                                        "weight": 30,
+                                        "weightUnit": "KG"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "travelerId": "2",
+                            "fareOption": "STANDARD",
+                            "travelerType": "ADULT",
+                            "price": {
+                                "currency": "USD",
+                                "total": "575.40",
+                                "base": "473.00",
+                                "taxes": [
+                                    {
+                                        "amount": "4.20",
+                                        "code": "BD"
+                                    },
+                                    {
+                                        "amount": "2.30",
+                                        "code": "E5"
+                                    },
+                                    {
+                                        "amount": "60.00",
+                                        "code": "LK"
+                                    },
+                                    {
+                                        "amount": "8.30",
+                                        "code": "OW"
+                                    },
+                                    {
+                                        "amount": "5.00",
+                                        "code": "P7"
+                                    },
+                                    {
+                                        "amount": "6.00",
+                                        "code": "P8"
+                                    },
+                                    {
+                                        "amount": "16.60",
+                                        "code": "UT"
+                                    }
+                                ],
+                                "refundableTaxes": "106.40"
+                            },
+                            "fareDetailsBySegment": [
+                                {
+                                    "segmentId": "3",
+                                    "cabin": "ECONOMY",
+                                    "fareBasis": "SE2MBD",
+                                    "class": "S",
+                                    "includedCheckedBags": {
+                                        "weight": 30,
+                                        "weightUnit": "KG"
+                                    }
+                                },
+                                {
+                                    "segmentId": "35",
+                                    "cabin": "ECONOMY",
+                                    "fareBasis": "QE2MP9BD",
+                                    "class": "Q",
+                                    "includedCheckedBags": {
+                                        "weight": 30,
+                                        "weightUnit": "KG"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "travelerId": "3",
+                            "fareOption": "STANDARD",
+                            "travelerType": "CHILD",
+                            "price": {
+                                "currency": "USD",
+                                "total": "449.10",
+                                "base": "355.00",
+                                "taxes": [
+                                    {
+                                        "amount": "4.20",
+                                        "code": "BD"
+                                    },
+                                    {
+                                        "amount": "2.30",
+                                        "code": "E5"
+                                    },
+                                    {
+                                        "amount": "60.00",
+                                        "code": "LK"
+                                    },
+                                    {
+                                        "amount": "8.30",
+                                        "code": "OW"
+                                    },
+                                    {
+                                        "amount": "5.00",
+                                        "code": "P7"
+                                    },
+                                    {
+                                        "amount": "6.00",
+                                        "code": "P8"
+                                    },
+                                    {
+                                        "amount": "8.30",
+                                        "code": "UT"
+                                    }
+                                ],
+                                "refundableTaxes": "98.10"
+                            },
+                            "fareDetailsBySegment": [
+                                {
+                                    "segmentId": "3",
+                                    "cabin": "ECONOMY",
+                                    "fareBasis": "SE2MBDCH2",
+                                    "class": "S",
+                                    "includedCheckedBags": {
+                                        "weight": 30,
+                                        "weightUnit": "KG"
+                                    }
+                                },
+                                {
+                                    "segmentId": "35",
+                                    "cabin": "ECONOMY",
+                                    "fareBasis": "QE2MP9BDC",
+                                    "class": "Q",
+                                    "includedCheckedBags": {
+                                        "weight": 30,
+                                        "weightUnit": "KG"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "travelerId": "4",
+                            "fareOption": "STANDARD",
+                            "travelerType": "HELD_INFANT",
+                            "associatedAdultId": "1",
+                            "price": {
+                                "currency": "USD",
+                                "total": "59.70",
+                                "base": "47.00",
+                                "taxes": [
+                                    {
+                                        "amount": "1.70",
+                                        "code": "E5"
+                                    },
+                                    {
+                                        "amount": "5.00",
+                                        "code": "P7"
+                                    },
+                                    {
+                                        "amount": "6.00",
+                                        "code": "P8"
+                                    }
+                                ],
+                                "refundableTaxes": "12.70"
+                            },
+                            "fareDetailsBySegment": [
+                                {
+                                    "segmentId": "3",
+                                    "cabin": "ECONOMY",
+                                    "fareBasis": "SE2MBDIN9",
+                                    "class": "S",
+                                    "includedCheckedBags": {
+                                        "weight": 10,
+                                        "weightUnit": "KG"
+                                    }
+                                },
+                                {
+                                    "segmentId": "35",
+                                    "cabin": "ECONOMY",
+                                    "fareBasis": "QE2MP9BDI",
+                                    "class": "Q",
+                                    "includedCheckedBags": {
+                                        "weight": 10,
+                                        "weightUnit": "KG"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "travelers": [
+                {
+                    "id": "1",
+                    "dateOfBirth": "1980-07-24",
+                    "gender": "MALE",
+                    "name": {
+                        "firstName": "Tony",
+                        "lastName": "Stark"
+                    },
+                    "contact": {
+                        "purpose": "STANDARD",
+                        "phones": [
+                            {
+                                "deviceType": "MOBILE",
+                                "number": "1234567890"
+                            }
+                        ],
+                        "emailAddress": "tony@example.com"
+                    }
+                },
+                {
+                    "id": "2",
+                    "dateOfBirth": "1983-11-02",
+                    "gender": "FEMALE",
+                    "name": {
+                        "firstName": "Pepper",
+                        "lastName": "Potts"
+                    },
+                    "contact": {
+                        "purpose": "STANDARD",
+                        "phones": [
+                            {
+                                "deviceType": "MOBILE",
+                                "number": "1234567890"
+                            }
+                        ],
+                        "emailAddress": "tony@example.com"
+                    }
+                },
+                {
+                    "id": "3",
+                    "dateOfBirth": "2015-08-27",
+                    "gender": "FEMALE",
+                    "name": {
+                        "firstName": "Morgan",
+                        "lastName": "Stark"
+                    },
+                    "contact": {
+                        "purpose": "STANDARD",
+                        "phones": [
+                            {
+                                "deviceType": "MOBILE",
+                                "number": "1234567890"
+                            }
+                        ],
+                        "emailAddress": "tony@example.com"
+                    }
+                },
+                {
+                    "id": "4",
+                    "dateOfBirth": "2024-01-01",
+                    "gender": "MALE",
+                    "name": {
+                        "firstName": "Infant",
+                        "lastName": "Stark"
+                    },
+                    "contact": {
+                        "purpose": "STANDARD",
+                        "phones": [
+                            {
+                                "deviceType": "MOBILE",
+                                "number": "1234567890"
+                            }
+                        ],
+                        "emailAddress": "tony@example.com"
+                    }
+                }
+            ],
+            "ticketingAgreement": {
+                "option": "CONFIRM"
+            },
+            "automatedProcess": [
+                {
+                    "code": "IMMEDIATE",
+                    "queue": {
+                        "number": "0",
+                        "category": "0"
+                    },
+                    "officeId": "NCE4D31SB"
+                }
+            ],
+            "contacts": [
+                {
+                    "purpose": "STANDARD",
+                    "phones": [
+                        {
+                            "deviceType": "MOBILE",
+                            "number": "1234567890"
+                        }
+                    ],
+                    "emailAddress": "tony@example.com"
+                }
+            ]
+        },
+        "dictionaries": {
+            "locations": {
+                "DAC": {
+                    "cityCode": "DAC",
+                    "countryCode": "BD"
+                },
+                "CMB": {
+                    "cityCode": "CMB",
+                    "countryCode": "LK"
+                }
+            }
+        }
+    }
+}

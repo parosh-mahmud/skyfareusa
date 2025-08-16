@@ -419,6 +419,7 @@ const fetchFlights = async ({ searchParams, pageParam = 1 }) => {
     );
   }
   const result = await res.json();
+  console.log("API Response:", result);
   if (!result.success) {
     throw new Error(
       result.error || "The search was not successful. Please try again."
@@ -550,6 +551,7 @@ export default function ResultsClientComponent() {
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>
       lastPage.meta.hasNextPage ? lastPage.meta.currentPage + 1 : undefined,
+    enabled: searchParams && searchParams.has("slices"),
     staleTime: 1000 * 60 * 5,
     refetchOnWindowFocus: false,
   });
@@ -564,13 +566,14 @@ export default function ResultsClientComponent() {
   });
 
   const allOffers = useMemo(
-    () => data?.pages.flatMap((page) => page.offers) || [],
+    () => data?.pages?.flatMap((page) => page.offers) || [],
     [data]
   );
 
-  // In ResultsClientComponent
-
   const groupedOffers = useMemo(() => {
+    // Add a null check here
+    if (!allOffers || allOffers.length === 0) return [];
+
     const groups = new Map();
     allOffers.forEach((offer) => {
       // Use the exact same key generation logic as the backend
@@ -827,13 +830,13 @@ export default function ResultsClientComponent() {
                 {sortedAndFilteredOffers.map((offerGroup) => {
                   const itineraryId =
                     offerGroup[0].slices
-                      .flatMap(
+                      ?.flatMap(
                         (s) =>
                           s.segments?.map(
                             (seg) =>
-                              `${seg.carrier?.iata_code || "XX"}-${
-                                seg.flight_number || "0000"
-                              }-${seg.departing_at}`
+                              `${seg.carrier?.iata_code || "XX"}${
+                                seg.flight_number
+                              }-${seg.origin?.iata_code}`
                           ) || []
                       )
                       .join("--") || offerGroup[0].id;

@@ -1,0 +1,954 @@
+{
+    "success": true,
+    "pricedOffer": {
+        "id": "2",
+        "sourceApi": "amadeus",
+        "total_amount": "1991.66",
+        "total_currency": "USD",
+        "slices": [
+            {
+                "segments": [
+                    {
+                        "departure": {
+                            "iataCode": "DAC",
+                            "terminal": "1",
+                            "at": "2025-08-25T12:50:00"
+                        },
+                        "arrival": {
+                            "iataCode": "JED",
+                            "terminal": "1",
+                            "at": "2025-08-25T16:45:00"
+                        },
+                        "carrierCode": "SV",
+                        "number": "809",
+                        "aircraft": {
+                            "code": "773"
+                        },
+                        "operating": {
+                            "carrierCode": "SV"
+                        },
+                        "duration": "PT6H55M",
+                        "id": "12",
+                        "numberOfStops": 0,
+                        "co2Emissions": [
+                            {
+                                "weight": 311,
+                                "weightUnit": "KG",
+                                "cabin": "ECONOMY"
+                            }
+                        ]
+                    },
+                    {
+                        "departure": {
+                            "iataCode": "JED",
+                            "terminal": "1",
+                            "at": "2025-08-25T22:25:00"
+                        },
+                        "arrival": {
+                            "iataCode": "DXB",
+                            "terminal": "1",
+                            "at": "2025-08-26T02:25:00"
+                        },
+                        "carrierCode": "SV",
+                        "number": "598",
+                        "aircraft": {
+                            "code": "321"
+                        },
+                        "operating": {
+                            "carrierCode": "SV"
+                        },
+                        "duration": "PT3H",
+                        "id": "13",
+                        "numberOfStops": 0,
+                        "co2Emissions": [
+                            {
+                                "weight": 141,
+                                "weightUnit": "KG",
+                                "cabin": "ECONOMY"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "segments": [
+                    {
+                        "departure": {
+                            "iataCode": "DXB",
+                            "terminal": "1",
+                            "at": "2025-09-10T11:10:00"
+                        },
+                        "arrival": {
+                            "iataCode": "JED",
+                            "terminal": "1",
+                            "at": "2025-09-10T13:10:00"
+                        },
+                        "carrierCode": "SV",
+                        "number": "567",
+                        "aircraft": {
+                            "code": "321"
+                        },
+                        "operating": {
+                            "carrierCode": "SV"
+                        },
+                        "duration": "PT3H",
+                        "id": "43",
+                        "numberOfStops": 0,
+                        "co2Emissions": [
+                            {
+                                "weight": 141,
+                                "weightUnit": "KG",
+                                "cabin": "ECONOMY"
+                            }
+                        ]
+                    },
+                    {
+                        "departure": {
+                            "iataCode": "JED",
+                            "terminal": "1",
+                            "at": "2025-09-10T14:55:00"
+                        },
+                        "arrival": {
+                            "iataCode": "DAC",
+                            "terminal": "1",
+                            "at": "2025-09-11T00:35:00"
+                        },
+                        "carrierCode": "SV",
+                        "number": "802",
+                        "aircraft": {
+                            "code": "773"
+                        },
+                        "operating": {
+                            "carrierCode": "SV"
+                        },
+                        "duration": "PT6H40M",
+                        "id": "44",
+                        "numberOfStops": 0,
+                        "co2Emissions": [
+                            {
+                                "weight": 310,
+                                "weightUnit": "KG",
+                                "cabin": "ECONOMY"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "passengers": [
+            {
+                "travelerId": "1",
+                "fareOption": "STANDARD",
+                "travelerType": "ADULT",
+                "price": {
+                    "currency": "USD",
+                    "total": "715.42",
+                    "base": "551.00",
+                    "taxes": [
+                        {
+                            "amount": "4.20",
+                            "code": "BD"
+                        },
+                        {
+                            "amount": "20.40",
+                            "code": "AE"
+                        },
+                        {
+                            "amount": "34.60",
+                            "code": "IO"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P7"
+                        },
+                        {
+                            "amount": "20.80",
+                            "code": "OW"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P8"
+                        },
+                        {
+                            "amount": "8.52",
+                            "code": "E3"
+                        },
+                        {
+                            "amount": "3.60",
+                            "code": "E5"
+                        },
+                        {
+                            "amount": "12.30",
+                            "code": "F6"
+                        },
+                        {
+                            "amount": "2.80",
+                            "code": "ZR"
+                        },
+                        {
+                            "amount": "1.40",
+                            "code": "TP"
+                        },
+                        {
+                            "amount": "2.60",
+                            "code": "T2"
+                        },
+                        {
+                            "amount": "33.20",
+                            "code": "UT"
+                        }
+                    ],
+                    "refundableTaxes": "155.90"
+                },
+                "fareDetailsBySegment": [
+                    {
+                        "segmentId": "12",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "NARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "N",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    },
+                    {
+                        "segmentId": "13",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "NARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "N",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    },
+                    {
+                        "segmentId": "43",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "VARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "V",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    },
+                    {
+                        "segmentId": "44",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "VARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "V",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    }
+                ]
+            },
+            {
+                "travelerId": "2",
+                "fareOption": "STANDARD",
+                "travelerType": "ADULT",
+                "price": {
+                    "currency": "USD",
+                    "total": "715.42",
+                    "base": "551.00",
+                    "taxes": [
+                        {
+                            "amount": "4.20",
+                            "code": "BD"
+                        },
+                        {
+                            "amount": "20.40",
+                            "code": "AE"
+                        },
+                        {
+                            "amount": "34.60",
+                            "code": "IO"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P7"
+                        },
+                        {
+                            "amount": "20.80",
+                            "code": "OW"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P8"
+                        },
+                        {
+                            "amount": "8.52",
+                            "code": "E3"
+                        },
+                        {
+                            "amount": "3.60",
+                            "code": "E5"
+                        },
+                        {
+                            "amount": "12.30",
+                            "code": "F6"
+                        },
+                        {
+                            "amount": "2.80",
+                            "code": "ZR"
+                        },
+                        {
+                            "amount": "1.40",
+                            "code": "TP"
+                        },
+                        {
+                            "amount": "2.60",
+                            "code": "T2"
+                        },
+                        {
+                            "amount": "33.20",
+                            "code": "UT"
+                        }
+                    ],
+                    "refundableTaxes": "155.90"
+                },
+                "fareDetailsBySegment": [
+                    {
+                        "segmentId": "12",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "NARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "N",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    },
+                    {
+                        "segmentId": "13",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "NARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "N",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    },
+                    {
+                        "segmentId": "43",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "VARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "V",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    },
+                    {
+                        "segmentId": "44",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "VARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "V",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    }
+                ]
+            },
+            {
+                "travelerId": "3",
+                "fareOption": "STANDARD",
+                "travelerType": "CHILD",
+                "price": {
+                    "currency": "USD",
+                    "total": "560.82",
+                    "base": "413.00",
+                    "taxes": [
+                        {
+                            "amount": "4.20",
+                            "code": "BD"
+                        },
+                        {
+                            "amount": "20.40",
+                            "code": "AE"
+                        },
+                        {
+                            "amount": "34.60",
+                            "code": "IO"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P7"
+                        },
+                        {
+                            "amount": "20.80",
+                            "code": "OW"
+                        },
+                        {
+                            "amount": "10.00",
+                            "code": "P8"
+                        },
+                        {
+                            "amount": "8.52",
+                            "code": "E3"
+                        },
+                        {
+                            "amount": "3.60",
+                            "code": "E5"
+                        },
+                        {
+                            "amount": "12.30",
+                            "code": "F6"
+                        },
+                        {
+                            "amount": "2.80",
+                            "code": "ZR"
+                        },
+                        {
+                            "amount": "1.40",
+                            "code": "TP"
+                        },
+                        {
+                            "amount": "2.60",
+                            "code": "T2"
+                        },
+                        {
+                            "amount": "16.60",
+                            "code": "UT"
+                        }
+                    ],
+                    "refundableTaxes": "139.30"
+                },
+                "fareDetailsBySegment": [
+                    {
+                        "segmentId": "12",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "NARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "N",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    },
+                    {
+                        "segmentId": "13",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "NARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "N",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    },
+                    {
+                        "segmentId": "43",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "VARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "V",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    },
+                    {
+                        "segmentId": "44",
+                        "cabin": "ECONOMY",
+                        "fareBasis": "VARXBDB4",
+                        "brandedFare": "NBASICE",
+                        "class": "V",
+                        "includedCheckedBags": {
+                            "quantity": 1
+                        }
+                    }
+                ]
+            }
+        ],
+        "rawOffer": {
+            "type": "flight-offer",
+            "id": "2",
+            "source": "GDS",
+            "instantTicketingRequired": false,
+            "nonHomogeneous": false,
+            "paymentCardRequired": false,
+            "lastTicketingDate": "2025-08-25",
+            "itineraries": [
+                {
+                    "segments": [
+                        {
+                            "departure": {
+                                "iataCode": "DAC",
+                                "terminal": "1",
+                                "at": "2025-08-25T12:50:00"
+                            },
+                            "arrival": {
+                                "iataCode": "JED",
+                                "terminal": "1",
+                                "at": "2025-08-25T16:45:00"
+                            },
+                            "carrierCode": "SV",
+                            "number": "809",
+                            "aircraft": {
+                                "code": "773"
+                            },
+                            "operating": {
+                                "carrierCode": "SV"
+                            },
+                            "duration": "PT6H55M",
+                            "id": "12",
+                            "numberOfStops": 0,
+                            "co2Emissions": [
+                                {
+                                    "weight": 311,
+                                    "weightUnit": "KG",
+                                    "cabin": "ECONOMY"
+                                }
+                            ]
+                        },
+                        {
+                            "departure": {
+                                "iataCode": "JED",
+                                "terminal": "1",
+                                "at": "2025-08-25T22:25:00"
+                            },
+                            "arrival": {
+                                "iataCode": "DXB",
+                                "terminal": "1",
+                                "at": "2025-08-26T02:25:00"
+                            },
+                            "carrierCode": "SV",
+                            "number": "598",
+                            "aircraft": {
+                                "code": "321"
+                            },
+                            "operating": {
+                                "carrierCode": "SV"
+                            },
+                            "duration": "PT3H",
+                            "id": "13",
+                            "numberOfStops": 0,
+                            "co2Emissions": [
+                                {
+                                    "weight": 141,
+                                    "weightUnit": "KG",
+                                    "cabin": "ECONOMY"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "segments": [
+                        {
+                            "departure": {
+                                "iataCode": "DXB",
+                                "terminal": "1",
+                                "at": "2025-09-10T11:10:00"
+                            },
+                            "arrival": {
+                                "iataCode": "JED",
+                                "terminal": "1",
+                                "at": "2025-09-10T13:10:00"
+                            },
+                            "carrierCode": "SV",
+                            "number": "567",
+                            "aircraft": {
+                                "code": "321"
+                            },
+                            "operating": {
+                                "carrierCode": "SV"
+                            },
+                            "duration": "PT3H",
+                            "id": "43",
+                            "numberOfStops": 0,
+                            "co2Emissions": [
+                                {
+                                    "weight": 141,
+                                    "weightUnit": "KG",
+                                    "cabin": "ECONOMY"
+                                }
+                            ]
+                        },
+                        {
+                            "departure": {
+                                "iataCode": "JED",
+                                "terminal": "1",
+                                "at": "2025-09-10T14:55:00"
+                            },
+                            "arrival": {
+                                "iataCode": "DAC",
+                                "terminal": "1",
+                                "at": "2025-09-11T00:35:00"
+                            },
+                            "carrierCode": "SV",
+                            "number": "802",
+                            "aircraft": {
+                                "code": "773"
+                            },
+                            "operating": {
+                                "carrierCode": "SV"
+                            },
+                            "duration": "PT6H40M",
+                            "id": "44",
+                            "numberOfStops": 0,
+                            "co2Emissions": [
+                                {
+                                    "weight": 310,
+                                    "weightUnit": "KG",
+                                    "cabin": "ECONOMY"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "price": {
+                "currency": "USD",
+                "total": "1991.66",
+                "base": "1515.00",
+                "fees": [
+                    {
+                        "amount": "0.00",
+                        "type": "SUPPLIER"
+                    },
+                    {
+                        "amount": "0.00",
+                        "type": "TICKETING"
+                    },
+                    {
+                        "amount": "0.00",
+                        "type": "FORM_OF_PAYMENT"
+                    }
+                ],
+                "grandTotal": "1991.66",
+                "billingCurrency": "USD"
+            },
+            "pricingOptions": {
+                "fareType": [
+                    "PUBLISHED"
+                ],
+                "includedCheckedBagsOnly": false
+            },
+            "validatingAirlineCodes": [
+                "SV"
+            ],
+            "travelerPricings": [
+                {
+                    "travelerId": "1",
+                    "fareOption": "STANDARD",
+                    "travelerType": "ADULT",
+                    "price": {
+                        "currency": "USD",
+                        "total": "715.42",
+                        "base": "551.00",
+                        "taxes": [
+                            {
+                                "amount": "4.20",
+                                "code": "BD"
+                            },
+                            {
+                                "amount": "20.40",
+                                "code": "AE"
+                            },
+                            {
+                                "amount": "34.60",
+                                "code": "IO"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P7"
+                            },
+                            {
+                                "amount": "20.80",
+                                "code": "OW"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P8"
+                            },
+                            {
+                                "amount": "8.52",
+                                "code": "E3"
+                            },
+                            {
+                                "amount": "3.60",
+                                "code": "E5"
+                            },
+                            {
+                                "amount": "12.30",
+                                "code": "F6"
+                            },
+                            {
+                                "amount": "2.80",
+                                "code": "ZR"
+                            },
+                            {
+                                "amount": "1.40",
+                                "code": "TP"
+                            },
+                            {
+                                "amount": "2.60",
+                                "code": "T2"
+                            },
+                            {
+                                "amount": "33.20",
+                                "code": "UT"
+                            }
+                        ],
+                        "refundableTaxes": "155.90"
+                    },
+                    "fareDetailsBySegment": [
+                        {
+                            "segmentId": "12",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "NARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "N",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        },
+                        {
+                            "segmentId": "13",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "NARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "N",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        },
+                        {
+                            "segmentId": "43",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "VARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "V",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        },
+                        {
+                            "segmentId": "44",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "VARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "V",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "travelerId": "2",
+                    "fareOption": "STANDARD",
+                    "travelerType": "ADULT",
+                    "price": {
+                        "currency": "USD",
+                        "total": "715.42",
+                        "base": "551.00",
+                        "taxes": [
+                            {
+                                "amount": "4.20",
+                                "code": "BD"
+                            },
+                            {
+                                "amount": "20.40",
+                                "code": "AE"
+                            },
+                            {
+                                "amount": "34.60",
+                                "code": "IO"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P7"
+                            },
+                            {
+                                "amount": "20.80",
+                                "code": "OW"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P8"
+                            },
+                            {
+                                "amount": "8.52",
+                                "code": "E3"
+                            },
+                            {
+                                "amount": "3.60",
+                                "code": "E5"
+                            },
+                            {
+                                "amount": "12.30",
+                                "code": "F6"
+                            },
+                            {
+                                "amount": "2.80",
+                                "code": "ZR"
+                            },
+                            {
+                                "amount": "1.40",
+                                "code": "TP"
+                            },
+                            {
+                                "amount": "2.60",
+                                "code": "T2"
+                            },
+                            {
+                                "amount": "33.20",
+                                "code": "UT"
+                            }
+                        ],
+                        "refundableTaxes": "155.90"
+                    },
+                    "fareDetailsBySegment": [
+                        {
+                            "segmentId": "12",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "NARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "N",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        },
+                        {
+                            "segmentId": "13",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "NARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "N",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        },
+                        {
+                            "segmentId": "43",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "VARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "V",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        },
+                        {
+                            "segmentId": "44",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "VARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "V",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "travelerId": "3",
+                    "fareOption": "STANDARD",
+                    "travelerType": "CHILD",
+                    "price": {
+                        "currency": "USD",
+                        "total": "560.82",
+                        "base": "413.00",
+                        "taxes": [
+                            {
+                                "amount": "4.20",
+                                "code": "BD"
+                            },
+                            {
+                                "amount": "20.40",
+                                "code": "AE"
+                            },
+                            {
+                                "amount": "34.60",
+                                "code": "IO"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P7"
+                            },
+                            {
+                                "amount": "20.80",
+                                "code": "OW"
+                            },
+                            {
+                                "amount": "10.00",
+                                "code": "P8"
+                            },
+                            {
+                                "amount": "8.52",
+                                "code": "E3"
+                            },
+                            {
+                                "amount": "3.60",
+                                "code": "E5"
+                            },
+                            {
+                                "amount": "12.30",
+                                "code": "F6"
+                            },
+                            {
+                                "amount": "2.80",
+                                "code": "ZR"
+                            },
+                            {
+                                "amount": "1.40",
+                                "code": "TP"
+                            },
+                            {
+                                "amount": "2.60",
+                                "code": "T2"
+                            },
+                            {
+                                "amount": "16.60",
+                                "code": "UT"
+                            }
+                        ],
+                        "refundableTaxes": "139.30"
+                    },
+                    "fareDetailsBySegment": [
+                        {
+                            "segmentId": "12",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "NARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "N",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        },
+                        {
+                            "segmentId": "13",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "NARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "N",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        },
+                        {
+                            "segmentId": "43",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "VARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "V",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        },
+                        {
+                            "segmentId": "44",
+                            "cabin": "ECONOMY",
+                            "fareBasis": "VARXBDB4",
+                            "brandedFare": "NBASICE",
+                            "class": "V",
+                            "includedCheckedBags": {
+                                "quantity": 1
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

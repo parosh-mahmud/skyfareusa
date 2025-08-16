@@ -72,6 +72,7 @@ export async function POST(request) {
           // IMPORTANT: Preserve the newly priced raw offer for the next step (order creation)
           rawOffer: newPricedAmadeusOffer,
         };
+        console.log(pricedOffer);
         break;
 
       default:

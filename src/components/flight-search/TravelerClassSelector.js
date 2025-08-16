@@ -27,11 +27,29 @@ const TravelerPopover = ({
     const newPassengers = [...passengers];
     const currentCount = newPassengers.filter((p) => p.type === type).length;
     const totalPassengers = newPassengers.length;
+    const adults = newPassengers.filter((p) => p.type === "adult");
 
     if (change > 0 && totalPassengers < 9) {
       // Limit to 9 total passengers
-      const age = type === "adult" ? 30 : type === "child" ? 8 : 1;
-      newPassengers.push({ type, age });
+      if (type === "infant" && adults.length === 0) {
+        // Infants must travel with an adult, so do nothing if no adults
+        return;
+      }
+
+      const passenger = {
+        type: type === "infant" ? "infant_without_seat" : type,
+        age: type === "adult" ? 30 : type === "child" ? 8 : 1,
+        id: (totalPassengers + 1).toString(),
+      };
+
+      // Find the first adult to associate with the infant
+      if (type === "infant") {
+        const firstAdult = adults[0];
+        if (firstAdult) {
+          passenger.associatedAdultId = firstAdult.id;
+        }
+      }
+      newPassengers.push(passenger);
     } else if (change < 0) {
       // Ensure at least one adult
       if (type === "adult" && currentCount <= 1) return;
@@ -44,7 +62,9 @@ const TravelerPopover = ({
   };
 
   const getPassengerCount = (type) =>
-    passengers.filter((p) => p.type === type).length;
+    passengers.filter(
+      (p) => p.type === type || p.type === "infant_without_seat"
+    ).length;
 
   return (
     <div
