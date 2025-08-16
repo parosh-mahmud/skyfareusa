@@ -221,12 +221,13 @@
 //   );
 // }
 
-// "use client";
+"use client";
 
-// import { Star, MapPin } from "lucide-react";
-// import Link from "next/link";
-// import Image from "next/image";
-// import { useState, useEffect } from "react"; // `useState` is still imported here
+// Add these missing import statements
+import { Star, MapPin } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function HotelCard({
   hotel,
@@ -234,13 +235,12 @@ export default function HotelCard({
   searchParamsString,
   isHighlighted,
 }) {
-  // Move useState hooks to the top of the component, before the early return
   const [imageUrl, setImageUrl] = useState("/images/hotel-placeholder.jpg");
   const [isImageLoading, setIsImageLoading] = useState(true);
 
   if (!hotel || !offer) return null;
 
-  // The rest of the component's logic is correct as is
+  // The rest of the component logic remains the same
   const renderStars = (rating) => {
     return (
       <div className="flex items-center">
