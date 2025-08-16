@@ -101,39 +101,39 @@ export default function HotelCard({
   const [isImageLoading, setIsImageLoading] = useState(true);
 
   // Effect to fetch the real image after the component renders
-  useEffect(() => {
-    // This function is defined inside the effect to capture the correct hotel props
-    const fetchImage = async () => {
-      // Ensure we have the necessary data to fetch an image
-      if (!hotel.name || !hotel.geoCode?.latitude) {
-        setIsImageLoading(false);
-        return;
-      }
+  // useEffect(() => {
+  //   // This function is defined inside the effect to capture the correct hotel props
+  //   const fetchImage = async () => {
+  //     // Ensure we have the necessary data to fetch an image
+  //     if (!hotel.name || !hotel.geoCode?.latitude) {
+  //       setIsImageLoading(false);
+  //       return;
+  //     }
 
-      try {
-        const params = new URLSearchParams({
-          hotelName: hotel.name,
-          lat: hotel.geoCode.latitude,
-          lng: hotel.geoCode.longitude,
-        });
+  //     try {
+  //       const params = new URLSearchParams({
+  //         hotelName: hotel.name,
+  //         lat: hotel.geoCode.latitude,
+  //         lng: hotel.geoCode.longitude,
+  //       });
 
-        const res = await fetch(`/api/hotels/image?${params.toString()}`);
-        const data = await res.json();
+  //       const res = await fetch(`/api/hotels/image?${params.toString()}`);
+  //       const data = await res.json();
 
-        if (data.success && data.imageUrl) {
-          setImageUrl(data.imageUrl); // Update state with the real image URL
-        } else {
-          // If the API call fails or finds no image, we stop loading and keep the placeholder.
-          setIsImageLoading(false);
-        }
-      } catch (error) {
-        console.error("Failed to fetch hotel image:", error);
-        setIsImageLoading(false); // Stop loading on error
-      }
-    };
+  //       if (data.success && data.imageUrl) {
+  //         setImageUrl(data.imageUrl); // Update state with the real image URL
+  //       } else {
+  //         // If the API call fails or finds no image, we stop loading and keep the placeholder.
+  //         setIsImageLoading(false);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch hotel image:", error);
+  //       setIsImageLoading(false); // Stop loading on error
+  //     }
+  //   };
 
-    fetchImage();
-  }, [hotel.name, hotel.geoCode]); // Re-run the effect if the hotel prop changes
+  //   fetchImage();
+  // }, [hotel.name, hotel.geoCode]); // Re-run the effect if the hotel prop changes
 
   const renderStars = (rating) => {
     return (
@@ -170,7 +170,7 @@ export default function HotelCard({
           {isImageLoading && (
             <div className="w-full h-full bg-gray-200 animate-pulse"></div>
           )}
-          <Image
+          {/* <Image
             src={imageUrl}
             alt={`Image of ${hotel.name}`}
             fill
@@ -183,7 +183,7 @@ export default function HotelCard({
               setImageUrl("/images/hotel-placeholder.jpg");
               setIsImageLoading(false);
             }}
-          />
+          /> */}
         </div>
 
         {/* Details Section */}
