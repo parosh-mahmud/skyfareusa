@@ -154,3 +154,53 @@ export async function GET(request) {
     );
   }
 }
+
+// src/app/api/airports/route.js
+// import Amadeus from "amadeus";
+
+// // Initialize Amadeus client using env vars
+// const amadeus = new Amadeus({
+//   clientId: process.env.AMADEUS_API_KEY,
+//   clientSecret: process.env.AMADEUS_API_SECRET,
+//   hostname: "production",
+// });
+
+// export async function GET(req) {
+//   try {
+//     const { searchParams } = new URL(req.url);
+
+//     // Support both `keyword` and `q`
+//     const keyword = searchParams.get("keyword") || searchParams.get("q");
+//     const subType = searchParams.get("subType") || "AIRPORT,CITY";
+//     const page = searchParams.get("page") || 0;
+//     const limit = searchParams.get("limit"); // optional
+
+//     if (!keyword) {
+//       return new Response(JSON.stringify({ error: "Keyword is required" }), {
+//         status: 400,
+//       });
+//     }
+
+//     // Call Amadeus SDK
+//     const response = await amadeus.referenceData.locations.get({
+//       keyword,
+//       subType,
+//       "page[offset]": page * 10,
+//       "page[limit]": limit || 10, // default 10
+//     });
+
+//     return new Response(JSON.stringify(response.data), { status: 200 });
+//   } catch (error) {
+//     console.error("Amadeus API Error:", error);
+
+//     // Ensure status code is always valid
+//     const status = Number(error.code) || 500;
+
+//     return new Response(
+//       JSON.stringify({
+//         error: error.description || error.message || "Something went wrong",
+//       }),
+//       { status }
+//     );
+//   }
+// }
