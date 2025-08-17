@@ -4,19 +4,31 @@ import { useMemo } from "react";
 import { Sun, Moon, Sparkles } from "lucide-react";
 import Image from "next/image";
 
-// ✅ Component to safely render airline logos
+// Import shadcn/ui components
+import { Checkbox } from "@/components/ui/checkbox";
+import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
+// AirlineLogo Component
 const AirlineLogo = ({ airline, size = 6 }) => (
   <Image
     src={`https://images.kiwi.com/airlines/64/${airline.code}.png`}
     alt={airline.name}
     width={size * 4}
     height={size * 4}
-    className={`w-${size} h-${size} rounded-full object-contain bg-white`}
+    className={`w-${size} h-${size} rounded-full object-contain bg-background`}
     unoptimized
+    onError={(e) => {
+      e.target.onerror = null;
+      e.target.src = "https://placehold.co/24x24/FFFFFF/000000?text=??";
+    }}
   />
 );
 
-// ✅ Price formatter now defaults to USD
+// Price Formatter
 const formatPrice = (amount, currency = "USD") =>
   new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -56,16 +68,19 @@ export default function FilterSidebar({ offers, filters, onFiltersChange }) {
   }, [offers]);
 
   // --- Handlers ---
-  const handleFilterChange = (filterName, value, isChecked) => {
-    const currentFilter = filters[filterName];
-    const newFilter = isChecked
-      ? [...currentFilter, value]
-      : currentFilter.filter((item) => item !== value);
+  const handleMultiSelectChange = (filterName, value) => {
+    const currentFilter = filters[filterName] || [];
+    const newFilter = currentFilter.includes(value)
+      ? currentFilter.filter((item) => item !== value)
+      : [...currentFilter, value];
     onFiltersChange({ ...filters, [filterName]: newFilter });
   };
 
   const handlePriceChange = (newPriceRange) => {
-    onFiltersChange({ ...filters, priceRange: newPriceRange });
+    onFiltersChange({
+      ...filters,
+      priceRange: { min: newPriceRange[0], max: newPriceRange[1] },
+    });
   };
 
   const clearFilters = () => {
@@ -90,92 +105,50 @@ export default function FilterSidebar({ offers, filters, onFiltersChange }) {
       <div>
         <h4 className="font-semibold mb-3">Price Range</h4>
         <div className="space-y-3">
-          <div className="relative h-8">
-            <input
-              type="range"
-              min={minPrice}
-              max={maxPrice}
-              value={filters.priceRange.min}
-              onChange={(e) =>
-                handlePriceChange({
-                  ...filters.priceRange,
-                  min: Math.min(
-                    parseInt(e.target.value),
-                    filters.priceRange.max - 1
-                  ),
-                })
-              }
-              className="absolute w-full h-1 bg-transparent appearance-none pointer-events-none top-0 z-20"
-            />
-            <input
-              type="range"
-              min={minPrice}
-              max={maxPrice}
-              value={filters.priceRange.max}
-              onChange={(e) =>
-                handlePriceChange({
-                  ...filters.priceRange,
-                  max: Math.max(
-                    parseInt(e.target.value),
-                    filters.priceRange.min + 1
-                  ),
-                })
-              }
-              className="absolute w-full h-1 bg-transparent appearance-none pointer-events-none top-0 z-20"
-            />
-            <div className="relative h-1 top-0">
-              <div className="absolute z-10 w-full h-1 bg-gray-200 rounded-full top-0"></div>
-              <div
-                className="absolute z-10 h-1 bg-blue-600 rounded-full top-0"
-                style={{
-                  left: `${
-                    ((filters.priceRange.min - minPrice) /
-                      (maxPrice - minPrice)) *
-                    100
-                  }%`,
-                  right: `${
-                    100 -
-                    ((filters.priceRange.max - minPrice) /
-                      (maxPrice - minPrice)) *
-                      100
-                  }%`,
-                }}
-              ></div>
-            </div>
-          </div>
-          <div className="flex justify-between text-xs text-gray-500">
+          <Slider
+            min={minPrice}
+            max={maxPrice}
+            step={10}
+            value={[filters.priceRange.min, filters.priceRange.max]}
+            onValueChange={handlePriceChange}
+            minStepsBetweenThumbs={1}
+          />
+          <div className="flex justify-between text-xs text-muted-foreground">
             <span>{formatPrice(filters.priceRange.min)}</span>
             <span>{formatPrice(filters.priceRange.max)}</span>
           </div>
         </div>
       </div>
+      <Separator />
 
       {/* Airlines Filter */}
-      <div className="border-t pt-4">
+      <div>
         <h4 className="font-semibold mb-3">Airlines</h4>
         <div className="space-y-2 text-sm max-h-40 overflow-y-auto pr-2">
           {airlines.map((airline) => (
-            <label
-              key={airline.code}
-              className="flex items-center gap-2 p-1 rounded hover:bg-gray-50 cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
+            <div key={airline.code} className="flex items-center space-x-2">
+              <Checkbox
+                id={`airline-${airline.code}`}
                 checked={filters.airlines.includes(airline.code)}
-                onChange={(e) =>
-                  handleFilterChange("airlines", airline.code, e.target.checked)
+                onCheckedChange={() =>
+                  handleMultiSelectChange("airlines", airline.code)
                 }
               />
-              <AirlineLogo airline={airline} />
-              <span className="truncate">{airline.name}</span>
-            </label>
+              <Label
+                htmlFor={`airline-${airline.code}`}
+                className="flex items-center gap-2 font-normal cursor-pointer"
+              >
+                <AirlineLogo airline={airline} />
+                <span className="truncate">{airline.name}</span>
+              </Label>
+            </div>
           ))}
         </div>
       </div>
+      <Separator />
 
       {/* Stops Filter */}
-      <div className="border-t pt-4">
+      <div>
         <h4 className="font-semibold mb-2">Stops</h4>
         <div className="space-y-2 text-sm">
           {[
@@ -183,61 +156,54 @@ export default function FilterSidebar({ offers, filters, onFiltersChange }) {
             { label: "1 Stop", value: 1 },
             { label: "2+ Stops", value: 2 },
           ].map(({ label, value }) => (
-            <label
-              key={value}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 text-blue-600 rounded"
+            <div key={value} className="flex items-center space-x-2">
+              <Checkbox
+                id={`stops-${value}`}
                 checked={filters.stops.includes(value)}
-                onChange={(e) =>
-                  handleFilterChange("stops", value, e.target.checked)
-                }
+                onCheckedChange={() => handleMultiSelectChange("stops", value)}
               />
-              <span>{label}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* ✅ COMPLETE Departure Time Filter */}
-      <div className="border-t pt-4">
-        <h4 className="font-semibold mb-3">Departure Time</h4>
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          {timeSlots.map(({ key, label, icon: Icon }) => (
-            <label key={key} className="cursor-pointer">
-              <input
-                type="checkbox"
-                className="sr-only"
-                checked={filters.departureTime.includes(key)}
-                onChange={(e) =>
-                  handleFilterChange("departureTime", key, e.target.checked)
-                }
-              />
-              <div
-                className={`flex flex-col items-center p-2 rounded-md border transition-colors ${
-                  filters.departureTime.includes(key)
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "bg-white text-gray-600 border-gray-300 hover:bg-blue-50"
-                }`}
+              <Label
+                htmlFor={`stops-${value}`}
+                className="font-normal cursor-pointer"
               >
-                <Icon className="w-4 h-4 mb-1" />
-                <span>{label}</span>
-              </div>
-            </label>
+                {label}
+              </Label>
+            </div>
           ))}
         </div>
       </div>
+      <Separator />
+
+      {/* Departure Time Filter */}
+      <div>
+        <h4 className="font-semibold mb-3">Departure Time</h4>
+        <ToggleGroup
+          type="multiple"
+          value={filters.departureTime}
+          onValueChange={(value) =>
+            onFiltersChange({ ...filters, departureTime: value })
+          }
+          className="grid grid-cols-2 gap-2"
+        >
+          {timeSlots.map(({ key, label, icon: Icon }) => (
+            <ToggleGroupItem
+              key={key}
+              value={key}
+              className="flex-col h-auto p-2"
+            >
+              <Icon className="w-4 h-4 mb-1" />
+              <span className="text-xs">{label}</span>
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+      </div>
+      <Separator />
 
       {/* Clear Filters Button */}
-      <div className="border-t pt-4">
-        <button
-          onClick={clearFilters}
-          className="w-full px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 border border-gray-200 rounded-md hover:bg-gray-200 transition-colors"
-        >
+      <div>
+        <Button onClick={clearFilters} variant="outline" className="w-full">
           Clear All Filters
-        </button>
+        </Button>
       </div>
     </div>
   );

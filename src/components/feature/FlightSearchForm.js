@@ -1,14 +1,19 @@
-// src/components/feature/FlightSearchForm.js
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react"; // ✅ Import useCallback
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ArrowRightLeft, Loader, X, PlusCircle } from "lucide-react";
-import TripTypeSelector from "./TripTypeSelector";
+
+// Import shadcn/ui components
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+
 import SuggestionsList from "./SuggestionsList";
 import DatePicker from "../flight-search/DatePicker";
 import TravelerClassSelector from "../flight-search/TravelerClassSelector";
 
-// ✅ Define default state outside the component for clarity and performance
+// default state
 const defaultInitialState = {
   tripType: "one-way",
   cabinClass: "economy",
@@ -30,146 +35,119 @@ const defaultInitialState = {
   passengers: [{ type: "adult" }],
 };
 
-export default function FlightSearchForm({
-  variant = "main", // "main" or "compact"
-  initialState = null,
-  onNewSearch = null,
-}) {
+export default function FlightSearchForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // ─── State & Refs ─────────────────────────────────────────────────────────
+
+  // ─── State & Refs ─────────────────────────────────
   const [isSearching, setIsSearching] = useState(false);
   const [activeSelector, setActiveSelector] = useState(null);
   const [airportQuery, setAirportQuery] = useState("");
   const [airportSuggestions, setAirportSuggestions] = useState([]);
   const [isSearchingAirports, setIsSearchingAirports] = useState(false);
 
-  // ✅ Initialize state with simple defaults. The useEffect will populate from the URL.
   const [tripType, setTripType] = useState(defaultInitialState.tripType);
   const [slices, setSlices] = useState(defaultInitialState.slices);
   const [passengers, setPassengers] = useState(defaultInitialState.passengers);
   const [cabinClass, setCabinClass] = useState(defaultInitialState.cabinClass);
 
-  // ✅ Wrap the initialization logic in useCallback to make it a stable function
+  const dropdownRef = useRef(null);
+  const debounceRef = useRef(null);
+
+  // ─── URL → State ─────────────────────────────────────
   const initializeStateFromURL = useCallback(() => {
     try {
-      const tripTypeParam = searchParams.get("tripType");
-      const cabinClassParam = searchParams.get("cabinClass");
-      const slicesParam = searchParams.get("slices");
-      const passengersParam = searchParams.get("passengers");
-
-      // Only update state if params actually exist in the URL
-      if (tripTypeParam || slicesParam || passengersParam || cabinClassParam) {
-        setTripType(tripTypeParam || defaultInitialState.tripType);
-        setCabinClass(cabinClassParam || defaultInitialState.cabinClass);
-        if (slicesParam) setSlices(JSON.parse(slicesParam));
-        if (passengersParam) setPassengers(JSON.parse(passengersParam));
+      const t = searchParams.get("tripType");
+      const c = searchParams.get("cabinClass");
+      const s = searchParams.get("slices");
+      const p = searchParams.get("passengers");
+      if (t || c || s || p) {
+        setTripType(t || defaultInitialState.tripType);
+        setCabinClass(c || defaultInitialState.cabinClass);
+        if (s) setSlices(JSON.parse(s));
+        if (p) setPassengers(JSON.parse(p));
       }
-    } catch (error) {
-      console.error("Failed to parse search params, using defaults:", error);
-      // Reset to defaults if params are corrupted
+    } catch {
       setTripType(defaultInitialState.tripType);
       setSlices(defaultInitialState.slices);
       setPassengers(defaultInitialState.passengers);
       setCabinClass(defaultInitialState.cabinClass);
     }
-  }, [searchParams]); // This function re-creates only when searchParams change
+  }, [searchParams]);
 
-  // ✅ This useEffect is now the single source of truth for setting state from the URL
   useEffect(() => {
     initializeStateFromURL();
-  }, [initializeStateFromURL]); // Dependency is the stable useCallback function
+  }, [initializeStateFromURL]);
 
-  const dropdownRef = useRef(null);
-  const debounceTimeout = useRef(null);
-
-  // ─── Airport Search Logic ─────────────────────────────────────────────────
+  // ─── SEARCH AIRPORTS ───────────────────────────────────
   const searchAirports = (q) => {
-    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
     if (q.length < 2) {
       setAirportSuggestions([]);
       return;
     }
     setIsSearchingAirports(true);
-    debounceTimeout.current = setTimeout(async () => {
+    debounceRef.current = setTimeout(async () => {
       try {
         const res = await fetch(`/api/airports?q=${q}&limit=5`);
         const json = await res.json();
         setAirportSuggestions(json.success ? json.data : []);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsSearchingAirports(false);
-      }
+      } catch {}
+      setIsSearchingAirports(false);
     }, 300);
   };
 
-  const handleQueryChange = (e) => {
-    const val = e.target.value;
-    setAirportQuery(val);
-    searchAirports(val);
+  const handleQueryChange = (value) => {
+    setAirportQuery(value);
+    searchAirports(value);
   };
 
+  // ─── HANDLERS ─────────────────────────────────────────
   const handleSelectAirport = (airport) => {
     if (!activeSelector) return;
     const { sliceIndex, field } = activeSelector;
-    const newSlices = [...slices];
+    const updated = [...slices];
 
-    const selectedAirport = {
+    updated[sliceIndex][field] = {
       name: airport.city,
       code: airport.iata,
       airportName: airport.name,
     };
 
-    newSlices[sliceIndex][field] = selectedAirport;
-
-    // --- START: Round Trip Synchronization Logic ---
     if (tripType === "round-trip" && sliceIndex === 0) {
-      if (field === "origin") {
-        newSlices[1].destination = selectedAirport;
-      }
-      if (field === "destination") {
-        newSlices[1].origin = selectedAirport;
-      }
+      if (field === "origin") updated[1].destination = updated[0].origin;
+      if (field === "destination") updated[1].origin = updated[0].destination;
     }
-    // --- END: Round Trip Synchronization Logic ---
-
     if (
       tripType === "multi-city" &&
       field === "destination" &&
-      sliceIndex < newSlices.length - 1
+      sliceIndex < updated.length - 1
     ) {
-      newSlices[sliceIndex + 1].origin = selectedAirport;
+      updated[sliceIndex + 1].origin = updated[sliceIndex].destination;
     }
 
-    setSlices(newSlices);
+    setSlices(updated);
     setActiveSelector(null);
     setAirportQuery("");
   };
 
-  // ─── SWAP ORIGIN & DESTINATION ─────────────────────────────────────────────
   const handleSwapLocations = () => {
-    const newSlices = [...slices];
-    const firstSlice = newSlices[0];
-    const tmp = firstSlice.origin;
-    firstSlice.origin = firstSlice.destination;
-    firstSlice.destination = tmp;
-
-    if (tripType === "round-trip" && newSlices[1]) {
-      newSlices[1].origin = firstSlice.destination;
-      newSlices[1].destination = firstSlice.origin;
+    const updated = [...slices];
+    const a = updated[0].origin;
+    updated[0].origin = updated[0].destination;
+    updated[0].destination = a;
+    if (tripType === "round-trip" && updated[1]) {
+      updated[1].origin = updated[0].destination;
+      updated[1].destination = updated[0].origin;
     }
-
-    setSlices(newSlices);
+    setSlices(updated);
   };
 
-  // ─── TRIP TYPE CHANGE ───────────────────────────────────────────────────────
   const handleTripTypeChange = (type) => {
     setTripType(type);
     setActiveSelector(null);
-
     if (type === "one-way") {
-      setSlices((prev) => prev.slice(0, 1));
+      setSlices((p) => p.slice(0, 1));
     } else if (type === "round-trip") {
       const first = slices[0];
       setSlices([
@@ -180,11 +158,11 @@ export default function FlightSearchForm({
           departure_date: "",
         },
       ]);
-    } else if (type === "multi-city" && slices.length < 2) {
-      setSlices([
-        ...slices,
+    } else {
+      setSlices((p) => [
+        ...p,
         {
-          origin: slices[0].destination,
+          origin: p[p.length - 1].destination,
           destination: { name: "", code: "", airportName: "" },
           departure_date: "",
         },
@@ -192,82 +170,47 @@ export default function FlightSearchForm({
     }
   };
 
-  // ─── ADD / REMOVE SLICES ────────────────────────────────────────────────────
   const handleAddSlice = () => {
-    const lastDest = slices[slices.length - 1].destination;
-
-    setSlices([
-      ...slices,
+    setSlices((p) => [
+      ...p,
       {
-        origin: lastDest,
+        origin: p[p.length - 1].destination,
         destination: { name: "", code: "", airportName: "" },
         departure_date: "",
       },
     ]);
   };
-
   const handleRemoveSlice = (i) => {
-    if (slices.length > 2) setSlices(slices.filter((_, idx) => idx !== i));
+    if (slices.length > 1) {
+      setSlices((p) => p.filter((_, idx) => idx !== i));
+    }
   };
 
-  // ─── DATE CHANGE ────────────────────────────────────────────────────────────
   const handleDateChange = (i, date) => {
     const updated = [...slices];
     updated[i].departure_date = date;
     setSlices(updated);
   };
 
-  // ─── OPEN/CLOSE SELECTORS ───────────────────────────────────────────────────
-  const handleSelectorChange = (newSelector) => {
-    setActiveSelector(newSelector);
-    setAirportQuery("");
-  };
-
-  // ─── FORM SUBMIT ────────────────────────────────────────────────────────────
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSearching(true); // You can still show a loader briefly
-
+    setIsSearching(true);
     const params = new URLSearchParams();
     params.set("tripType", tripType);
     params.set("cabinClass", cabinClass);
     params.set("slices", JSON.stringify(slices));
     params.set("passengers", JSON.stringify(passengers));
-    console.log(params.toString());
     router.push(`/flights/results?${params.toString()}`);
-
-    // The `isSearching` state should be managed on the results page,
-    // but we can set it to false after a short delay to prevent a locked UI if navigation fails.
-    setTimeout(() => setIsSearching(false), 2000);
   };
 
-  // ─── CLICK‐OUTSIDE TO CLOSE ALL DROPDOWNS ────────────────────────────────────────
   useEffect(() => {
-    const onClickOutside = (e) => {
-      const isOutsideDropdown =
-        dropdownRef.current && !dropdownRef.current.contains(e.target);
-      const outsideAirport = ![
-        ...document.querySelectorAll(".airport-selector-trigger"),
-      ].some((el) => el.contains(e.target));
-      const outsideDate = ![
-        ...document.querySelectorAll(".date-picker-trigger"),
-      ].some((el) => el.contains(e.target));
-      const outsideTraveler = ![
-        ...document.querySelectorAll(".traveler-selector-trigger"),
-      ].some((el) => el.contains(e.target));
-
-      if (
-        isOutsideDropdown &&
-        outsideAirport &&
-        outsideDate &&
-        outsideTraveler
-      ) {
+    const onClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setActiveSelector(null);
       }
     };
-
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
   const suggestionProps = {
@@ -275,424 +218,182 @@ export default function FlightSearchForm({
     isLoading: isSearchingAirports,
     query: airportQuery,
     onQueryChange: handleQueryChange,
+    onSelect: handleSelectAirport,
     dropdownRef,
   };
 
-  // ─── COMPACT VARIANT ─────────────────────────────────────────────────────────────
-  if (variant === "compact") {
-    return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 w-full max-w-2xl mx-auto overflow-visible">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <TripTypeSelector
-            tripType={tripType}
-            onChange={handleTripTypeChange}
-            size="compact"
-          />
-
-          {/* FROM */}
-          <div
-            className="relative airport-selector-trigger"
-            ref={
-              activeSelector?.sliceIndex === 0 &&
-              activeSelector?.field === "origin"
-                ? dropdownRef
-                : null
-            }
-          >
-            <label className="block text-xs font-medium text-blue-600 mb-1 uppercase">
-              FROM
-            </label>
-            <div
-              className="p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-blue-400 bg-white transition-colors"
-              onClick={() =>
-                handleSelectorChange({ sliceIndex: 0, field: "origin" })
-              }
-            >
-              <p className="font-bold text-blue-900 text-base truncate">
-                {slices[0].origin.name}
-              </p>
-              <p className="text-sm text-gray-500 truncate">
-                {slices[0].origin.code}, {slices[0].origin.airportName}
-              </p>
-            </div>
-            {activeSelector?.sliceIndex === 0 &&
-              activeSelector?.field === "origin" && (
-                <SuggestionsList
-                  {...suggestionProps}
-                  onSelect={handleSelectAirport}
-                  placeholder="Type to search airports"
-                />
-              )}
-          </div>
-
-          {/* TO */}
-          <div
-            className="relative airport-selector-trigger"
-            ref={
-              activeSelector?.sliceIndex === 0 &&
-              activeSelector?.field === "destination"
-                ? dropdownRef
-                : null
-            }
-          >
-            <label className="block text-xs font-medium text-blue-600 mb-1 uppercase">
-              TO
-            </label>
-            <div className="relative">
-              <button
-                type="button"
-                onClick={handleSwapLocations}
-                className="absolute -top-6 right-4 p-2 bg-white rounded-full border border-gray-200 hover:bg-gray-50 z-10 shadow-sm"
-              >
-                <ArrowRightLeft className="w-4 h-4 text-gray-600" />
-              </button>
-              <div
-                className="p-4 border border-gray-200 rounded-lg bg-white cursor-pointer hover:border-blue-400 transition-colors"
-                onClick={() =>
-                  handleSelectorChange({ sliceIndex: 0, field: "destination" })
-                }
-              >
-                <p className="font-bold text-blue-900 text-base truncate">
-                  {slices[0].destination.name}
-                </p>
-                <p className="text-sm text-gray-500 truncate">
-                  {slices[0].destination.code},{" "}
-                  {slices[0].destination.airportName}
-                </p>
-              </div>
-            </div>
-            {activeSelector?.sliceIndex === 0 &&
-              activeSelector?.field === "destination" && (
-                <SuggestionsList
-                  {...suggestionProps}
-                  onSelect={handleSelectAirport}
-                  placeholder="Type to search airports"
-                />
-              )}
-          </div>
-
-          {/* DEPARTURE DATE */}
-          <div className="date-picker-trigger relative z-50">
-            <label className="block text-xs font-medium text-blue-600 mb-1 uppercase">
-              DEPARTURE DATE
-            </label>
-            <div className="p-4 border border-gray-200 rounded-lg bg-white">
-              <DatePicker
-                value={slices[0].departure_date}
-                onChange={(date) => handleDateChange(0, date)}
-                placeholder="Select date"
-                minDate={new Date().toISOString().split("T")[0]}
-                label="Select journey date"
-                onOpen={() => setActiveSelector(null)}
-              />
-            </div>
-          </div>
-
-          {/* RETURN DATE */}
-          <div className="date-picker-trigger relative z-50">
-            <label className="block text-xs font-medium text-blue-600 mb-1 uppercase">
-              RETURN DATE
-            </label>
-            <div className="p-4 border border-gray-200 rounded-lg bg-white">
-              {tripType === "round-trip" ? (
-                <DatePicker
-                  value={slices[1]?.departure_date || ""}
-                  onChange={(date) => handleDateChange(1, date)}
-                  placeholder="Select date"
-                  minDate={
-                    slices[0].departure_date ||
-                    new Date().toISOString().split("T")[0]
-                  }
-                  isDualMonth={true}
-                  label="Select return date"
-                  onOpen={() => setActiveSelector(null)}
-                />
-              ) : (
-                <p className="text-gray-500 text-base">
-                  Save more on return flight
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* TRAVELER & CLASS */}
-          <div className="traveler-selector-trigger relative z-50">
-            <TravelerClassSelector
-              passengers={passengers}
-              onPassengersChange={setPassengers}
-              cabinClass={cabinClass}
-              onCabinClassChange={setCabinClass}
-              variant="compact"
-              onOpen={() => setActiveSelector(null)}
-            />
-          </div>
-
-          {/* SEARCH BUTTON */}
-          <div className="pt-4">
-            <button
-              type="submit"
-              disabled={isSearching}
-              className="w-full bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-300 text-blue-900 font-bold text-lg px-6 py-4 rounded-xl shadow-lg flex items-center justify-center transition-colors"
-            >
-              {isSearching ? (
-                <Loader className="w-5 h-5 animate-spin" />
-              ) : (
-                "Search"
-              )}
-            </button>
-          </div>
-        </form>
-      </div>
-    );
-  }
-
-  // ─── MAIN VARIANT ────────────────────────────────────────────────────────────────
   const renderSlicesUI = () => {
     if (tripType === "multi-city") {
       return (
-        <div className="mb-6 space-y-4 overflow-visible">
+        <div className="space-y-4">
           {slices.map((slice, idx) => (
-            <div
-              key={idx}
-              className="grid grid-cols-1 md:grid-cols-[1fr,1fr,1fr,auto] gap-4 items-center p-4 border border-gray-200 rounded-lg overflow-visible"
-            >
-              {/* ORIGIN */}
-              <div
-                className="relative airport-selector-trigger"
-                ref={
-                  activeSelector?.sliceIndex === idx &&
-                  activeSelector?.field === "origin"
-                    ? dropdownRef
-                    : null
-                }
-              >
-                <div
-                  onClick={() =>
-                    handleSelectorChange({ sliceIndex: idx, field: "origin" })
-                  }
-                  className="cursor-pointer"
-                >
-                  <p className="text-xs text-blue-600 uppercase font-medium mb-1">
-                    FROM
-                  </p>
-                  <p className="font-bold text-blue-900 text-base truncate">
-                    {slice.origin.name || "Select Origin"}
-                  </p>
-                  <p className="text-sm text-gray-500 truncate">
-                    {slice.origin.code}, {slice.origin.airportName}
-                  </p>
+            <Card key={idx} className="p-4 overflow-visible">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto_auto] gap-4 items-end">
+                <div className="relative">
+                  <Label>From</Label>
+                  <Button
+                    type="button" // ✅ FIX: Prevents form submission
+                    variant="outline"
+                    className="w-full justify-start text-left h-auto"
+                    onClick={() =>
+                      setActiveSelector({ sliceIndex: idx, field: "origin" })
+                    }
+                  >
+                    <div>
+                      <p className="font-bold truncate">
+                        {slice.origin.name || "Select Origin"}
+                      </p>
+                      <p className="text-sm text-muted-foreground truncate">
+                        {slice.origin.code}, {slice.origin.airportName}
+                      </p>
+                    </div>
+                  </Button>
+                  {activeSelector?.sliceIndex === idx &&
+                    activeSelector.field === "origin" && (
+                      <SuggestionsList {...suggestionProps} />
+                    )}
                 </div>
-                {activeSelector?.sliceIndex === idx &&
-                  activeSelector?.field === "origin" && (
-                    <SuggestionsList
-                      {...suggestionProps}
-                      onSelect={handleSelectAirport}
-                    />
-                  )}
-              </div>
-
-              {/* DESTINATION */}
-              <div
-                className="relative airport-selector-trigger"
-                ref={
-                  activeSelector?.sliceIndex === idx &&
-                  activeSelector?.field === "destination"
-                    ? dropdownRef
-                    : null
-                }
-              >
-                <div
-                  onClick={() =>
-                    handleSelectorChange({
-                      sliceIndex: idx,
-                      field: "destination",
-                    })
-                  }
-                  className="cursor-pointer"
-                >
-                  <p className="text-xs text-blue-600 uppercase font-medium mb-1">
-                    TO
-                  </p>
-                  <p className="font-bold text-blue-900 text-base truncate">
-                    {slice.destination.name || "Select Destination"}
-                  </p>
-                  <p className="text-sm text-gray-500 truncate">
-                    {slice.destination.code}, {slice.destination.airportName}
-                  </p>
+                <div className="relative">
+                  <Label>To</Label>
+                  <Button
+                    type="button" // ✅ FIX: Prevents form submission
+                    variant="outline"
+                    className="w-full justify-start text-left h-auto"
+                    onClick={() =>
+                      setActiveSelector({
+                        sliceIndex: idx,
+                        field: "destination",
+                      })
+                    }
+                  >
+                    <div>
+                      <p className="font-bold truncate">
+                        {slice.destination.name || "Select Destination"}
+                      </p>
+                      <p className="text-sm text-muted-foreground truncate">
+                        {slice.destination.code},{" "}
+                        {slice.destination.airportName}
+                      </p>
+                    </div>
+                  </Button>
+                  {activeSelector?.sliceIndex === idx &&
+                    activeSelector.field === "destination" && (
+                      <SuggestionsList {...suggestionProps} />
+                    )}
                 </div>
-                {activeSelector?.sliceIndex === idx &&
-                  activeSelector?.field === "destination" && (
-                    <SuggestionsList
-                      {...suggestionProps}
-                      onSelect={handleSelectAirport}
-                    />
-                  )}
+                <div>
+                  <Label>Departure Date</Label>
+                  <DatePicker
+                    value={slice.departure_date}
+                    onChange={(d) => handleDateChange(idx, d)}
+                    onOpen={() => setActiveSelector(null)}
+                  />
+                </div>
+                {slices.length > 1 && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleRemoveSlice(idx)}
+                  >
+                    <X className="w-5 h-5 text-muted-foreground" />
+                  </Button>
+                )}
               </div>
-
-              {/* DATE */}
-              <div className="date-picker-trigger relative z-50">
-                <p className="text-xs text-blue-600 uppercase font-medium mb-1">
-                  DEPARTURE DATE
-                </p>
-                <DatePicker
-                  value={slice.departure_date}
-                  onChange={(date) => handleDateChange(idx, date)}
-                  placeholder="Select date"
-                  minDate={new Date().toISOString().split("T")[0]}
-                  label="Select journey date"
-                  onOpen={() => setActiveSelector(null)}
-                />
-              </div>
-
-              {/* REMOVE */}
-              {slices.length > 2 && (
-                <button
-                  type="button"
-                  onClick={() => handleRemoveSlice(idx)}
-                  className="p-2 text-gray-400 hover:text-red-500 transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              )}
-            </div>
+            </Card>
           ))}
         </div>
       );
     }
 
-    // ONE-WAY or ROUND-TRIP
     const one = slices[0];
-    const ret = slices[1];
-
+    const ret = slices[1] || {};
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-5 border border-gray-200 rounded-2xl mb-8 bg-white overflow-visible">
-        {/* FROM */}
-        <div
-          className="relative p-5 border-b lg:border-b-0 lg:border-r border-gray-200 airport-selector-trigger"
-          ref={
-            activeSelector?.sliceIndex === 0 &&
-            activeSelector?.field === "origin"
-              ? dropdownRef
-              : null
-          }
-        >
+      <div className="grid grid-cols-1 lg:grid-cols-5 border rounded-2xl mb-8 bg-background overflow-visible">
+        <div className="relative p-5 border-b lg:border-b-0 lg:border-r">
           <div
+            className="cursor-pointer h-full"
             onClick={() =>
-              handleSelectorChange({ sliceIndex: 0, field: "origin" })
+              setActiveSelector({ sliceIndex: 0, field: "origin" })
             }
-            className="cursor-pointer"
           >
-            <p className="text-xs text-blue-600 uppercase font-medium mb-2">
-              FROM
-            </p>
-            <p className="text-lg lg:text-xl font-bold text-blue-900 truncate">
-              {one.origin.name}
-            </p>
-            <p className="text-sm text-gray-500 truncate">
+            <p className="text-xs text-muted-foreground uppercase mb-2">From</p>
+            <p className="text-lg font-bold truncate">{one.origin.name}</p>
+            <p className="text-sm text-muted-foreground truncate">
               {one.origin.code}, {one.origin.airportName}
             </p>
           </div>
           {activeSelector?.sliceIndex === 0 &&
-            activeSelector?.field === "origin" && (
-              <SuggestionsList
-                {...suggestionProps}
-                onSelect={handleSelectAirport}
-              />
+            activeSelector.field === "origin" && (
+              <SuggestionsList {...suggestionProps} />
             )}
         </div>
-
-        {/* TO */}
-        <div
-          className="relative p-5 border-b lg:border-b-0 lg:border-r border-gray-200 airport-selector-trigger"
-          ref={
-            activeSelector?.sliceIndex === 0 &&
-            activeSelector?.field === "destination"
-              ? dropdownRef
-              : null
-          }
-        >
-          <button
-            type="button"
+        <div className="relative p-5 border-b lg:border-b-0 lg:border-r">
+          <Button
+            type="button" // ✅ FIX: Prevents form submission
+            variant="outline"
+            size="icon"
             onClick={handleSwapLocations}
-            className="absolute left-0 top-1/2 -translate-x-1/2 p-2 bg-white rounded-full border border-gray-200 shadow-md hover:bg-gray-50 transition-colors z-10"
+            className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 lg:left-0 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 rounded-full z-10 bg-background"
           >
-            <ArrowRightLeft className="w-4 h-4 text-gray-600" />
-          </button>
+            <ArrowRightLeft className="w-4 h-4" />
+          </Button>
           <div
+            className="cursor-pointer h-full"
             onClick={() =>
-              handleSelectorChange({ sliceIndex: 0, field: "destination" })
+              setActiveSelector({ sliceIndex: 0, field: "destination" })
             }
-            className="cursor-pointer"
           >
-            <p className="text-xs text-blue-600 uppercase font-medium mb-2">
-              TO
-            </p>
-            <p className="text-lg lg:text-xl font-bold text-blue-900 truncate">
-              {one.destination.name}
-            </p>
-            <p className="text-sm text-gray-500 truncate">
+            <p className="text-xs text-muted-foreground uppercase mb-2">To</p>
+            <p className="text-lg font-bold truncate">{one.destination.name}</p>
+            <p className="text-sm text-muted-foreground truncate">
               {one.destination.code}, {one.destination.airportName}
             </p>
           </div>
           {activeSelector?.sliceIndex === 0 &&
-            activeSelector?.field === "destination" && (
-              <SuggestionsList
-                {...suggestionProps}
-                onSelect={handleSelectAirport}
-              />
+            activeSelector.field === "destination" && (
+              <SuggestionsList {...suggestionProps} />
             )}
         </div>
-
-        {/* DEPARTURE */}
-        <div className="p-5 border-b lg:border-b-0 lg:border-r border-gray-200 date-picker-trigger relative z-50">
-          <p className="text-xs text-blue-600 uppercase font-medium mb-2">
-            DEPARTURE DATE
+        <div className="p-5 border-b lg:border-b-0 lg:border-r">
+          <p className="text-xs text-muted-foreground uppercase mb-2">
+            Departure Date
           </p>
           <DatePicker
             value={one.departure_date}
-            onChange={(date) => handleDateChange(0, date)}
-            placeholder="Select date"
-            minDate={new Date().toISOString().split("T")[0]}
-            label="Select journey date"
+            onChange={(d) => handleDateChange(0, d)}
             onOpen={() => setActiveSelector(null)}
           />
         </div>
-
-        {/* RETURN */}
-        <div className="p-5 border-b lg:border-b-0 lg:border-r border-gray-200 date-picker-trigger relative z-50">
-          <p className="text-xs text-blue-600 uppercase font-medium mb-2">
-            RETURN DATE
+        <div className="p-5 border-b lg:border-b-0 lg:border-r">
+          <p className="text-xs text-muted-foreground uppercase mb-2">
+            Return Date
           </p>
           {tripType === "round-trip" ? (
             <DatePicker
-              value={ret?.departure_date || ""}
-              onChange={(date) => handleDateChange(1, date)}
-              placeholder="Select date"
+              value={ret.departure_date || ""}
+              onChange={(d) => handleDateChange(1, d)}
               minDate={one.departure_date}
-              isDualMonth={true}
-              label="Select return date"
               onOpen={() => setActiveSelector(null)}
             />
           ) : (
-            <div className="pt-1">
-              <p
-                className="text-gray-500 text-base cursor-pointer hover:text-blue-600 transition-colors"
+            <div className="h-full flex items-center">
+              <Button
+                variant="link"
+                className="p-0 h-auto"
                 onClick={() => handleTripTypeChange("round-trip")}
               >
-                Save more on return flight
-              </p>
+                Add return flight
+              </Button>
             </div>
           )}
         </div>
-
-        {/* PASSENGERS & CLASS */}
-        <div className="p-5 traveler-selector-trigger relative z-50">
+        <div className="p-5">
           <TravelerClassSelector
             passengers={passengers}
             onPassengersChange={setPassengers}
             cabinClass={cabinClass}
             onCabinClassChange={setCabinClass}
-            variant="main"
             onOpen={() => setActiveSelector(null)}
           />
         </div>
@@ -701,37 +402,52 @@ export default function FlightSearchForm({
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl w-full relative z-20 pt-8 border border-gray-100 overflow-visible">
-      <form onSubmit={handleSubmit} className="px-8 pb-20">
-        <TripTypeSelector
-          tripType={tripType}
-          onChange={handleTripTypeChange}
-          size="main"
-        />
-
-        {renderSlicesUI()}
-
-        {tripType === "multi-city" && (
-          <button
-            type="button"
-            onClick={handleAddSlice}
-            className="flex items-center gap-2 text-blue-600 font-medium mb-6 hover:text-blue-800 transition-colors"
+    <Card className="w-full relative z-50 overflow-visible pt-6">
+      <CardContent>
+        <form onSubmit={handleSubmit}>
+          <Tabs
+            value={tripType}
+            onValueChange={handleTripTypeChange}
+            className="mb-4"
           >
-            <PlusCircle className="w-5 h-5" /> Add Another Flight
-          </button>
-        )}
-      </form>
+            <TabsList>
+              <TabsTrigger value="one-way">One Way</TabsTrigger>
+              <TabsTrigger value="round-trip">Round Trip</TabsTrigger>
+              <TabsTrigger value="multi-city">Multi-City</TabsTrigger>
+            </TabsList>
+          </Tabs>
 
-      {/* Floating Search Button */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-        <button
-          onClick={handleSubmit}
-          disabled={isSearching}
-          className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-300 text-blue-900 font-bold text-lg px-16 py-4 rounded-2xl shadow-lg flex items-center justify-center transition-colors border-0"
-        >
-          {isSearching ? <Loader className="w-6 h-6 animate-spin" /> : "Search"}
-        </button>
-      </div>
-    </div>
+          {renderSlicesUI()}
+
+          <div className="flex justify-between items-center">
+            <div>
+              {tripType === "multi-city" && (
+                <Button
+                  type="button" // ✅ FIX: Prevents form submission
+                  variant="ghost"
+                  onClick={handleAddSlice}
+                  className="text-primary"
+                >
+                  <PlusCircle className="w-5 h-5 mr-2" /> Add Another Flight
+                </Button>
+              )}
+            </div>
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+              <Button
+                type="submit"
+                size="lg"
+                disabled={isSearching}
+                className="px-16 py-6 h-auto text-lg"
+              >
+                {isSearching && (
+                  <Loader className="w-6 h-6 animate-spin mr-2" />
+                )}
+                Search Flights
+              </Button>
+            </div>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

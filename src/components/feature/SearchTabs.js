@@ -1,95 +1,67 @@
-// "use client";
-// import { useState } from "react";
-// import { Plane, Building, Globe, FileText } from "lucide-react";
-
-// export default function FlightSearchTabs() {
-//   const [activeService, setActiveService] = useState("flight");
-
-//   const services = [
-//     { id: "flight", label: "Flight", icon: <Plane size={16} /> }, // Slightly smaller icon for mobile
-//     { id: "hotel", label: "Hotel", icon: <Building size={16} /> },
-//     { id: "tour", label: "Tour", icon: <Globe size={16} /> },
-//     { id: "visa", label: "Visa", icon: <FileText size={16} /> },
-//   ];
-
-//   return (
-//     <div className="w-full flex justify-center relative z-30 mb-[-20px]">
-//       {/* ✅ Container is now horizontally scrollable if content overflows */}
-//       <div className="bg-white rounded-3xl shadow-lg flex p-1 overflow-x-auto whitespace-nowrap">
-//         {services.map((service) => (
-//           <button
-//             key={service.id}
-//             onClick={() => setActiveService(service.id)}
-//             // ✅ Padding and gap are now responsive
-//             className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 transition-all duration-300 relative rounded-2xl ${
-//               activeService === service.id
-//                 ? "text-blue-600 font-semibold"
-//                 : "text-gray-500 hover:text-gray-700"
-//             }`}
-//           >
-//             {service.icon}
-//             <span
-//               // ✅ Font size is now responsive
-//               className="text-xs sm:text-sm md:text-base"
-//             >
-//               {service.label}
-//             </span>
-//             {activeService === service.id && (
-//               // ✅ Underline is responsive
-//               <div className="absolute bottom-0.5 left-3 right-3 sm:left-4 sm:right-4 h-1 bg-yellow-400 rounded-full"></div>
-//             )}
-//           </button>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
-// src/components/feature/SearchTabs.js
 "use client";
 
 import { useState } from "react";
 import { Plane, BedDouble, Globe, FileText } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
 import FlightSearchForm from "./FlightSearchForm";
 import HotelSearchForm from "./HotelSearchForm";
 
 export default function SearchTabs() {
-  const [activeService, setActiveService] = useState("flight");
-
   const services = [
-    { id: "flight", label: "Flight", icon: <Plane size={16} /> },
-    { id: "hotel", label: "Hotel", icon: <BedDouble size={16} /> },
-    { id: "tour", label: "Tour", icon: <Globe size={16} /> },
-    { id: "visa", label: "Visa", icon: <FileText size={16} /> },
+    { id: "flight", label: "Flight", icon: Plane },
+    { id: "hotel", label: "Hotel", icon: BedDouble },
+    { id: "tour", label: "Tour", icon: Globe },
+    { id: "visa", label: "Visa", icon: FileText },
   ];
 
   return (
-    <div className="w-full">
-      {/* Tab Buttons */}
-      <div className="w-full flex justify-center relative z-10 mb-[-2px]">
-        <div className="bg-white rounded-t-lg shadow-lg flex p-1 overflow-x-auto">
+    <Tabs defaultValue="flight" className="w-full">
+      <div className="w-full flex justify-center relative z-10">
+        <TabsList className="h-auto bg-background/80 backdrop-blur-sm p-2 rounded-2xl">
           {services.map((service) => (
-            <button
+            <TabsTrigger
               key={service.id}
-              onClick={() => setActiveService(service.id)}
-              className={`flex items-center gap-2 px-6 py-3 transition-colors duration-200 border-b-4 ${
-                activeService === service.id
-                  ? "text-blue-600 font-semibold border-blue-600"
-                  : "text-gray-500 border-transparent hover:text-gray-800"
-              }`}
+              value={service.id}
+              className="px-6 py-4 text-sm md:text-base rounded-xl data-[state=active]:shadow-lg"
             >
-              {service.icon}
-              <span className="text-sm md:text-base">{service.label}</span>
-            </button>
+              <service.icon size={20} className="mr-3" />
+              {service.label}
+            </TabsTrigger>
           ))}
-        </div>
+        </TabsList>
       </div>
 
-      {/* Form Content */}
-      <div className="relative">
-        {activeService === "flight" && <FlightSearchForm />}
-        {activeService === "hotel" && <HotelSearchForm />}
+      <div className="relative -mt-4">
+        <TabsContent value="flight">
+          <FlightSearchForm />
+        </TabsContent>
+        <TabsContent value="hotel">
+          <HotelSearchForm />
+        </TabsContent>
+        <TabsContent value="tour">
+          <Card className="w-full">
+            <CardContent className="p-8 text-center">
+              <Globe className="w-16 h-16 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Tour Packages</h3>
+              <p className="text-muted-foreground">
+                Coming soon! Discover amazing tour packages.
+              </p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="visa">
+          <Card className="w-full">
+            <CardContent className="p-8 text-center">
+              <FileText className="w-16 h-16 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Visa Services</h3>
+              <p className="text-muted-foreground">
+                Coming soon! Get help with your visa applications.
+              </p>
+            </CardContent>
+          </Card>
+        </TabsContent>
       </div>
-    </div>
+    </Tabs>
   );
 }

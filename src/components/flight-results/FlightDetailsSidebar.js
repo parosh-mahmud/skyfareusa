@@ -330,9 +330,29 @@
 
 "use client";
 
-import { X, Clock, Plane, ArrowRight } from "lucide-react";
+import {
+  X,
+  Clock,
+  Plane,
+  ArrowRight,
+  CalendarDays,
+  PlaneTakeoff,
+  PlaneLanding,
+} from "lucide-react";
 import Image from "next/image";
 import { useEffect } from "react";
+
+// Import shadcn/ui components
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 // --- Helper Functions ---
 const formatTime = (dt) =>
@@ -343,7 +363,7 @@ const formatTime = (dt) =>
   });
 const formatDate = (dt) =>
   new Date(dt).toLocaleDateString("en-US", {
-    day: "short",
+    weekday: "short",
     month: "short",
     day: "numeric",
   });
@@ -363,7 +383,6 @@ const calculateTimeDiff = (start, end) => {
 
 // --- Sub-Components for a Cleaner Structure ---
 
-// Renders a single flight segment (e.g., DAC -> DXB)
 const FlightSegment = ({ segment, isLast }) => {
   const carrier = segment.carrier || {};
   const airlineName = carrier.name || "Unknown";
@@ -380,19 +399,23 @@ const FlightSegment = ({ segment, isLast }) => {
           <p className="font-bold text-lg">
             {formatTime(segment.departing_at)}
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-muted-foreground">
             {formatDate(segment.departing_at)}
           </p>
         </div>
         <div className="flex flex-col items-center mx-4">
-          <div className="w-4 h-4 rounded-full border-2 border-gray-400 bg-white z-10"></div>
-          <div className="w-0.5 flex-grow bg-gray-300"></div>
+          <div className="w-4 h-4 rounded-full border-2 border-primary bg-background z-10 flex items-center justify-center">
+            <PlaneTakeoff className="w-2 h-2 text-primary" />
+          </div>
+          <div className="w-0.5 flex-grow bg-border"></div>
         </div>
         <div className="flex-grow pb-8">
           <p className="font-semibold">
             {segment.origin?.name} ({segment.origin?.iata_code})
           </p>
-          <p className="text-sm text-gray-500">{segment.origin?.airportName}</p>
+          <p className="text-sm text-muted-foreground">
+            {segment.origin?.city?.name}
+          </p>
         </div>
       </div>
 
@@ -400,7 +423,7 @@ const FlightSegment = ({ segment, isLast }) => {
       <div className="flex my-2">
         <div className="w-24"></div>
         <div className="flex flex-col items-center mx-4">
-          <div className="w-0.5 flex-grow bg-gray-300"></div>
+          <div className="w-0.5 flex-grow bg-border"></div>
         </div>
         <div className="flex-grow pb-8 flex items-center gap-4">
           <Image
@@ -408,15 +431,20 @@ const FlightSegment = ({ segment, isLast }) => {
             alt={airlineName}
             width={32}
             height={32}
-            className="h-8 w-8 object-contain rounded-full p-1 shadow-sm bg-white"
+            className="h-8 w-8 object-contain rounded-full p-1 shadow-sm bg-background"
             unoptimized
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://placehold.co/32x32/FFFFFF/000000?text=??";
+            }}
           />
           <div>
             <p className="text-sm font-semibold">{airlineName}</p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               {airlineCode} {flightNumber} • {aircraft}
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+              <Clock className="w-3 h-3" />
               Duration: {formatDuration(segment.duration)}
             </p>
           </div>
@@ -427,20 +455,22 @@ const FlightSegment = ({ segment, isLast }) => {
       <div className="flex">
         <div className="w-24 text-right pr-4 flex-shrink-0">
           <p className="font-bold text-lg">{formatTime(segment.arriving_at)}</p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-muted-foreground">
             {formatDate(segment.arriving_at)}
           </p>
         </div>
         <div className="flex flex-col items-center mx-4">
-          <div className="w-4 h-4 rounded-full border-2 border-gray-400 bg-white z-10"></div>
-          {!isLast && <div className="w-0.5 flex-grow bg-gray-300"></div>}
+          <div className="w-4 h-4 rounded-full border-2 border-primary bg-background z-10 flex items-center justify-center">
+            <PlaneLanding className="w-2 h-2 text-primary" />
+          </div>
+          {!isLast && <div className="w-0.5 flex-grow bg-border"></div>}
         </div>
         <div className="flex-grow">
           <p className="font-semibold">
             {segment.destination?.name} ({segment.destination?.iata_code})
           </p>
-          <p className="text-sm text-gray-500">
-            {segment.destination?.airportName}
+          <p className="text-sm text-muted-foreground">
+            {segment.destination?.city?.name}
           </p>
         </div>
       </div>
@@ -448,18 +478,18 @@ const FlightSegment = ({ segment, isLast }) => {
   );
 };
 
-// Renders the layover block between segments
 const LayoverInfo = ({ fromSegment, toSegment }) => (
   <div className="flex my-4">
     <div className="w-24"></div>
     <div className="flex flex-col items-center mx-4">
-      <div className="w-0.5 flex-grow bg-gray-300"></div>
+      <div className="w-0.5 flex-grow bg-border"></div>
     </div>
-    <div className="flex-grow p-3 bg-blue-50 border border-blue-200 rounded-lg text-center">
-      <p className="text-sm text-blue-800 font-semibold">
-        Layover in {fromSegment.destination?.name}:{" "}
+    <div className="flex-grow flex justify-center">
+      <Badge variant="outline">
+        <Clock className="w-3 h-3 mr-2" />
+        Layover in {fromSegment.destination?.city?.name}:{" "}
         {calculateTimeDiff(fromSegment.arriving_at, toSegment.departing_at)}
-      </p>
+      </Badge>
     </div>
   </div>
 );
@@ -467,63 +497,40 @@ const LayoverInfo = ({ fromSegment, toSegment }) => (
 // --- Main Sidebar Component ---
 
 export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "unset";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen]);
-
   if (!flightData) return null;
 
   return (
-    <>
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={onClose}
-        />
-      )}
-      <div
-        className={`fixed right-0 top-0 h-full w-full max-w-lg bg-white shadow-xl z-50 transform transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="bg-white px-4 py-3 flex items-center justify-between sticky top-0 z-10 border-b">
-          <h2 className="text-lg font-semibold text-gray-800">
-            Flight Itinerary
-          </h2>
-          <button
-            onClick={onClose}
-            className="p-2 text-gray-500 hover:bg-gray-100 rounded-full"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent className="w-full max-w-lg p-0">
+        <SheetHeader className="px-4 py-3 flex flex-row items-center justify-between sticky top-0 z-10 border-b bg-background">
+          <SheetTitle>Flight Itinerary</SheetTitle>
+          <SheetClose asChild>
+            <Button variant="ghost" size="icon">
+              <X className="w-5 h-5" />
+            </Button>
+          </SheetClose>
+        </SheetHeader>
 
         <div className="overflow-y-auto h-full pb-20">
-          {/* ✅ FIX: Map over ALL slices to show the complete journey */}
           {flightData.slices.map((slice, sliceIndex) => (
-            <div key={sliceIndex} className="p-4 sm:p-6 border-b">
+            <div key={sliceIndex} className="p-4 sm:p-6">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-10 h-10 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-lg">
+                <div className="w-10 h-10 bg-primary text-primary-foreground rounded-lg flex items-center justify-center font-bold text-lg">
                   {sliceIndex + 1}
                 </div>
                 <div>
-                  <h3 className="font-bold text-xl text-gray-800 flex items-center gap-2">
+                  <h3 className="font-bold text-xl flex items-center gap-2">
                     {slice.origin?.iata_code} <ArrowRight size={16} />{" "}
                     {slice.destination?.iata_code}
                   </h3>
-                  <p className="text-sm text-gray-500">
-                    {sliceIndex === 0
-                      ? "Departure"
-                      : `Flight ${sliceIndex + 1}`}{" "}
-                    • {formatDate(slice.segments[0].departing_at)} • Total
-                    duration: {formatDuration(slice.duration)}
+                  <p className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
+                    <CalendarDays className="w-4 h-4" />
+                    {sliceIndex === 0 ? "Departure" : `Return`} •{" "}
+                    {formatDate(slice.segments[0].departing_at)}
                   </p>
                 </div>
               </div>
+              <Separator className="my-4" />
 
               {slice.segments.map((segment, segIndex) => (
                 <div key={segIndex}>
@@ -542,7 +549,7 @@ export default function FlightDetailsSidebar({ isOpen, onClose, flightData }) {
             </div>
           ))}
         </div>
-      </div>
-    </>
+      </SheetContent>
+    </Sheet>
   );
 }

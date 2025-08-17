@@ -1,6 +1,16 @@
 "use client";
 
-import { Loader } from "lucide-react";
+import { Loader, Plane } from "lucide-react";
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandLoading,
+} from "@/components/ui/command";
+import { Card } from "@/components/ui/card";
 
 export default function SuggestionsList({
   suggestions,
@@ -11,52 +21,60 @@ export default function SuggestionsList({
   dropdownRef,
   placeholder = "Type to search airports",
 }) {
+  const emptyMessage =
+    query.length < 2
+      ? "Type at least 2 characters to search"
+      : `No airports found for "${query}"`;
+
   return (
-    <div
+    <Card
       ref={dropdownRef}
-      className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-xl z-[100] mt-1"
+      className="absolute top-full left-0 right-0 z-[100] mt-1"
     >
-      <div className="p-3 border-b border-gray-200">
-        <input
-          type="text"
+      <Command shouldFilter={false}>
+        <CommandInput
           value={query}
-          onChange={onQueryChange}
+          onValueChange={onQueryChange} // Command uses onValueChange, passing the string value directly
           placeholder={placeholder}
-          className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-400 text-sm"
           autoFocus
         />
-      </div>
-
-      <div className="max-h-60 overflow-y-auto">
-        {isLoading ? (
-          <div className="flex items-center justify-start p-4 text-gray-500">
-            <Loader className="w-4 h-4 animate-spin mr-2" />
-            <span className="text-sm">Searching...</span>
-          </div>
-        ) : suggestions.length > 0 ? (
-          suggestions.map((airport, idx) => (
-            <div
-              key={idx}
-              onClick={() => onSelect(airport)}
-              className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
-            >
-              <div className="font-medium text-gray-900 text-sm">
-                {airport.city} ({airport.iata})
+        <CommandList>
+          {isLoading ? (
+            <CommandLoading>
+              <div className="flex items-center justify-start p-4 text-muted-foreground">
+                <Loader className="w-4 h-4 animate-spin mr-2" />
+                <span className="text-sm">Searching...</span>
               </div>
-              <div className="text-xs text-gray-500">{airport.name}</div>
-              <div className="text-xs text-gray-400">{airport.country}</div>
-            </div>
-          ))
-        ) : query.length >= 2 ? (
-          <div className="p-4 text-center text-gray-500 text-sm">
-            {`No airports found for "${query}"`} {/* Corrected this line */}
-          </div>
-        ) : (
-          <div className="p-4 text-center text-gray-500 text-sm">
-            Type at least 2 characters to search
-          </div>
-        )}
-      </div>
-    </div>
+            </CommandLoading>
+          ) : (
+            <>
+              <CommandEmpty>{emptyMessage}</CommandEmpty>
+              {suggestions.length > 0 && (
+                <CommandGroup>
+                  {suggestions.map((airport) => (
+                    <CommandItem
+                      key={airport.iata}
+                      value={`${airport.city} ${airport.iata} ${airport.name}`} // Value used for accessibility and internal logic
+                      onSelect={() => onSelect(airport)}
+                      className="flex flex-col items-start"
+                    >
+                      <div className="font-medium text-sm">
+                        {airport.city} ({airport.iata})
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {airport.name}
+                      </div>
+                      <div className="text-xs text-muted-foreground/70">
+                        {airport.country}
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+            </>
+          )}
+        </CommandList>
+      </Command>
+    </Card>
   );
 }

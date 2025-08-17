@@ -1,16 +1,15 @@
 // src/app/layout.js
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
+import Header from "@/components/layout/Header"; // Using new path alias
+import Footer from "@/components/layout/Footer"; // Using new path alias
 import Providers from "./providers";
-// Configure Inter for body text
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
 
-// Configure Poppins for headings
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -18,24 +17,27 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "SkyFareUSA | Book Flights with Ease",
+  title: "Sky Fare USA | Book Flights with Ease",
   description:
-    "Find and book cheap flights with SkyFareUSA. Your ultimate flight booking solution for secure and seamless reservations.",
+    "Find and book cheap flights with Sky Fare USA. Your ultimate flight booking solution.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    // ✅ The fix is adding suppressHydrationWarning here
     <html
       lang="en"
       className={`${inter.variable} ${poppins.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex flex-col min-h-screen bg-sand text-neutral-800 font-sans">
+      {/* The "font-sans" class now correctly applies the Inter font 
+        because of our tailwind.config.js setup.
+      */}
+      <body className="font-sans antialiased flex flex-col min-h-screen">
         <Header />
-        {/* Note: Corrected non-standard Tailwind class sm:h-18 to sm:h-20 */}
-        <div className="h-16 sm:h-20 md:h-20"></div>
-        <main className="flex-grow">
+        {/* The empty div for spacing is removed for a cleaner approach */}
+        <main className="flex-grow pt-16 sm:pt-20 md:pt-20">
+          {" "}
+          {/* Add padding here instead */}
           <Providers>{children}</Providers>
         </main>
         <Footer />

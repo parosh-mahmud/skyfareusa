@@ -1,125 +1,186 @@
+// src/components/flight-search/TravelerClassSelector.js
 "use client";
-import { useState, useEffect, useRef } from "react";
+
 import { Plus, Minus } from "lucide-react";
 
-// This is the popover UI for selecting travelers and class
-const TravelerPopover = ({
+// Import your custom UI components
+
+import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { Separator } from "../ui/separator";
+import { Label } from "../ui/label";
+
+// Helper component for the popover content to keep the main component clean
+const TravelerPopoverContent = ({
   passengers,
   onPassengersChange,
   cabinClass,
   onCabinClassChange,
-  onClose,
 }) => {
-  const popoverRef = useRef(null);
-
-  // This hook handles closing the popover when clicking outside of it
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [onClose]);
-
   const updatePassengerCount = (type, change) => {
     const newPassengers = [...passengers];
-    const currentCount = newPassengers.filter((p) => p.type === type).length;
     const totalPassengers = newPassengers.length;
-    const adults = newPassengers.filter((p) => p.type === "adult");
 
-    if (change > 0 && totalPassengers < 9) {
-      // Limit to 9 total passengers
+    // --- Start of Addition Logic ---
+    if (change > 0) {
+      if (totalPassengers >= 9) return; // Max 9 passengers
+
+      // Infants must be associated with an adult
+      const adults = newPassengers.filter((p) => p.type === "adult");
       if (type === "infant" && adults.length === 0) {
-        // Infants must travel with an adult, so do nothing if no adults
+        // You could show a toast notification here
+        console.warn("An infant must travel with an adult.");
+        return;
+      }
+
+      // Infants cannot outnumber adults
+      const infants = newPassengers.filter(
+        (p) => p.type === "infant_without_seat"
+      );
+      if (type === "infant" && infants.length >= adults.length) {
+        console.warn("Number of infants cannot exceed the number of adults.");
         return;
       }
 
       const passenger = {
         type: type === "infant" ? "infant_without_seat" : type,
         age: type === "adult" ? 30 : type === "child" ? 8 : 1,
-        id: (totalPassengers + 1).toString(),
+        id: `passenger_${totalPassengers + 1}`, // More robust ID
       };
 
-      // Find the first adult to associate with the infant
       if (type === "infant") {
-        const firstAdult = adults[0];
-        if (firstAdult) {
-          passenger.associatedAdultId = firstAdult.id;
-        }
+        passenger.associatedAdultId = adults[0].id;
       }
       newPassengers.push(passenger);
-    } else if (change < 0) {
-      // Ensure at least one adult
+    }
+    // --- End of Addition Logic ---
+
+    // --- Start of Subtraction Logic ---
+    else if (change < 0) {
+      const currentCount = newPassengers.filter(
+        (p) =>
+          p.type === type ||
+          (type === "infant" && p.type === "infant_without_seat")
+      ).length;
+
+      // Must have at least one adult
       if (type === "adult" && currentCount <= 1) return;
+
       if (currentCount > 0) {
-        const index = newPassengers.findIndex((p) => p.type === type);
-        if (index !== -1) newPassengers.splice(index, 1);
+        const indexToRemove = newPassengers.findLastIndex(
+          (p) =>
+            p.type === type ||
+            (type === "infant" && p.type === "infant_without_seat")
+        );
+        if (indexToRemove !== -1) {
+          const removedPassenger = newPassengers[indexToRemove];
+          newPassengers.splice(indexToRemove, 1);
+
+          // If an adult is removed, re-associate their infant if necessary
+          if (removedPassenger.type === "adult") {
+            const associatedInfantIndex = newPassengers.findIndex(
+              (p) => p.associatedAdultId === removedPassenger.id
+            );
+            if (associatedInfantIndex !== -1) {
+              const firstAdult = newPassengers.find((p) => p.type === "adult");
+              if (firstAdult) {
+                newPassengers[associatedInfantIndex].associatedAdultId =
+                  firstAdult.id;
+              } else {
+                // This case should be handled, maybe remove the infant too
+                newPassengers.splice(associatedInfantIndex, 1);
+              }
+            }
+          }
+        }
       }
     }
+    // --- End of Subtraction Logic ---
     onPassengersChange(newPassengers);
   };
 
   const getPassengerCount = (type) =>
     passengers.filter(
-      (p) => p.type === type || p.type === "infant_without_seat"
+      (p) =>
+        p.type === type ||
+        (type === "infant" && p.type === "infant_without_seat")
     ).length;
 
   return (
-    <div
-      ref={popoverRef}
-      className="absolute top-full right-0 mt-2 bg-white rounded-lg shadow-xl z-[100] w-80 p-6 border"
-    >
-      <div className="space-y-4">
-        {/* Passenger Counters */}
-        {[
-          { type: "adult", label: "Adults", desc: "12+ years" },
-          { type: "child", label: "Children", desc: "2-11 years" },
-          { type: "infant", label: "Infants", desc: "Below 2 years" },
-        ].map((pax) => (
-          <div key={pax.type} className="flex items-center justify-between">
-            <div>
-              <p className="font-semibold text-gray-800">{pax.label}</p>
-              <p className="text-sm text-gray-500">{pax.desc}</p>
+    <PopoverContent className="w-80" align="end">
+      <div className="grid gap-4">
+        <div className="space-y-2">
+          <h4 className="font-medium leading-none">Travelers</h4>
+          <p className="text-sm text-muted-foreground">
+            Select the number of passengers.
+          </p>
+        </div>
+        <div className="grid gap-4">
+          {[
+            { type: "adult", label: "Adults", desc: "12+ years" },
+            { type: "child", label: "Children", desc: "2-11 years" },
+            { type: "infant", label: "Infants", desc: "Below 2 years" },
+          ].map((pax) => (
+            <div key={pax.type} className="grid grid-cols-3 items-center gap-4">
+              <Label className="col-span-1">
+                {pax.label}
+                <p className="font-light text-xs text-muted-foreground">
+                  {pax.desc}
+                </p>
+              </Label>
+              <div className="flex items-center justify-end gap-2 col-span-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() => updatePassengerCount(pax.type, -1)}
+                  disabled={
+                    getPassengerCount(pax.type) ===
+                    (pax.type === "adult" ? 1 : 0)
+                  }
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <span className="w-8 text-center font-bold text-lg">
+                  {getPassengerCount(pax.type)}
+                </span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() => updatePassengerCount(pax.type, 1)}
+                  disabled={passengers.length >= 9}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => updatePassengerCount(pax.type, -1)}
-                className="p-1.5 bg-gray-100 rounded-full hover:bg-gray-200"
-              >
-                <Minus className="w-4 h-4" />
-              </button>
-              <span className="w-8 text-center font-bold text-lg">
-                {getPassengerCount(pax.type)}
-              </span>
-              <button
-                type="button"
-                onClick={() => updatePassengerCount(pax.type, 1)}
-                className="p-1.5 bg-gray-100 rounded-full hover:bg-gray-200"
-              >
-                <Plus className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        ))}
-        {/* Class Selection */}
-        <div className="pt-4 border-t">
-          <p className="font-semibold text-gray-800 mb-2">Cabin Class</p>
-          <select
-            value={cabinClass}
-            onChange={(e) => onCabinClassChange(e.target.value)}
-            className="w-full border-gray-200 border rounded-lg p-2 text-sm"
-          >
-            <option value="economy">Economy</option>
-            <option value="premium_economy">Premium Economy</option>
-            <option value="business">Business</option>
-            <option value="first">First</option>
-          </select>
+          ))}
+        </div>
+        <Separator />
+        <div className="grid gap-2">
+          <Label>Cabin Class</Label>
+          <Select value={cabinClass} onValueChange={onCabinClassChange}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select class" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="economy">Economy</SelectItem>
+              <SelectItem value="premium_economy">Premium Economy</SelectItem>
+              <SelectItem value="business">Business</SelectItem>
+              <SelectItem value="first">First</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
-    </div>
+    </PopoverContent>
   );
 };
 
@@ -129,29 +190,8 @@ export default function TravelerClassSelector({
   onPassengersChange,
   cabinClass,
   onCabinClassChange,
-  variant = "main",
-  onOpen,
-  displayVariant = "default", // Add this prop
+  variant = "main", // "main" or "compact"
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const wrapperRef = useRef(null);
-
-  // This closes the popover if you click outside the main component trigger
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [wrapperRef]);
-
-  const handleOpen = () => {
-    onOpen?.(); // Close other selectors
-    setIsOpen(!isOpen);
-  };
-
   const totalPassengers = passengers.length;
   const passengerText = `${totalPassengers} Traveler${
     totalPassengers > 1 ? "s" : ""
@@ -160,61 +200,33 @@ export default function TravelerClassSelector({
     .replace("_", " ")
     .replace(/\b\w/g, (l) => l.toUpperCase());
 
-  if (variant === "compact") {
-    return (
-      <div ref={wrapperRef} className="relative">
-        <div onClick={handleOpen} className="cursor-pointer">
-          <p className="font-bold text-blue-900 text-lg">{passengerText}</p>
-          <p className="text-sm text-gray-500">{cabinClassText}</p>
-        </div>
-        {isOpen && (
-          <TravelerPopover
-            onClose={() => setIsOpen(false)}
-            passengers={passengers}
-            onPassengersChange={onPassengersChange}
-            cabinClass={cabinClass}
-            onCabinClassChange={onCabinClassChange}
-          />
-        )}
+  const triggerContent =
+    variant === "compact" ? (
+      <div>
+        <p className="font-bold text-lg">{passengerText}</p>
+        <p className="text-sm text-muted-foreground">{cabinClassText}</p>
+      </div>
+    ) : (
+      <div>
+        <p className="text-xs uppercase tracking-wider">Traveler, Class</p>
+        <p className="text-base sm:text-lg font-bold text-foreground">
+          {passengerText}
+        </p>
+        <p className="text-xs text-muted-foreground">{cabinClassText}</p>
       </div>
     );
-  }
 
-  // Main variant
   return (
-    <div ref={wrapperRef} className="relative">
-      <div onClick={handleOpen} className="cursor-pointer">
-        <p className="text-xs text-blue-600 font-medium mb-2 uppercase">
-          TRAVELER, CLASS
-        </p>
-        <div className="flex items-center gap-2">
-          <div>
-            <p
-              className={`text-base sm:text-lg font-bold text-blue-900 ${
-                displayVariant === "compact" ? "text-lg" : ""
-              }`}
-            >
-              {passengerText}
-            </p>
-            <p
-              className={`text-xs text-gray-400 ${
-                displayVariant === "compact" ? "text-sm" : ""
-              }`}
-            >
-              {cabinClassText}
-            </p>
-          </div>
-        </div>
-      </div>
-      {isOpen && (
-        <TravelerPopover
-          onClose={() => setIsOpen(false)}
-          passengers={passengers}
-          onPassengersChange={onPassengersChange}
-          cabinClass={cabinClass}
-          onCabinClassChange={onCabinClassChange}
-        />
-      )}
-    </div>
+    <Popover>
+      <PopoverTrigger className="text-left w-full cursor-pointer">
+        {triggerContent}
+      </PopoverTrigger>
+      <TravelerPopoverContent
+        passengers={passengers}
+        onPassengersChange={onPassengersChange}
+        cabinClass={cabinClass}
+        onCabinClassChange={onCabinClassChange}
+      />
+    </Popover>
   );
 }

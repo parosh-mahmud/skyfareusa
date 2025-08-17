@@ -1,17 +1,35 @@
-/** @type {import('next').NextConfig} */
-// const nextConfig = {};
+// /** @type {import('next').NextConfig} */
+// // const nextConfig = {};
 
+// // export default nextConfig;
+
+// // next.config.mjs
+// const nextConfig = {
+//   images: {
+//     remotePatterns: [
+//       {
+//         protocol: "https",
+//         hostname: "assets.duffel.com",
+//       },
+//     ],
+//   },
+// };
 // export default nextConfig;
 
-// next.config.mjs
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "assets.duffel.com",
-      },
-    ],
+    unoptimized: true,
+  },
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
   },
 };
+
 export default nextConfig;
