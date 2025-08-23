@@ -1,113 +1,3 @@
-// //src/components/bookingv2/selected-client-component.js
-// "use client";
-
-// import { useState } from "react";
-// import { Card, CardContent } from "../ui/card";
-// import { useTimeRemaining } from "../../hooks/use-time-remaining";
-// import BookingProgress from "./booking-progress";
-// import TravellerDetailsStep from "./traveller-details-step";
-// import ExtraBaggagesStep from "./extra-baggages-step";
-// import ReviewPaymentStep from "./review-payment-step";
-
-// export default function SelectedClientComponent() {
-//   const [currentStep, setCurrentStep] = useState(1);
-//   const [bookingData, setBookingData] = useState({
-//     travellerData: [],
-//     selectedServices: [],
-//     amadeusSelection: { seat: null, baggage: [] },
-//   });
-
-//   const { minutes, seconds, isExpired } = useTimeRemaining(15);
-
-//   // Mock passengers data
-//   const mockPassengers = [{ type: "adult" }, { type: "adult" }];
-
-//   const handleTravellerDetailsNext = (travellerData) => {
-//     setBookingData((prev) => ({ ...prev, travellerData }));
-//     setCurrentStep(2);
-//   };
-
-//   const handleServicesNext = (servicesData) => {
-//     setBookingData((prev) => ({ ...prev, ...servicesData }));
-//     setCurrentStep(3);
-//   };
-
-//   const handleConfirmBooking = (finalData) => {
-//     console.log("Booking confirmed:", finalData);
-//     // Handle booking confirmation
-//     alert("Booking confirmed successfully!");
-//   };
-
-//   if (isExpired) {
-//     return (
-//       <div className="max-w-4xl mx-auto p-6">
-//         <Card>
-//           <CardContent className="p-8 text-center">
-//             <h2 className="text-2xl font-semibold text-red-600 mb-4">
-//               Session Expired
-//             </h2>
-//             <p className="text-gray-600 mb-4">
-//               Your booking session has expired. Please start a new search.
-//             </p>
-//             <button
-//               onClick={() => window.location.reload()}
-//               className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-//             >
-//               Start New Search
-//             </button>
-//           </CardContent>
-//         </Card>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="max-w-4xl mx-auto p-6">
-//       {/* Timer */}
-//       <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-//         <div className="flex items-center justify-between">
-//           <span className="text-yellow-800">Complete your booking within:</span>
-//           <span className="font-mono text-lg font-semibold text-yellow-900">
-//             {String(minutes).padStart(2, "0")}:
-//             {String(seconds).padStart(2, "0")}
-//           </span>
-//         </div>
-//       </div>
-
-//       {/* Progress Indicator */}
-//       <BookingProgress currentStep={currentStep} />
-
-//       {/* Step Content */}
-//       <Card className="mt-6">
-//         <CardContent className="p-6">
-//           {currentStep === 1 && (
-//             <TravellerDetailsStep
-//               passengers={mockPassengers}
-//               onNext={handleTravellerDetailsNext}
-//             />
-//           )}
-
-//           {currentStep === 2 && (
-//             <ExtraBaggagesStep
-//               onNext={handleServicesNext}
-//               onBack={() => setCurrentStep(1)}
-//               provider="duffel" // or "amadeus"
-//             />
-//           )}
-
-//           {currentStep === 3 && (
-//             <ReviewPaymentStep
-//               bookingData={bookingData}
-//               onBack={() => setCurrentStep(2)}
-//               onConfirm={handleConfirmBooking}
-//             />
-//           )}
-//         </CardContent>
-//       </Card>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -123,30 +13,40 @@ import ExtraBaggagesStep from "./extra-baggages-step";
 import ReviewPaymentStep from "./review-payment-step";
 import PriceDisplaySection from "./price-display-section";
 import BookingConfirmation from "./booking-confirmation";
+
 export default function SelectedClientComponent() {
   const [currentStep, setCurrentStep] = useState(1);
   const [bookingData, setBookingData] = useState({
+    contactDetails: null,
     travellerData: [],
     selectedServices: [],
-    amadeusSelection: { seat: null, baggage: [] },
   });
 
+  // State for the re-pricing call on load
   const [isPricing, setIsPricing] = useState(true);
   const [pricingError, setPricingError] = useState(null);
 
+  // New state for the final order creation process
+  const [isCreatingOrder, setIsCreatingOrder] = useState(false);
+  const [orderError, setOrderError] = useState(null);
+
   const { minutes, seconds, isExpired } = useTimeRemaining(15);
-  const { pricedOffer, setPricedOffer, selectedFlight } = useBookingStore();
+
+  // Get state and actions from Zustand store
+  const { pricedOffer, setPricedOffer, selectedFlight, resetBooking } =
+    useBookingStore();
+
   const [confirmedOrder, setConfirmedOrder] = useState(null);
+
   useEffect(() => {
     const repriceOffer = async () => {
       if (!selectedFlight) {
         setPricingError(
-          "No flight offer was selected. Please go back and try again."
+          "No flight selected. Please return to the search results."
         );
         setIsPricing(false);
         return;
       }
-
       try {
         const res = await fetch("/api/flights/offers/price", {
           method: "POST",
@@ -157,25 +57,18 @@ export default function SelectedClientComponent() {
             sourceApi: selectedFlight.sourceApi,
           }),
         });
-
         const result = await res.json();
-
-        if (!res.ok || !result.success) {
-          throw new Error(result.error || "Failed to get the latest price.");
-        }
-
+        if (!res.ok || !result.success)
+          throw new Error(result.error || "Failed to get latest price.");
         setPricedOffer(result.pricedOffer);
       } catch (error) {
-        console.error("Repricing failed:", error);
         setPricingError(error.message);
       } finally {
         setIsPricing(false);
       }
     };
-
     repriceOffer();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedFlight, setPricedOffer]);
 
   const passengers = pricedOffer?.passengers || [];
 
@@ -187,8 +80,11 @@ export default function SelectedClientComponent() {
     };
   }, [pricedOffer]);
 
-  const handleTravellerDetailsNext = (travellerData) => {
-    setBookingData((prev) => ({ ...prev, travellerData }));
+  // --- Step Navigation Handlers ---
+
+  const handleTravellerDetailsNext = (data) => {
+    // Correctly merge contact and traveller data
+    setBookingData((prev) => ({ ...prev, ...data }));
     setCurrentStep(2);
   };
 
@@ -197,27 +93,82 @@ export default function SelectedClientComponent() {
     setCurrentStep(3);
   };
 
-  const handleConfirmBooking = (orderData) => {
-    console.log("Booking confirmed successfully!", orderData);
-    setConfirmedOrder(orderData);
+  // This function now contains the final API call logic
+  const handleConfirmBooking = async (paymentData) => {
+    setIsCreatingOrder(true);
+    setOrderError(null);
+
+    const { contactDetails, travellerData } = bookingData;
+
+    // Format payload for the order creation API
+    const orderPayload = {
+      pricedOffer,
+      payments: [
+        {
+          type: "balance",
+          currency: pricedOffer.total_currency,
+          amount: pricedOffer.total_amount,
+        },
+      ],
+      passengers: travellerData.map((p, index) => {
+        const passengerPayload = {
+          id: pricedOffer.passengers[index].id,
+          given_name: p.firstName,
+          family_name: p.lastName,
+          born_on: p.dateOfBirth,
+          gender: p.gender.toLowerCase().startsWith("m") ? "m" : "f",
+          title: p.title,
+          phone_number: contactDetails.phone,
+          email: contactDetails.email,
+        };
+        if (p.passportNumber) {
+          passengerPayload.identity_documents = [
+            {
+              type: "passport",
+              unique_identifier: p.passportNumber,
+              issuing_country_code: p.issuingCountry,
+              expires_on: p.passportExpiry,
+            },
+          ];
+        }
+        return passengerPayload;
+      }),
+      selectedServices: bookingData.selectedServices || [],
+    };
+    console.log("Order Payload:", orderPayload);
+
+    try {
+      const res = await fetch("/api/flights/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
+      const result = await res.json();
+      if (!res.ok || !result.success)
+        throw new Error(result.error || "Booking failed.");
+
+      setConfirmedOrder(result.order);
+      resetBooking(); // Clean up the store for the next booking
+    } catch (error) {
+      setOrderError(error.message);
+    } finally {
+      setIsCreatingOrder(false);
+    }
   };
+
+  // --- Render Logic ---
+
   if (confirmedOrder) {
     return <BookingConfirmation order={confirmedOrder} />;
   }
-
   if (isPricing) {
     return (
       <div className="max-w-4xl mx-auto p-6 text-center">
         <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4" />
         <h2 className="text-2xl font-semibold">Confirming Latest Price...</h2>
-        <p className="text-gray-600">
-          Please wait while we fetch the most up-to-date details for your
-          flight.
-        </p>
       </div>
     );
   }
-
   if (pricingError) {
     return (
       <div className="max-w-4xl mx-auto p-6">
@@ -229,7 +180,6 @@ export default function SelectedClientComponent() {
       </div>
     );
   }
-
   if (isExpired) {
     return (
       <div className="max-w-4xl mx-auto p-6">
@@ -238,13 +188,7 @@ export default function SelectedClientComponent() {
             <h2 className="text-2xl font-semibold text-red-600 mb-4">
               Session Expired
             </h2>
-            <p className="text-gray-600 mb-4">
-              Your booking session has expired. Please start a new search.
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-            >
+            <button onClick={() => window.location.reload()}>
               Start New Search
             </button>
           </CardContent>
@@ -286,14 +230,16 @@ export default function SelectedClientComponent() {
               {currentStep === 3 && (
                 <ReviewPaymentStep
                   bookingData={bookingData}
+                  pricedOffer={pricedOffer} // <-- ADD THIS PROP
                   onBack={() => setCurrentStep(2)}
                   onConfirm={handleConfirmBooking}
+                  isProcessing={isCreatingOrder}
+                  error={orderError}
                 />
               )}
             </CardContent>
           </Card>
         </div>
-
         <div className="lg:col-span-1 mt-6 lg:mt-0">
           <div className="sticky top-6">
             <PriceDisplaySection

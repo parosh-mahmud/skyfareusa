@@ -6,18 +6,7 @@ import { useRouter } from "next/navigation";
 import { useBookingStore } from "src/lib/store";
 
 // Import Lucide icons
-import {
-  Star,
-  Luggage,
-  Armchair,
-  Wifi,
-  Coffee,
-  RefreshCw,
-  Shield,
-  X,
-  Info,
-  Crown,
-} from "lucide-react";
+import { Star, Luggage, Armchair, RefreshCw, Shield, Info } from "lucide-react";
 
 // Import shadcn/ui components
 import {
@@ -63,8 +52,8 @@ const FeatureItem = ({
     />
     <span
       className={`text-sm ${
-        available ? "text-foreground" : "text-muted-foreground line-through"
-      }`}
+        available ? "text-foreground" : "text-muted-foreground"
+      } ${!available ? "line-through" : ""}`}
     >
       {text}
     </span>
@@ -72,7 +61,7 @@ const FeatureItem = ({
 );
 
 // Fare Details Modal
-const FareDetailsModal = ({ offer, features, fareName, children }) => {
+const FareDetailsModal = ({ features, fareName, children }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -116,81 +105,75 @@ export default function FareCard({ offer, isRecommended = false, onSelect }) {
       };
     }
 
-    const isAmadeus = offer.sourceApi === "amadeus";
     const features = { baggage: [], comfort: [], flexibility: [] };
-    let fareName = "Standard";
-    let airline = "";
 
-    if (isAmadeus) {
-      const travelerPricing = offer.rawOffer?.travelerPricings?.[0];
-      const fareSegment = travelerPricing?.fareDetailsBySegment?.[0];
-      fareName =
-        fareSegment?.brandedFareLabel || fareSegment?.cabin || "Economy";
-      airline = offer.rawOffer?.validatingAirlineCodes?.[0] || "";
+    // --- UPDATED DUFFEL API LOGIC ---
+    const firstSlice = offer.slices?.[0];
+    const firstSegment = firstSlice?.segments?.[0];
+    const segmentPassengerInfo = firstSegment?.passengers?.[0];
 
-      if (fareSegment?.includedCheckedBags) {
-        const { weight, weightUnit = "KG" } = fareSegment.includedCheckedBags;
-        features.baggage.push({
-          icon: Luggage,
-          text: `${weight}${weightUnit} Checked Bag`,
-          available: true,
-          isHighlight: weight >= 25,
-        });
-      } else {
-        features.baggage.push({
-          icon: Luggage,
-          text: "No Checked Bag",
-          available: false,
-        });
-      }
+    // 1. Get Fare Name: Look for a fare brand name, fall back to cabin class, then to a default.
+    const fareName =
+      firstSlice?.fare_brand_name ||
+      segmentPassengerInfo?.cabin_class_marketing_name ||
+      (segmentPassengerInfo?.cabin_class
+        ? `${segmentPassengerInfo.cabin_class
+            .charAt(0)
+            .toUpperCase()}${segmentPassengerInfo.cabin_class.slice(1)}`
+        : "Economy");
 
-      features.comfort.push({
-        icon: Armchair,
-        text: `${fareSegment?.cabin || "Economy"} Class`,
+    const airline = firstSegment?.carrier?.name || "Airline";
+
+    // 2. Get Baggage Allowance: Find the 'checked' baggage type in the detailed segment data.
+    const baggageInfo = segmentPassengerInfo?.baggages?.find(
+      (b) => b.type === "checked"
+    );
+    const baggageAllowance = baggageInfo?.quantity || 0;
+
+    if (baggageAllowance > 0) {
+      features.baggage.push({
+        icon: Luggage,
+        text: `${baggageAllowance} Checked Bag(s)`,
         available: true,
-        isHighlight: fareSegment?.cabin !== "ECONOMY",
+        isHighlight: baggageAllowance > 1,
       });
     } else {
-      // Handle Duffel API response structure
-      const baggageAllowance =
-        offer.passengers?.[0]?.baggages?.[0]?.quantity || 0;
-      fareName = "Duffel Standard";
-      airline = offer.slices?.[0]?.segments?.[0]?.carrier?.name || "";
-
-      if (baggageAllowance > 0) {
-        features.baggage.push({
-          icon: Luggage,
-          text: `${baggageAllowance} Checked Bag(s)`,
-          available: true,
-          isHighlight: baggageAllowance > 1,
-        });
-      } else {
-        features.baggage.push({
-          icon: Luggage,
-          text: "No Checked Bag",
-          available: false,
-        });
-      }
-
-      const isRefundable =
-        offer.conditions?.refund_before_departure?.allowed || false;
-      const isChangeable =
-        offer.conditions?.change_before_departure?.allowed || false;
-
-      features.flexibility.push({
-        icon: RefreshCw,
-        text: isChangeable ? "Changes Allowed" : "Change Fees Apply",
-        available: isChangeable,
-        isHighlight: isChangeable,
-      });
-
-      features.flexibility.push({
-        icon: Shield,
-        text: isRefundable ? "Refundable" : "Non-refundable",
-        available: isRefundable,
-        isHighlight: isRefundable,
+      features.baggage.push({
+        icon: Luggage,
+        text: "No Checked Bag",
+        available: false,
       });
     }
+
+    // Add comfort feature based on cabin class if available
+    if (segmentPassengerInfo?.cabin_class) {
+      features.comfort.push({
+        icon: Armchair,
+        text: `${fareName} Class`,
+        available: true,
+        isHighlight: segmentPassengerInfo.cabin_class !== "economy",
+      });
+    }
+
+    // 3. Get Change/Refund Conditions: Check the conditions object.
+    const isChangeable =
+      offer.conditions?.change_before_departure?.allowed || false;
+    const isRefundable =
+      offer.conditions?.refund_before_departure?.allowed || false;
+
+    features.flexibility.push({
+      icon: RefreshCw,
+      text: isChangeable ? "Changes Allowed" : "Changes Not Allowed",
+      available: isChangeable,
+      isHighlight: isChangeable,
+    });
+
+    features.flexibility.push({
+      icon: Shield,
+      text: isRefundable ? "Refundable" : "Non-refundable",
+      available: isRefundable,
+      isHighlight: isRefundable,
+    });
 
     return { features, fareName, airline };
   }, [offer]);
@@ -206,14 +189,13 @@ export default function FareCard({ offer, isRecommended = false, onSelect }) {
     ...features.comfort,
     ...features.flexibility,
   ];
-  const displayFeatures = allFeatures.slice(0, 4);
+  const displayFeatures = allFeatures.slice(0, 3); // Show top 3 features
 
   const handleSelect = () => {
     setSelectedOffer(offer);
     if (onSelect) {
       onSelect(offer);
     } else {
-      console.log("Selected Offer:", offer);
       router.push("/book/selected");
     }
   };
@@ -221,7 +203,7 @@ export default function FareCard({ offer, isRecommended = false, onSelect }) {
   return (
     <Card
       className={`relative flex flex-col min-h-[400px] transition-all duration-300 hover:border-primary hover:-translate-y-1 ${
-        isRecommended ? "border-primary border-2" : ""
+        isRecommended ? "border-primary border-2 shadow-lg" : "border"
       }`}
     >
       {isRecommended && (
@@ -233,17 +215,17 @@ export default function FareCard({ offer, isRecommended = false, onSelect }) {
 
       <CardHeader>
         <CardTitle>{fareName}</CardTitle>
-        {airline && <CardDescription>{airline} Airlines</CardDescription>}
+        {airline && <CardDescription>{airline}</CardDescription>}
       </CardHeader>
 
       <CardContent className="flex-grow">
         <div className="mb-4">
           <div className="flex items-baseline gap-2">
             <span className="text-4xl font-bold">
-              {currency === "USD" ? "$" : currency}
+              {currency === "USD" ? "$" : ""}
               {price.toLocaleString()}
             </span>
-            <span className="text-sm text-muted-foreground">/ person</span>
+            <span className="text-sm text-muted-foreground">/ total</span>
           </div>
         </div>
 
@@ -257,12 +239,8 @@ export default function FareCard({ offer, isRecommended = false, onSelect }) {
       </CardContent>
 
       <CardFooter className="flex flex-col items-start gap-4">
-        {allFeatures.length > 4 && (
-          <FareDetailsModal
-            offer={offer}
-            features={features}
-            fareName={fareName}
-          >
+        {allFeatures.length > 3 && (
+          <FareDetailsModal features={features} fareName={fareName}>
             <Button variant="link" className="p-0 h-auto">
               <Info className="w-4 h-4 mr-2" />
               View all features ({allFeatures.length})

@@ -45,8 +45,9 @@ export default function BookingConfirmation({ order }) {
         </CardHeader>
       </Card>
 
-      {/* Re-use the FlightDetailsCard for a consistent look */}
-      <FlightDetailsCard offerSlice={order.slices[0]} />
+      {/* --- THIS IS THE FIX --- */}
+      {/* Pass the entire 'order' object as the 'offer' prop */}
+      <FlightDetailsCard offer={order} />
 
       <div className="grid md:grid-cols-2 gap-6 mt-6">
         <Card>
