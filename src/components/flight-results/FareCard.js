@@ -1,3 +1,4 @@
+//src/components/flight-results/FareCard.js
 "use client";
 
 import { useState, useMemo } from "react";
@@ -212,6 +213,7 @@ export default function FareCard({ offer, isRecommended = false, onSelect }) {
     if (onSelect) {
       onSelect(offer);
     } else {
+      console.log("Selected Offer:", offer);
       router.push("/book/selected");
     }
   };

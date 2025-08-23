@@ -1,0 +1,101 @@
+{
+    "id": "off_0000AxGfNFES8QGpRfRSdB",
+    "sourceApi": "duffel",
+    "total_amount": "141.24",
+    "total_currency": "USD",
+    "slices": [
+        {
+            "duration": "PT3H28M",
+            "origin": {
+                "city_name": "Dhaka",
+                "airportName": "Dhaka Shahjalal International Airport",
+                "iata_code": "DAC"
+            },
+            "destination": {
+                "city_name": "Colombo",
+                "airportName": "Bandaranaike International Airport",
+                "iata_code": "CMB"
+            },
+            "segments": [
+                {
+                    "origin": {
+                        "city_name": "Dhaka",
+                        "iata_country_code": "BD",
+                        "iata_city_code": "DAC",
+                        "icao_code": "VGHS",
+                        "iata_code": "DAC",
+                        "latitude": 23.844185,
+                        "longitude": 90.400279,
+                        "city": null,
+                        "time_zone": "Asia/Dhaka",
+                        "type": "airport",
+                        "name": "Dhaka Shahjalal International Airport",
+                        "id": "arp_dac_bd"
+                    },
+                    "destination": {
+                        "city_name": "Colombo",
+                        "iata_country_code": "LK",
+                        "iata_city_code": "CMB",
+                        "icao_code": "VCBI",
+                        "iata_code": "CMB",
+                        "latitude": 7.180457,
+                        "longitude": 79.884176,
+                        "city": {
+                            "city_name": null,
+                            "iata_country_code": "LK",
+                            "iata_city_code": "CMB",
+                            "icao_code": null,
+                            "iata_code": "CMB",
+                            "latitude": null,
+                            "longitude": null,
+                            "time_zone": null,
+                            "type": "city",
+                            "name": "Colombo",
+                            "id": "cit_cmb_lk"
+                        },
+                        "time_zone": "Asia/Colombo",
+                        "type": "airport",
+                        "name": "Bandaranaike International Airport",
+                        "id": "arp_cmb_lk"
+                    },
+                    "departing_at": "2025-08-25T18:34:00",
+                    "arriving_at": "2025-08-25T21:32:00",
+                    "carrier": {
+                        "logo_symbol_url": "https://assets.duffel.com/img/airlines/for-light-background/full-color-logo/ZZ.svg",
+                        "logo_lockup_url": null,
+                        "conditions_of_carriage_url": "https://duffelairways.com/dummy-url/conditions-of-carriage",
+                        "iata_code": "ZZ",
+                        "name": "Duffel Airways",
+                        "id": "arl_00009VME7D6ivUu8dn35WK"
+                    },
+                    "flight_number": "7366",
+                    "duration": "PT3H28M",
+                    "aircraft": null
+                }
+            ]
+        }
+    ],
+    "passengers": [
+        {
+            "fare_type": null,
+            "loyalty_programme_accounts": [],
+            "family_name": null,
+            "given_name": null,
+            "age": null,
+            "type": "adult",
+            "id": "pas_0000AxGfNEx5B0NMZnJaYU"
+        }
+    ],
+    "conditions": {
+        "refund_before_departure": {
+            "penalty_currency": null,
+            "penalty_amount": null,
+            "allowed": false
+        },
+        "change_before_departure": {
+            "penalty_currency": null,
+            "penalty_amount": null,
+            "allowed": false
+        }
+    }
+}

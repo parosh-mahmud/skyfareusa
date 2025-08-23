@@ -110,85 +110,139 @@
 
 // ... (imports and client initializations)
 
+// //src/app/api/flights/orders/route.js
+
+// export async function POST(request) {
+//   try {
+//     // The request now includes selectedServices (for Duffel) and selectedSeats (for Amadeus)
+//     const {
+//       pricedOffer,
+//       passengers,
+//       selectedServices,
+//       selectedSeats,
+//       sourceApi,
+//     } = await request.json();
+
+//     if (!pricedOffer || !passengers?.length || !sourceApi) {
+//       return NextResponse.json(
+//         { success: false, error: "Missing required parameters." },
+//         { status: 400 }
+//       );
+//     }
+
+//     let createdOrder;
+
+//     switch (sourceApi) {
+//       case "duffel":
+//         const duffelOrder = await duffel.orders.create({
+//           selected_offers: [pricedOffer.id],
+//           passengers: passengers.map((p) => ({
+//             /* ...passenger data... */
+//           })),
+//           // ✅ Add the selected seat services to the order
+//           services: selectedServices,
+//         });
+//         createdOrder = duffelOrder.data;
+//         break;
+
+//       case "amadeus":
+//         const amadeusPricedOffer = pricedOffer.rawOffer || pricedOffer;
+//         const amadeusTravelers = passengers.map((p, index) => {
+//           const travelerId = (index + 1).toString();
+//           const seatSelectionForTraveler = selectedSeats?.[travelerId];
+
+//           let seatAssignments;
+//           if (seatSelectionForTraveler) {
+//             // ✅ Map selected seats to the format Amadeus requires
+//             seatAssignments = Object.entries(seatSelectionForTraveler).map(
+//               ([segmentId, seat]) => ({
+//                 seat,
+//                 segmentId,
+//               })
+//             );
+//           }
+
+//           return {
+//             id: travelerId,
+//             dateOfBirth: p.dateOfBirth,
+//             name: { firstName: p.firstName, lastName: p.lastName },
+//             gender: p.gender.toUpperCase(),
+//             contact: { emailAddress: p.contact.email /* ... */ },
+//             documents: p.documents,
+//             seatAssignments: seatAssignments, // Add the seat selection
+//           };
+//         });
+
+//         const amadeusOrder = await amadeus.booking.flightOrders.post(
+//           JSON.stringify({
+//             data: {
+//               type: "flight-order",
+//               flightOffers: [amadeusPricedOffer],
+//               travelers: amadeusTravelers,
+//             },
+//           })
+//         );
+//         createdOrder = amadeusOrder.data;
+//         break;
+
+//       default:
+//         throw new Error("Unknown API source.");
+//     }
+
+//     return NextResponse.json({ success: true, order: createdOrder });
+//   } catch (error) {
+//     // ... (error handling)
+//   }
+// }
+
+//src/app/api/flights/orders/route.js
+import { Duffel } from "@duffel/api";
+import { NextResponse } from "next/server";
+
+const duffel = new Duffel({
+  token: process.env.DUFFEL_ACCESS_TOKEN,
+});
+
 export async function POST(request) {
   try {
-    // The request now includes selectedServices (for Duffel) and selectedSeats (for Amadeus)
-    const {
-      pricedOffer,
-      passengers,
-      selectedServices,
-      selectedSeats,
-      sourceApi,
-    } = await request.json();
+    const { pricedOffer, passengers, selectedServices, payments, metadata } =
+      await request.json();
 
-    if (!pricedOffer || !passengers?.length || !sourceApi) {
+    if (!pricedOffer || !passengers?.length || !payments?.length) {
       return NextResponse.json(
         { success: false, error: "Missing required parameters." },
         { status: 400 }
       );
     }
 
-    let createdOrder;
+    // REMOVED: The redundant mapping of the 'passengers' array is no longer needed.
+    // The data coming from the client is already in the correct format.
 
-    switch (sourceApi) {
-      case "duffel":
-        const duffelOrder = await duffel.orders.create({
-          selected_offers: [pricedOffer.id],
-          passengers: passengers.map((p) => ({
-            /* ...passenger data... */
-          })),
-          // ✅ Add the selected seat services to the order
-          services: selectedServices,
-        });
-        createdOrder = duffelOrder.data;
-        break;
+    const orderPayload = {
+      selected_offers: [pricedOffer.id],
+      // Use the 'passengers' array directly as it's already formatted
+      passengers: passengers,
+      services: selectedServices || [],
+      payments: payments,
+      type: "instant",
+      metadata: metadata || {},
+    };
 
-      case "amadeus":
-        const amadeusPricedOffer = pricedOffer.rawOffer || pricedOffer;
-        const amadeusTravelers = passengers.map((p, index) => {
-          const travelerId = (index + 1).toString();
-          const seatSelectionForTraveler = selectedSeats?.[travelerId];
+    const orderResponse = await duffel.orders.create(orderPayload);
 
-          let seatAssignments;
-          if (seatSelectionForTraveler) {
-            // ✅ Map selected seats to the format Amadeus requires
-            seatAssignments = Object.entries(seatSelectionForTraveler).map(
-              ([segmentId, seat]) => ({
-                seat,
-                segmentId,
-              })
-            );
-          }
-
-          return {
-            id: travelerId,
-            dateOfBirth: p.dateOfBirth,
-            name: { firstName: p.firstName, lastName: p.lastName },
-            gender: p.gender.toUpperCase(),
-            contact: { emailAddress: p.contact.email /* ... */ },
-            documents: p.documents,
-            seatAssignments: seatAssignments, // Add the seat selection
-          };
-        });
-
-        const amadeusOrder = await amadeus.booking.flightOrders.post(
-          JSON.stringify({
-            data: {
-              type: "flight-order",
-              flightOffers: [amadeusPricedOffer],
-              travelers: amadeusTravelers,
-            },
-          })
-        );
-        createdOrder = amadeusOrder.data;
-        break;
-
-      default:
-        throw new Error("Unknown API source.");
-    }
-
-    return NextResponse.json({ success: true, order: createdOrder });
+    return NextResponse.json({ success: true, order: orderResponse.data });
   } catch (error) {
-    // ... (error handling)
+    // IMPROVED: Log the entire error object for better debugging
+    console.error("Duffel API Error:", JSON.stringify(error, null, 2));
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Failed to create flight order.",
+        // Provide the actual error details back to the client
+        details: error.errors || "An unexpected error occurred.",
+      },
+      { status: error.meta?.status || 500 }
+    );
   }
 }

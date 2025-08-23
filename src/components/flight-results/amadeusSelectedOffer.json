@@ -1,0 +1,72 @@
+{
+    "id": "3",
+    "sourceApi": "amadeus",
+    "total_amount": "438.50",
+    "total_currency": "USD",
+    "slices": [
+        {
+            "duration": "PT13H40M",
+            "origin": {
+                "iata_code": "DAC",
+                "city_name": "DAC"
+            },
+            "destination": {
+                "iata_code": "DXB",
+                "city_name": "DXB"
+            },
+            "segments": [
+                {
+                    "departing_at": "2025-08-25T21:00:00",
+                    "arriving_at": "2025-08-25T23:20:00",
+                    "carrier": {
+                        "iata_code": "AI",
+                        "name": "AIR INDIA"
+                    },
+                    "flight_number": "238",
+                    "duration": "PT2H50M",
+                    "aircraft": {
+                        "name": "AIRBUS A320 (SHARKLETS)"
+                    },
+                    "origin": {
+                        "iata_code": "DAC"
+                    },
+                    "destination": {
+                        "iata_code": "DEL"
+                    }
+                },
+                {
+                    "departing_at": "2025-08-26T06:30:00",
+                    "arriving_at": "2025-08-26T08:40:00",
+                    "carrier": {
+                        "iata_code": "AI",
+                        "name": "AIR INDIA"
+                    },
+                    "flight_number": "929",
+                    "duration": "PT3H40M",
+                    "aircraft": {
+                        "name": "BOEING 787-8"
+                    },
+                    "origin": {
+                        "iata_code": "DEL"
+                    },
+                    "destination": {
+                        "iata_code": "DXB"
+                    }
+                }
+            ]
+        }
+    ],
+    "passengers": [
+        {
+            "id": "1",
+            "type": "adult",
+            "baggages": [
+                {
+                    "type": "carry_on",
+                    "quantity": 1
+                }
+            ]
+        }
+    ],
+    "conditions": {}
+}

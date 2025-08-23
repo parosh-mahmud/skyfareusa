@@ -919,6 +919,554 @@
 //   );
 // }
 
+// //src// app/flight-results/ResultsClientComponent.js
+// "use client";
+
+// import { useState, useMemo, useEffect, useRef } from "react";
+// import { useSearchParams, useRouter } from "next/navigation";
+// import { useInfiniteQuery } from "@tanstack/react-query";
+// import {
+//   Plane,
+//   Loader,
+//   AlertCircle,
+//   DollarSign,
+//   Zap,
+//   Star,
+//   SlidersHorizontal,
+//   X,
+//   ChevronDown,
+//   Users,
+//   Briefcase,
+// } from "lucide-react";
+
+// // Import shadcn/ui components
+// import { Button } from "@/components/ui/button";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Skeleton } from "@/components/ui/skeleton";
+// import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+// import { Badge } from "@/components/ui/badge";
+// import {
+//   Sheet,
+//   SheetContent,
+//   SheetHeader,
+//   SheetTitle,
+//   SheetTrigger,
+// } from "@/components/ui/sheet";
+// import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
+// import FilterSidebar from "src/components/flight-results/FilterSidebar";
+// import FlightOfferCard from "src/components/flight-results/FlightOfferCard";
+// import ModifySearchForm from "src/components/flight-results/ModifySearchForm";
+// import ProgressiveLoadingBar from "@/components/flight-results/ProgressiveLoadingBar";
+// // API fetching function
+// const fetchFlights = async ({ searchParams, pageParam = 1 }) => {
+//   if (!searchParams.has("slices")) {
+//     throw new Error(
+//       "Invalid search query. Please try again from the homepage."
+//     );
+//   }
+//   const payload = {
+//     slices: JSON.parse(searchParams.get("slices")).map((s) => ({
+//       origin: s.origin.code,
+//       destination: s.destination.code,
+//       departure_date: s.departure_date,
+//     })),
+//     passengers: JSON.parse(searchParams.get("passengers")),
+//     cabin_class: searchParams.get("cabinClass"),
+//     page: pageParam,
+//   };
+//   const res = await fetch("/api/flights/search", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(payload),
+//   });
+//   if (!res.ok) {
+//     const errorData = await res.json().catch(() => ({}));
+//     throw new Error(
+//       errorData.error || `A server error occurred (status: ${res.status}).`
+//     );
+//   }
+//   const result = await res.json();
+//   if (!result.success) {
+//     throw new Error(
+//       result.error || "The search was not successful. Please try again."
+//     );
+//   }
+//   return result;
+// };
+
+// // Helper Functions
+// const getStopsCount = (segments) => (segments?.length || 1) - 1;
+// const getDepartureHour = (dateTime) => new Date(dateTime).getHours();
+// const calculateTotalDuration = (offer) => {
+//   return offer.slices.reduce((total, slice) => {
+//     const durationMatch = slice.duration?.match(/PT(\d+)H(\d+)M/);
+//     if (!durationMatch) return total;
+//     const hours = parseInt(durationMatch[1] || "0", 10);
+//     const minutes = parseInt(durationMatch[2] || "0", 10);
+//     return total + hours * 60 + minutes;
+//   }, 0);
+// };
+
+// // Detailed Skeleton Component
+// const ResultsPageSkeleton = () => (
+//   <div className="bg-muted/40 min-h-screen">
+//     <div className="bg-background shadow-sm border-b sticky top-0 z-40">
+//       <div className="container mx-auto px-4 py-3 max-w-7xl">
+//         <Skeleton className="h-9 w-full" />
+//       </div>
+//     </div>
+//     <div className="container mx-auto px-4 py-6 max-w-7xl">
+//       <div className="bg-primary text-primary-foreground p-4 rounded-t-lg mb-4">
+//         <h2 className="font-bold text-xl flex items-center gap-2">
+//           <Plane size={20} /> <Skeleton className="h-6 w-48 bg-primary/50" />
+//         </h2>
+//       </div>
+//       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+//         <aside className="hidden lg:block">
+//           <Card>
+//             <CardHeader>
+//               <CardTitle>
+//                 <Skeleton className="h-6 w-3/4" />
+//               </CardTitle>
+//             </CardHeader>
+//             <CardContent className="space-y-4">
+//               <Skeleton className="h-20 w-full" />
+//               <Skeleton className="h-20 w-full" />
+//               <Skeleton className="h-20 w-full" />
+//             </CardContent>
+//           </Card>
+//         </aside>
+//         <main className="space-y-4">
+//           <Skeleton className="h-14 w-full" />
+//           {[...Array(5)].map((_, i) => (
+//             <Card key={i} className="overflow-hidden">
+//               <CardContent className="p-4">
+//                 <div className="flex flex-col md:flex-row md:justify-between">
+//                   <div className="flex-grow md:border-r md:pr-6">
+//                     <div className="flex items-center gap-3 mb-4">
+//                       <Skeleton className="h-10 w-10 rounded-full" />
+//                       <Skeleton className="h-4 w-32" />
+//                     </div>
+//                     <div className="space-y-2">
+//                       <Skeleton className="h-20 w-full" />
+//                     </div>
+//                   </div>
+//                   <div className="flex-shrink-0 md:pl-6 mt-4 md:mt-0 flex flex-col items-center md:items-end">
+//                     <Skeleton className="h-5 w-20 mb-1" />
+//                     <Skeleton className="h-8 w-28" />
+//                   </div>
+//                 </div>
+//               </CardContent>
+//               <div className="border-t bg-muted/70 px-4 py-3 flex items-center justify-between">
+//                 <Skeleton className="h-4 w-24" />
+//                 <Skeleton className="h-10 w-32" />
+//               </div>
+//             </Card>
+//           ))}
+//         </main>
+//       </div>
+//     </div>
+//   </div>
+// );
+
+// const SearchSummaryBar = ({ searchParams, onModifyClick, isOpen }) => {
+//   const displaySlices = JSON.parse(searchParams.get("slices") || "[]");
+//   const passengers = JSON.parse(searchParams.get("passengers") || "[]");
+//   const cabinClass = searchParams.get("cabinClass") || "economy";
+//   const totalPassengers = passengers.length;
+//   if (displaySlices.length === 0) return null;
+//   const departure = displaySlices[0];
+//   const returnSlice = displaySlices.length > 1;
+
+//   return (
+//     <div className="flex flex-col md:flex-row justify-between items-center w-full gap-2 md:gap-4">
+//       <div className="flex items-center gap-4 text-sm overflow-x-auto w-full pb-2 md:pb-0">
+//         <div className="flex items-center gap-2 flex-shrink-0">
+//           <Plane size={16} className="text-muted-foreground" />
+//           <span className="font-semibold">
+//             {departure.origin.code} → {departure.destination.code}
+//           </span>
+//           {returnSlice && <Badge variant="secondary">Round Trip</Badge>}
+//         </div>
+//         <div className="flex items-center gap-2 flex-shrink-0">
+//           <Users size={16} className="text-muted-foreground" />
+//           <span className="font-semibold">
+//             {totalPassengers} Traveler{totalPassengers > 1 ? "s" : ""}
+//           </span>
+//         </div>
+//         <div className="flex items-center gap-2 flex-shrink-0">
+//           <Briefcase size={16} className="text-muted-foreground" />
+//           <span className="font-semibold capitalize">{cabinClass}</span>
+//         </div>
+//       </div>
+//       <Button
+//         onClick={onModifyClick}
+//         variant="secondary"
+//         className="w-full md:w-auto flex-shrink-0"
+//       >
+//         Modify Search
+//         <ChevronDown
+//           size={16}
+//           className={`ml-2 transition-transform ${isOpen ? "rotate-180" : ""}`}
+//         />
+//       </Button>
+//     </div>
+//   );
+// };
+
+// export default function FlightResultsPage() {
+//   const router = useRouter();
+//   const searchParams = useSearchParams();
+//   const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
+//   const [isModifySearchOpen, setIsModifySearchOpen] = useState(false);
+//   const modifySearchRef = useRef(null);
+
+//   const {
+//     data,
+//     fetchNextPage,
+//     hasNextPage,
+//     isFetchingNextPage,
+//     isLoading,
+//     isError,
+//     error,
+//   } = useInfiniteQuery({
+//     queryKey: ["flights", searchParams.toString()],
+//     queryFn: ({ pageParam }) => fetchFlights({ searchParams, pageParam }),
+//     initialPageParam: 1,
+//     getNextPageParam: (lastPage) =>
+//       lastPage.meta.hasNextPage ? lastPage.meta.currentPage + 1 : undefined,
+//     enabled: searchParams && searchParams.has("slices"),
+//     staleTime: 1000 * 60 * 5,
+//     refetchOnWindowFocus: false,
+//   });
+
+//   const [activeSort, setActiveSort] = useState("cheapest");
+//   const [expandedItineraryId, setExpandedItineraryId] = useState(null);
+//   const [filters, setFilters] = useState({
+//     airlines: [],
+//     stops: [],
+//     priceRange: { min: 0, max: 10000 },
+//     departureTime: [],
+//   });
+
+//   const allOffers = useMemo(
+//     () => data?.pages?.flatMap((page) => page.offers) || [],
+//     [data]
+//   );
+
+//   const groupedOffers = useMemo(() => {
+//     if (!allOffers || allOffers.length === 0) return [];
+//     const groups = new Map();
+//     allOffers.forEach((offer) => {
+//       const itineraryId =
+//         offer.slices
+//           ?.map((slice) =>
+//             slice.segments
+//               ?.map(
+//                 (seg) =>
+//                   `${seg.carrier?.iata_code || "XX"}${seg.flight_number}-${
+//                     seg.origin?.iata_code
+//                   }`
+//               )
+//               .join("_")
+//           )
+//           .join("__") || offer.id;
+//       if (!groups.has(itineraryId)) {
+//         groups.set(itineraryId, []);
+//       }
+//       groups.get(itineraryId).push(offer);
+//     });
+//     const groupedArray = Array.from(groups.values());
+//     groupedArray.forEach((group) =>
+//       group.sort(
+//         (a, b) => parseFloat(a.total_amount) - parseFloat(b.total_amount)
+//       )
+//     );
+//     return groupedArray;
+//   }, [allOffers]);
+
+//   const filteredOffers = useMemo(() => {
+//     if (!groupedOffers) return [];
+//     const timeRanges = {
+//       "early-morning": [0, 6],
+//       morning: [6, 12],
+//       afternoon: [12, 18],
+//       evening: [18, 24],
+//     };
+//     return groupedOffers.filter((group) => {
+//       const offer = group[0];
+//       if (!offer) return false;
+//       const price = parseFloat(offer.total_amount);
+//       if (price < filters.priceRange.min || price > filters.priceRange.max)
+//         return false;
+//       if (
+//         filters.airlines.length > 0 &&
+//         !filters.airlines.includes(
+//           offer.slices[0]?.segments[0]?.carrier?.iata_code
+//         )
+//       )
+//         return false;
+//       if (filters.stops.length > 0) {
+//         const stops = getStopsCount(offer.slices[0].segments);
+//         if (
+//           !(
+//             filters.stops.includes(stops) ||
+//             (filters.stops.includes(2) && stops >= 2)
+//           )
+//         )
+//           return false;
+//       }
+//       if (filters.departureTime.length > 0) {
+//         const departureHour = getDepartureHour(
+//           offer.slices[0].segments[0].departing_at
+//         );
+//         if (
+//           !filters.departureTime.some(
+//             (slot) =>
+//               departureHour >= timeRanges[slot][0] &&
+//               departureHour < timeRanges[slot][1]
+//           )
+//         )
+//           return false;
+//       }
+//       return true;
+//     });
+//   }, [groupedOffers, filters]);
+
+//   const sortedAndFilteredOffers = useMemo(() => {
+//     const sorted = [...filteredOffers];
+//     switch (activeSort) {
+//       case "fastest":
+//         return sorted.sort(
+//           (a, b) => calculateTotalDuration(a[0]) - calculateTotalDuration(b[0])
+//         );
+//       case "best":
+//         const getScore = (o) =>
+//           parseFloat(o.total_amount) +
+//           calculateTotalDuration(o) * 2 +
+//           getStopsCount(o.slices[0].segments) * 100;
+//         return sorted.sort((a, b) => getScore(a[0]) - getScore(b[0]));
+//       case "cheapest":
+//       default:
+//         return sorted.sort(
+//           (a, b) =>
+//             parseFloat(a[0].total_amount) - parseFloat(b[0].total_amount)
+//         );
+//     }
+//   }, [filteredOffers, activeSort]);
+
+//   useEffect(() => {
+//     if (!groupedOffers || groupedOffers.length === 0) return;
+//     const prices = groupedOffers.map((g) => parseFloat(g[0].total_amount));
+//     const min = Math.floor(Math.min(...prices));
+//     const max = Math.ceil(Math.max(...prices));
+//     if (filters.priceRange.min === 0 && filters.priceRange.max === 10000) {
+//       setFilters((prev) => ({ ...prev, priceRange: { min, max } }));
+//     }
+//   }, [groupedOffers, filters.priceRange]);
+
+//   useEffect(() => {
+//     const handleClickOutside = (event) => {
+//       if (
+//         modifySearchRef.current &&
+//         !modifySearchRef.current.contains(event.target)
+//       ) {
+//         setIsModifySearchOpen(false);
+//       }
+//     };
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => document.removeEventListener("mousedown", handleClickOutside);
+//   }, []);
+
+//   if (isLoading) {
+//     return <ResultsPageSkeleton />;
+//   }
+
+//   if (isError) {
+//     return (
+//       <div className="min-h-screen bg-muted/40 flex items-center justify-center p-4">
+//         <Alert variant="destructive" className="max-w-lg">
+//           <AlertCircle className="h-4 w-4" />
+//           <AlertTitle>Search Error</AlertTitle>
+//           <AlertDescription>{error.message}</AlertDescription>
+//           <div className="mt-4">
+//             <Button onClick={() => router.push("/")}>Return to Homepage</Button>
+//           </div>
+//         </Alert>
+//       </div>
+//     );
+//   }
+
+//   const sortOptions = [
+//     { id: "cheapest", label: "Cheapest", icon: DollarSign },
+//     { id: "fastest", label: "Fastest", icon: Zap },
+//     { id: "best", label: "Best", icon: Star },
+//   ];
+
+//   const displaySlices = JSON.parse(searchParams.get("slices") || "[]");
+
+//   return (
+//     <div className="min-h-screen bg-muted/40">
+//       <div className="bg-background shadow-sm border-b sticky top-0 z-40">
+//         <div
+//           ref={modifySearchRef}
+//           className="container mx-auto px-4 py-3 max-w-7xl relative"
+//         >
+//           <SearchSummaryBar
+//             searchParams={searchParams}
+//             isOpen={isModifySearchOpen}
+//             onModifyClick={() => setIsModifySearchOpen((prev) => !prev)}
+//           />
+//           {isModifySearchOpen && (
+//             <div className="absolute top-full left-0 w-full mt-2 px-4 md:px-0">
+//               <ModifySearchForm />
+//             </div>
+//           )}
+//         </div>
+//       </div>
+
+//       <div className="container mx-auto px-4 py-6 max-w-7xl">
+//         <div className="bg-primary text-primary-foreground p-4 rounded-t-lg mb-4">
+//           <h2 className="font-bold text-xl flex items-center gap-2">
+//             <Plane size={20} /> {displaySlices[0]?.origin.code} →{" "}
+//             {displaySlices[0]?.destination.code}
+//           </h2>
+//         </div>
+
+//         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+//           <aside className="hidden lg:block h-fit sticky top-[85px]">
+//             <Card>
+//               <CardHeader>
+//                 <CardTitle>Filter Results</CardTitle>
+//               </CardHeader>
+//               <CardContent>
+//                 <FilterSidebar
+//                   offers={groupedOffers}
+//                   filters={filters}
+//                   onFiltersChange={setFilters}
+//                 />
+//               </CardContent>
+//             </Card>
+//           </aside>
+
+//           <main className="space-y-4 min-w-0">
+//             <div className="lg:hidden">
+//               <Sheet>
+//                 <SheetTrigger asChild>
+//                   <Button variant="outline" className="w-full">
+//                     <SlidersHorizontal size={16} className="mr-2" />
+//                     Filters
+//                   </Button>
+//                 </SheetTrigger>
+//                 <SheetContent side="left" className="w-full max-w-xs">
+//                   <SheetHeader>
+//                     <SheetTitle>Filter Results</SheetTitle>
+//                   </SheetHeader>
+//                   <div className="p-4 overflow-y-auto">
+//                     <FilterSidebar
+//                       offers={groupedOffers}
+//                       filters={filters}
+//                       onFiltersChange={setFilters}
+//                     />
+//                   </div>
+//                 </SheetContent>
+//               </Sheet>
+//             </div>
+
+//             <Card>
+//               <CardContent className="p-2">
+//                 <ToggleGroup
+//                   type="single"
+//                   value={activeSort}
+//                   onValueChange={(value) => {
+//                     if (value) setActiveSort(value);
+//                   }}
+//                   className="w-full justify-around"
+//                 >
+//                   {sortOptions.map((opt) => (
+//                     <ToggleGroupItem
+//                       key={opt.id}
+//                       value={opt.id}
+//                       className="flex-1"
+//                     >
+//                       <opt.icon size={16} className="mr-2" /> {opt.label}
+//                     </ToggleGroupItem>
+//                   ))}
+//                 </ToggleGroup>
+//               </CardContent>
+//             </Card>
+
+//             {sortedAndFilteredOffers.length > 0 ? (
+//               <div className="space-y-4">
+//                 {sortedAndFilteredOffers.map((offerGroup) => {
+//                   const itineraryId =
+//                     offerGroup[0].slices
+//                       ?.flatMap(
+//                         (s) =>
+//                           s.segments?.map(
+//                             (seg) =>
+//                               `${seg.carrier?.iata_code || "XX"}${
+//                                 seg.flight_number
+//                               }-${seg.origin?.iata_code}`
+//                           ) || []
+//                       )
+//                       .join("--") || offerGroup[0].id;
+//                   return (
+//                     <FlightOfferCard
+//                       key={itineraryId}
+//                       offerGroup={offerGroup}
+//                       isExpanded={expandedItineraryId === itineraryId}
+//                       onToggleDetails={() =>
+//                         setExpandedItineraryId((prev) =>
+//                           prev === itineraryId ? null : itineraryId
+//                         )
+//                       }
+//                     />
+//                   );
+//                 })}
+//               </div>
+//             ) : (
+//               <Card className="p-12 text-center">
+//                 <Plane className="w-16 h-16 text-muted mx-auto mb-4" />
+//                 <h3 className="text-xl font-bold mb-2">No Flights Found</h3>
+//                 <p className="text-muted-foreground max-w-md mx-auto">
+//                   No flights match your filter criteria. Try adjusting your
+//                   filters.
+//                 </p>
+//               </Card>
+//             )}
+
+//             <div className="pt-4 text-center">
+//               {hasNextPage && (
+//                 <Button
+//                   onClick={() => fetchNextPage()}
+//                   disabled={isFetchingNextPage}
+//                 >
+//                   {isFetchingNextPage ? (
+//                     <>
+//                       <Loader className="mr-2 h-4 w-4 animate-spin" />
+//                       Loading More...
+//                     </>
+//                   ) : (
+//                     "Load More Flights"
+//                   )}
+//                 </Button>
+//               )}
+//               {!isLoading && !hasNextPage && allOffers.length > 0 && (
+//                 <p className="text-muted-foreground">
+//                   You've reached the end of the list.
+//                 </p>
+//               )}
+//             </div>
+//           </main>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+//src// app/flight-results/ResultsClientComponent.js
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
@@ -956,8 +1504,9 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import FilterSidebar from "src/components/flight-results/FilterSidebar";
 import FlightOfferCard from "src/components/flight-results/FlightOfferCard";
 import ModifySearchForm from "src/components/flight-results/ModifySearchForm";
+import ProgressiveLoadingBar from "@/components/flight-results/ProgressiveLoadingBar";
 
-// API fetching function remains the same...
+// API fetching function
 const fetchFlights = async ({ searchParams, pageParam = 1 }) => {
   if (!searchParams.has("slices")) {
     throw new Error(
@@ -986,6 +1535,7 @@ const fetchFlights = async ({ searchParams, pageParam = 1 }) => {
     );
   }
   const result = await res.json();
+  console.log("Fetch Flights Result:", result);
   if (!result.success) {
     throw new Error(
       result.error || "The search was not successful. Please try again."
@@ -994,7 +1544,7 @@ const fetchFlights = async ({ searchParams, pageParam = 1 }) => {
   return result;
 };
 
-// --- Helper Functions (unchanged) ---
+// Helper Functions
 const getStopsCount = (segments) => (segments?.length || 1) - 1;
 const getDepartureHour = (dateTime) => new Date(dateTime).getHours();
 const calculateTotalDuration = (offer) => {
@@ -1007,31 +1557,75 @@ const calculateTotalDuration = (offer) => {
   }, 0);
 };
 
-// --- Loading Skeleton using shadcn/ui ---
-const SkeletonCard = () => (
-  <Card className="overflow-hidden">
-    <CardContent className="p-4">
-      <div className="flex flex-col md:flex-row md:justify-between">
-        <div className="flex-grow md:border-r md:pr-6">
-          <div className="flex items-center gap-3 mb-4">
-            <Skeleton className="h-10 w-10 rounded-full" />
-            <Skeleton className="h-4 w-32" />
-          </div>
-          <div className="space-y-2">
-            <Skeleton className="h-20 w-full" />
-          </div>
-        </div>
-        <div className="flex-shrink-0 md:pl-6 mt-4 md:mt-0 flex flex-col items-center md:items-end">
-          <Skeleton className="h-5 w-20 mb-1" />
-          <Skeleton className="h-8 w-28" />
-        </div>
+// Detailed Skeleton Component
+const ResultsPageSkeleton = ({ progress, currentPhase, loadedFlights }) => (
+  <div className="bg-muted/40 min-h-screen">
+    <div className="bg-background shadow-sm border-b sticky top-0 z-40">
+      <div className="container mx-auto px-4 py-3 max-w-7xl">
+        <Skeleton className="h-9 w-full" />
       </div>
-    </CardContent>
-    <div className="border-t bg-muted/70 px-4 py-3 flex items-center justify-between">
-      <Skeleton className="h-4 w-24" />
-      <Skeleton className="h-10 w-32" />
     </div>
-  </Card>
+    <div className="container mx-auto px-4 py-6 max-w-7xl">
+      <div className="bg-primary text-primary-foreground p-4 rounded-t-lg mb-4">
+        <h2 className="font-bold text-xl flex items-center gap-2">
+          <Plane size={20} /> <Skeleton className="h-6 w-48 bg-primary/50" />
+        </h2>
+      </div>
+
+      {/* Progressive Loading Bar */}
+      <ProgressiveLoadingBar
+        progress={progress}
+        currentPhase={currentPhase}
+        loadedFlights={loadedFlights}
+        isComplete={false}
+      />
+
+      <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
+        <aside className="hidden lg:block">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                <Skeleton className="h-6 w-3/4" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Skeleton className="h-20 w-full" />
+              <Skeleton className="h-20 w-full" />
+              <Skeleton className="h-20 w-full" />
+            </CardContent>
+          </Card>
+        </aside>
+        <main className="space-y-4">
+          <Skeleton className="h-14 w-full" />
+          {[...Array(5)].map((_, i) => (
+            <Card key={i} className="overflow-hidden">
+              <CardContent className="p-4">
+                <div className="flex flex-col md:flex-row md:justify-between">
+                  <div className="flex-grow md:border-r md:pr-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Skeleton className="h-10 w-10 rounded-full" />
+                      <Skeleton className="h-4 w-32" />
+                    </div>
+                    <div className="space-y-2">
+                      <Skeleton className="h-20 w-full" />
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0 md:pl-6 mt-4 md:mt-0 flex flex-col items-center md:items-end">
+                    <Skeleton className="h-5 w-20 mb-1" />
+                    <Skeleton className="h-8 w-28" />
+                  </div>
+                </div>
+              </CardContent>
+              <div className="border-t bg-muted/70 px-4 py-3 flex items-center justify-between">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-10 w-32" />
+              </div>
+            </Card>
+          ))}
+        </main>
+      </div>
+    </div>
+  </div>
 );
 
 const SearchSummaryBar = ({ searchParams, onModifyClick, isOpen }) => {
@@ -1079,13 +1673,17 @@ const SearchSummaryBar = ({ searchParams, onModifyClick, isOpen }) => {
   );
 };
 
-// --- Main Client Component ---
-export default function ResultsClientComponent() {
+export default function FlightResultsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
   const [isModifySearchOpen, setIsModifySearchOpen] = useState(false);
   const modifySearchRef = useRef(null);
+
+  // Progressive loading state
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [currentPhase, setCurrentPhase] = useState("instant");
+  const [isSearchComplete, setIsSearchComplete] = useState(false);
 
   const {
     data,
@@ -1151,7 +1749,6 @@ export default function ResultsClientComponent() {
     return groupedArray;
   }, [allOffers]);
 
-  // Filtering and Sorting logic remains the same...
   const filteredOffers = useMemo(() => {
     if (!groupedOffers) return [];
     const timeRanges = {
@@ -1222,6 +1819,40 @@ export default function ResultsClientComponent() {
     }
   }, [filteredOffers, activeSort]);
 
+  // Progressive loading simulation effect
+  useEffect(() => {
+    if (isLoading && !isError) {
+      setIsSearchComplete(false);
+      const progressInterval = setInterval(() => {
+        setLoadingProgress((prev) => {
+          const newProgress = prev + Math.random() * 15 + 5;
+
+          // Update phases based on progress
+          if (newProgress >= 30 && currentPhase === "instant") {
+            setCurrentPhase("cheapest");
+          } else if (newProgress >= 70 && currentPhase === "cheapest") {
+            setCurrentPhase("best");
+          }
+
+          return Math.min(newProgress, 95);
+        });
+      }, 200);
+
+      return () => clearInterval(progressInterval);
+    } else if (!isLoading && data) {
+      // Complete the loading when data is available
+      setLoadingProgress(100);
+      setTimeout(() => setIsSearchComplete(true), 500);
+    }
+  }, [isLoading, isError, data, currentPhase]);
+
+  // Reset loading state when search params change
+  useEffect(() => {
+    setLoadingProgress(0);
+    setCurrentPhase("instant");
+    setIsSearchComplete(false);
+  }, [searchParams]);
+
   useEffect(() => {
     if (!groupedOffers || groupedOffers.length === 0) return;
     const prices = groupedOffers.map((g) => parseFloat(g[0].total_amount));
@@ -1246,8 +1877,13 @@ export default function ResultsClientComponent() {
   }, []);
 
   if (isLoading) {
-    // The main loading fallback is handled by the server component's Suspense
-    return null;
+    return (
+      <ResultsPageSkeleton
+        progress={loadingProgress}
+        currentPhase={currentPhase}
+        loadedFlights={allOffers.length}
+      />
+    );
   }
 
   if (isError) {
@@ -1300,6 +1936,16 @@ export default function ResultsClientComponent() {
             {displaySlices[0]?.destination.code}
           </h2>
         </div>
+
+        {/* Show Progressive Loading Bar when search is in progress or just completed */}
+        {(!isSearchComplete || allOffers.length === 0) && (
+          <ProgressiveLoadingBar
+            progress={loadingProgress}
+            currentPhase={currentPhase}
+            loadedFlights={allOffers.length}
+            isComplete={isSearchComplete && allOffers.length > 0}
+          />
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
           <aside className="hidden lg:block h-fit sticky top-[85px]">
